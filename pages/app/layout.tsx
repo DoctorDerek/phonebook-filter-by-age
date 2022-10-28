@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
       <body>
-        <main className="flex h-screen w-screen cursor-crosshair flex-col items-center justify-center">
+        <main className="my-2 mx-auto flex min-h-screen w-[95vw] cursor-crosshair flex-col items-center justify-center">
           <div className="min-w-104 flex max-w-3xl flex-col items-center justify-center space-y-2 rounded-xl border border-solid border-gray-600 p-2">
             {children}
           </div>
