@@ -9,6 +9,39 @@ export type PhoneBookEntry = {
   phoneNumber: string
 }
 
+const INITIAL_PHONE_BOOK_ENTRIES = [
+  {
+    id: 1,
+    firstName: "Eric",
+    lastName: "Elliot",
+    phoneNumber: "222-555-6575",
+  },
+  {
+    id: 2,
+    firstName: "Steve",
+    lastName: "Jobs",
+    phoneNumber: "220-454-6754",
+  },
+  {
+    id: 3,
+    firstName: "Fred",
+    lastName: "Allen",
+    phoneNumber: "210-657-9886",
+  },
+  {
+    id: 4,
+    firstName: "Steve",
+    lastName: "Wozniak",
+    phoneNumber: "343-675-8786",
+  },
+  {
+    id: 5,
+    firstName: "Bill",
+    lastName: "Gates",
+    phoneNumber: "343-654-9688",
+  },
+]
+
 const phoneBookMachine = createMachine(
   {
     id: "phoneBook",
@@ -18,7 +51,7 @@ const phoneBookMachine = createMachine(
       // The context (extended state) of the finite state machine:
       context: {} as { phoneBookEntries: PhoneBookEntry[] },
       // The events handled by this fininte state machine:
-      events: {} as  // CRUD operations + FINISH
+      events: {} as  // CRUD operations + FINISH + RESET
         | { type: "CREATE"; phoneBookEntry: PhoneBookEntry }
         | {
             type: "READ"
@@ -27,13 +60,16 @@ const phoneBookMachine = createMachine(
         | { type: "DELETE"; phoneBookEntry: PhoneBookEntry }
         | {
             type: "FINISH"
+          }
+        | {
+            type: "RESET"
           },
     },
-    // We start in the "idle" state, which is where we should typically be:
+    // We start in the "idle" state, expecting a "READ" action to be sent:
     initial: "idle",
     // The initial context (initial state) of the state machine:
     context: {
-      phoneBookEntries: [] as PhoneBookEntry[],
+      phoneBookEntries: INITIAL_PHONE_BOOK_ENTRIES as PhoneBookEntry[],
     },
     states: {
       idle: {
@@ -62,6 +98,11 @@ const phoneBookMachine = createMachine(
             // Run these actions on state transition via trigger DELETE:
             actions: ["deletePhoneBookEntry"],
           },
+          RESET: {
+            target: "running",
+            // Run these actions on state transition via trigger RESET:
+            actions: ["resetPhoneBookEntries"],
+          },
         },
       },
       running: {
@@ -88,7 +129,7 @@ const phoneBookMachine = createMachine(
             } catch (error: any) {
               console.log(error) // Probably a JSON.parse error 😁
             }
-          return [] as PhoneBookEntry[]
+          return INITIAL_PHONE_BOOK_ENTRIES as PhoneBookEntry[]
         },
       }),
       createPhoneBookEntry: assign({
@@ -130,6 +171,9 @@ const phoneBookMachine = createMachine(
           console.log(error) // Something went horribly, horribly wrong. 🤯
         }
       },
+      resetPhoneBookEntries: assign({
+        phoneBookEntries: (context, event) => INITIAL_PHONE_BOOK_ENTRIES,
+      }),
     },
   }
 )

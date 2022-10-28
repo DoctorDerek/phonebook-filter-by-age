@@ -16,6 +16,7 @@ export interface Typegen0 {
     createPhoneBookEntry: "CREATE"
     deletePhoneBookEntry: "DELETE"
     readPhoneBookFromLocalStorage: "READ"
+    resetPhoneBookEntries: "RESET"
     updatePhoneBookEntry: "UPDATE"
     writePhoneBookToLocalStorage: "FINISH"
   }

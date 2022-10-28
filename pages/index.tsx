@@ -11,12 +11,17 @@ export default function PhoneBookApp() {
   const { send } = globalServices.phoneBookService
 
   useEffect(() => {
-    // When first load or are idle, load the phone book from localStorage:
+    // When we first load or are idle, load the phone book from localStorage:
     if (state.matches("idle")) send({ type: "READ" })
     // When we're running, we need to write the phone book to localStorage:
     if (state.matches("running")) send({ type: "FINISH" })
   }, [state, send])
   console.log(state.context.phoneBookEntries)
+
+  const { value, context } = state || {}
+  const { phoneBookEntries } = context || {}
+
+  const resetPhoneBook = () => send({ type: "RESET" })
 
   return (
     <div>
@@ -27,9 +32,10 @@ export default function PhoneBookApp() {
 
       <main>
         <div>
-          <>Current state: {state.value}</>
+          <>Current state: {value}</>
+          <>Current entries: {JSON.stringify(phoneBookEntries)}</>
         </div>
-        <button>ASDF</button>
+        <button onClick={() => resetPhoneBook()}>RESET</button>
       </main>
     </div>
   )
