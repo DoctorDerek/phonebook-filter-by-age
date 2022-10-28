@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write .",
+    "format": "prettier --ignore-path .gitignore --write .",
     "test": "jest test --collectCoverage",
     "test:watch": "jest test --watch",
     "test:watchAll": "jest test --watchAll",
