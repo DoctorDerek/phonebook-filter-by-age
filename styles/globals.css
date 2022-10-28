@@ -2,29 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+Accessible focus effects
+https://uxdesign.cc/create-better-accessible-focus-effects-75a3de27b8ba
+*/
+
+:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 0.0625rem #facc15 !important; /* 1px */
+  /* Tailwind CSS color yellow-400 === #facc15 */
+  border-color: transparent !important;
+  border-radius: 0.5rem;
+  /* Tailwind CSS rounded-lg === 0.5rem === 8px */
+}
+
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+  scroll-behavior: smooth;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
