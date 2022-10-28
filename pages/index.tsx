@@ -1,6 +1,7 @@
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
 import { PhoneBookEntry } from "@/utils/phoneBookMachine"
@@ -59,6 +60,18 @@ export default function PhoneBookApp() {
     phoneBookEntry?: PhoneBookEntry
   }>({ type: "CLOSED" })
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PhoneBookEntry>()
+
+  const onSubmit = (data: PhoneBookEntry) => {
+    console.log(data)
+    console.log(dialogState.type)
+    console.log(dialogState.phoneBookEntry)
+  }
+
   return (
     <>
       <Head>
@@ -76,52 +89,116 @@ export default function PhoneBookApp() {
         {/* A full-screen container that will center the dialog. */}
         <div className="fixed inset-0 flex items-center justify-center p-4">
           {/* The actual dialog panel, centered inside the box. */}
-          <Dialog.Panel className="relative mx-auto flex min-h-[60vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
-            <button
-              onClick={() => setDialogState({ type: "CLOSED" })}
-              className="group absolute top-2 right-2 h-6 w-6 rounded-lg hover:outline hover:outline-1 hover:outline-gray-600"
-            >
-              <XMarkIcon
-                aria-label="Close dialog"
-                className="fill-gray-500 group-hover:fill-gray-600"
-              />
-            </button>
-            <Dialog.Title className="text-center text-2xl font-bold">
-              {/** We transform the dialog state to title case: "Update" */}
-              {`${dialogState.type.slice(0, 1)}${dialogState.type
-                .slice(1)
-                .toLocaleLowerCase()}`}{" "}
-              {dialogState.type !== "RESET" && "Phone Book Entry"}
-              {dialogState.type === "RESET" && "Contacts"}
-            </Dialog.Title>
-
-            <Dialog.Description>
-              {dialogState.type === "DELETE" &&
-                "This will permanently delete the entry."}
-              {dialogState.type === "RESET" &&
-                "This will permanently reset your contacts."}
-            </Dialog.Description>
-            <p>
-              {(dialogState.type === "DELETE" ||
-                dialogState.type === "RESET") &&
-                "Are you sure you want to proceed? Your data will be permanently removed. This action cannot be undone."}
-            </p>
-
-            <div className="flex w-full items-center justify-end space-x-2">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Dialog.Panel className="relative mx-auto flex min-h-[75vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
               <button
-                className="rounded-md bg-gray-800 px-6 py-2 text-white hover:bg-gray-700 hover:outline hover:outline-1 hover:outline-gray-800"
                 onClick={() => setDialogState({ type: "CLOSED" })}
+                className="group absolute top-2 right-2 h-6 w-6 rounded-lg hover:outline hover:outline-1 hover:outline-gray-600"
               >
-                Cancel
+                <XMarkIcon
+                  aria-label="Close dialog"
+                  className="fill-gray-500 group-hover:fill-gray-600"
+                />
               </button>
-              <button
-                type="submit"
-                className="rounded-md bg-blue-400 px-6 py-2 text-white hover:bg-blue-500 hover:outline hover:outline-1 hover:outline-blue-400"
-              >
-                {dialogState.type}
-              </button>
-            </div>
-          </Dialog.Panel>
+              <Dialog.Title className="text-center text-2xl font-bold">
+                {/** We transform the dialog state to title case: "Update" */}
+                {`${dialogState.type.slice(0, 1)}${dialogState.type
+                  .slice(1)
+                  .toLocaleLowerCase()}`}{" "}
+                {dialogState.type !== "RESET" && "Phone Book Entry"}
+                {dialogState.type === "RESET" && "Contacts"}
+              </Dialog.Title>
+
+              <Dialog.Description>
+                {dialogState.type === "CREATE" &&
+                  "This will create a new entry in your contacts."}
+                {dialogState.type === "UPDATE" &&
+                  "This will update the entry in your contacts."}
+                {dialogState.type === "DELETE" &&
+                  "This will permanently delete the entry."}
+                {dialogState.type === "RESET" &&
+                  "This will permanently reset your contacts."}
+              </Dialog.Description>
+
+              {(dialogState.type === "DELETE" ||
+                dialogState.type === "RESET") && (
+                <p>
+                  Are you sure you want to proceed? Your data will be
+                  permanently removed. This action cannot be undone.
+                </p>
+              )}
+
+              {dialogState.type !== "RESET" && (
+                <>
+                  <input
+                    type="hidden"
+                    value={dialogState?.phoneBookEntry?.id || -1}
+                    {...register("id")}
+                  />
+
+                  <div className="space-y-1 whitespace-nowrap">
+                    <label className="flex space-x-1 text-sm text-gray-700">
+                      <span>First Name</span>
+                      <input
+                        type="text"
+                        placeholder={dialogState.phoneBookEntry?.firstName}
+                        {...register("firstName", {
+                          required: dialogState.type === "CREATE",
+                        })}
+                        className="w-full rounded-md border border-gray-300 pl-1 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
+                        disabled={dialogState.type === "DELETE"}
+                      />
+                    </label>
+                    <label className="flex space-x-1 text-sm text-gray-700">
+                      <span>Last Name</span>
+                      <input
+                        type="text"
+                        placeholder={dialogState.phoneBookEntry?.lastName}
+                        {...register("lastName", {
+                          required: dialogState.type === "CREATE",
+                        })}
+                        className="w-full rounded-md border border-gray-300  pl-1 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
+                        disabled={dialogState.type === "DELETE"}
+                      />
+                    </label>
+                    <label className="flex space-x-1 text-sm text-gray-700">
+                      <span>Phone Number</span>
+                      <input
+                        type="text"
+                        placeholder={dialogState.phoneBookEntry?.phoneNumber}
+                        {...register("phoneNumber", {
+                          required: dialogState.type === "CREATE",
+                        })}
+                        className="w-full rounded-md border border-gray-300 pl-1 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
+                        disabled={dialogState.type === "DELETE"}
+                      />
+                    </label>
+                    {dialogState.type === "CREATE" &&
+                      (errors.firstName ||
+                        errors.lastName ||
+                        errors.phoneNumber) && (
+                        <div>All fields are required.</div>
+                      )}
+                  </div>
+                </>
+              )}
+
+              <div className="flex w-full items-center justify-end space-x-2">
+                <button
+                  className="rounded-md bg-gray-800 px-6 py-2 text-white hover:bg-gray-700 hover:outline hover:outline-1 hover:outline-gray-800"
+                  onClick={() => setDialogState({ type: "CLOSED" })}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-md bg-blue-400 px-6 py-2 text-white hover:bg-blue-500 hover:outline hover:outline-1 hover:outline-blue-400"
+                >
+                  {dialogState.type}
+                </button>
+              </div>
+            </Dialog.Panel>
+          </form>
         </div>
       </Dialog>
 
@@ -158,7 +235,7 @@ export default function PhoneBookApp() {
         <input
           type="text"
           placeholder="Search for contact by last name..."
-          className="border-sm w-full rounded-md border border-gray-300 pl-6 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
+          className="w-full rounded-md border border-gray-300 pl-6 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
           onChange={(event) => setFilterText(event?.target?.value)}
         />
         <MagnifyingGlassIcon className="absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2" />
