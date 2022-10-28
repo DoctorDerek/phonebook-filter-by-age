@@ -12,7 +12,7 @@ import {
 import { useActor } from "@xstate/react"
 
 export default function PhoneBookApp() {
-  // Retrieve our loggedIn/loggedOut status from the global context with xState:
+  // Retrieve our global context from the XState finite state machine:
   const globalServices = useContext(GlobalStateContext)
   const [state] = useActor(globalServices.phoneBookService)
   const { send } = globalServices.phoneBookService
