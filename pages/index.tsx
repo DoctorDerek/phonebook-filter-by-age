@@ -31,9 +31,11 @@ export default function PhoneBookApp() {
     if (state.matches("running")) send({ type: "FINISH" })
   }, [state, send, router.isReady])
 
+  /** Unpack our current XState machine context (i.e. the phone book entries) */
   const { context } = state || {}
   const { phoneBookEntries } = context || {}
 
+  /** Set up a state handler for the "search by last name" filter logic. */
   const [filterText, setFilterText] = useState("")
 
   /**
