@@ -14,6 +14,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
     "@next/font": "^13.0.0",
     "@xstate/react": "^3.0.1",
