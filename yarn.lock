@@ -458,6 +458,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@heroicons/react@npm:^2.0.12":
+  version: 2.0.12
+  resolution: "@heroicons/react@npm:2.0.12"
+  peerDependencies:
+    react: ">= 16"
+  checksum: d8e52410890db3337c3c82dcc223eeb3d88badcf96438e38fd9f4cc7aaafa41eb3653dcea6d9f1a8cac55e1076ac3b7a53fb87bfae71b5b202abf0e85066d004
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.6":
   version: 0.11.6
   resolution: "@humanwhocodes/config-array@npm:0.11.6"
@@ -5199,6 +5208,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "phonebook-app@workspace:."
   dependencies:
+    "@heroicons/react": ^2.0.12
     "@next/font": ^13.0.0
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0
