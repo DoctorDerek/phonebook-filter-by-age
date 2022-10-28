@@ -1,4 +1,5 @@
 import Head from "next/head"
+import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
@@ -16,16 +17,19 @@ export default function PhoneBookApp() {
   const globalServices = useContext(GlobalStateContext)
   const [state] = useActor(globalServices.phoneBookService)
   const { send } = globalServices.phoneBookService
+  const router = useRouter()
 
   useEffect(() => {
+    // Make sure that the window object is available before we start to render.
+    if (!router.isReady) return // void
     // When we first load or are idle, load the phone book from localStorage:
     if (state.matches("idle")) send({ type: "READ" })
     // When we're running, we need to write the phone book to localStorage:
     if (state.matches("running")) send({ type: "FINISH" })
-  }, [state, send])
+  }, [state, send, router.isReady])
   console.log(state.context.phoneBookEntries)
 
-  const { value, context } = state || {}
+  const { context } = state || {}
   const { phoneBookEntries } = context || {}
 
   const resetPhoneBook = () => send({ type: "RESET" })
