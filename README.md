@@ -60,7 +60,7 @@ Launches the test runner in the interactive watch mode.
 
 ## Technical Journal
 
-- `0.1.0` New app: create next-app w/TypeScript + Yarn 3
+- `0.1.1` New app: create next-app w/TypeScript + Yarn 3
 - `0.2.0` Added all best practices & basic dependencies
 - `0.3.0` ...
 - `0.4.0` ...
