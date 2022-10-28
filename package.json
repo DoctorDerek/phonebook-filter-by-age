@@ -14,6 +14,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@next/font": "^13.0.0",
     "@xstate/react": "^3.0.1",
     "next": "13.0.0",
     "react": "18.2.0",

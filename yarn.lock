@@ -801,6 +801,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/font@npm:^13.0.0":
+  version: 13.0.0
+  resolution: "@next/font@npm:13.0.0"
+  checksum: e616d77336d82455e08653a5488b7e8721ac3db5fb0a69e6270ed093eb2a8d7f51b0582e1ef0fa7947587bda13296fd6cee2fe4fcf88a98c2bcc69122fa70e5b
+  languageName: node
+  linkType: hard
+
 "@next/swc-android-arm-eabi@npm:13.0.0":
   version: 13.0.0
   resolution: "@next/swc-android-arm-eabi@npm:13.0.0"
@@ -5192,6 +5199,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "phonebook-app@workspace:."
   dependencies:
+    "@next/font": ^13.0.0
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0
     "@types/node": ^18.11.7
