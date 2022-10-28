@@ -4,11 +4,13 @@ import { useContext, useEffect, useState } from "react"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
 import { PhoneBookEntry } from "@/utils/phoneBookMachine"
+import { Dialog } from "@headlessui/react"
 import {
   DevicePhoneMobileIcon,
   MagnifyingGlassIcon,
   PhoneIcon,
   TrashIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/solid"
 import { useActor } from "@xstate/react"
 
@@ -27,7 +29,6 @@ export default function PhoneBookApp() {
     // When we're running, we need to write the phone book to localStorage:
     if (state.matches("running")) send({ type: "FINISH" })
   }, [state, send, router.isReady])
-  console.log(state.context.phoneBookEntries)
 
   const { context } = state || {}
   const { phoneBookEntries } = context || {}
@@ -50,6 +51,13 @@ export default function PhoneBookApp() {
   }: {
     phoneBookEntry: PhoneBookEntry
   }) => send({ type: "DELETE", phoneBookEntry })
+  // {() => deletePhoneBookEntry({ phoneBookEntry })}
+
+  /** We model the dialogState off the XState action patterns. */
+  const [dialogState, setDialogState] = useState<{
+    type: "CLOSED" | "CREATE" | "UPDATE" | "DELETE" | "RESET"
+    phoneBookEntry?: PhoneBookEntry
+  }>({ type: "CLOSED" })
 
   return (
     <>
@@ -57,24 +65,95 @@ export default function PhoneBookApp() {
         <title>Phonebook App by @DoctorDerek</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Dialog
+        open={dialogState.type !== "CLOSED"}
+        onClose={() => setDialogState({ type: "CLOSED" })}
+        className="relative z-50"
+      >
+        {/* The backdrop (a fixed sibling to the panel container). */}
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+
+        {/* A full-screen container that will center the dialog. */}
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          {/* The actual dialog panel, centered inside the box. */}
+          <Dialog.Panel className="relative mx-auto flex min-h-[60vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
+            <button
+              onClick={() => setDialogState({ type: "CLOSED" })}
+              className="group absolute top-2 right-2 h-6 w-6 rounded-lg hover:outline hover:outline-1 hover:outline-gray-600"
+            >
+              <XMarkIcon
+                aria-label="Close dialog"
+                className="fill-gray-500 group-hover:fill-gray-600"
+              />
+            </button>
+            <Dialog.Title className="text-center text-2xl font-bold">
+              {/** We transform the dialog state to title case: "Update" */}
+              {`${dialogState.type.slice(0, 1)}${dialogState.type
+                .slice(1)
+                .toLocaleLowerCase()}`}{" "}
+              {dialogState.type !== "RESET" && "Phone Book Entry"}
+              {dialogState.type === "RESET" && "Contacts"}
+            </Dialog.Title>
+
+            <Dialog.Description>
+              {dialogState.type === "DELETE" &&
+                "This will permanently delete the entry."}
+              {dialogState.type === "RESET" &&
+                "This will permanently reset your contacts."}
+            </Dialog.Description>
+            <p>
+              {(dialogState.type === "DELETE" ||
+                dialogState.type === "RESET") &&
+                "Are you sure you want to proceed? Your data will be permanently removed. This action cannot be undone."}
+            </p>
+
+            <div className="flex w-full items-center justify-end space-x-2">
+              <button
+                className="rounded-md bg-gray-800 px-6 py-2 text-white hover:bg-gray-700 hover:outline hover:outline-1 hover:outline-gray-800"
+                onClick={() => setDialogState({ type: "CLOSED" })}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="rounded-md bg-blue-400 px-6 py-2 text-white hover:bg-blue-500 hover:outline hover:outline-1 hover:outline-blue-400"
+              >
+                {dialogState.type}
+              </button>
+            </div>
+          </Dialog.Panel>
+        </div>
+      </Dialog>
+
       <div className="group flex items-center justify-center space-x-2 text-4xl font-semibold">
         <DevicePhoneMobileIcon className="h-10 w-10 group-hover:animate-spin" />
         <h1>Phone Book App</h1>
       </div>
+
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center justify-center space-x-2">
           <h2 className="text-2xl font-semibold">Contacts</h2>
-          <button onClick={() => resetPhoneBook()}>
+          <button
+            onClick={() => setDialogState({ type: "RESET" })}
+            className="group flex items-center justify-center"
+          >
             <TrashIcon
               aria-label="Delete all phone book entries and reset"
-              className="h-6 w-6 rounded-md hover:fill-red-600 hover:outline hover:outline-1 hover:outline-red-600"
+              className="h-6 w-6 rounded-md group-hover:fill-red-600 group-hover:outline group-hover:outline-1 group-hover:outline-red-600"
             />
+            <div className="invisible pl-1 font-bold text-red-600 group-hover:visible">
+              reset
+            </div>
           </button>
         </div>
-        <button className="rounded-md bg-blue-400 px-6 py-2 text-white">
+        <button
+          className="rounded-md bg-blue-400 px-6 py-2 text-white hover:bg-blue-500 hover:outline hover:outline-1 hover:outline-blue-400"
+          onClick={() => setDialogState({ type: "CREATE" })}
+        >
           + Add Contact
         </button>
       </div>
+
       <div className="relative w-full">
         <input
           type="text"
@@ -94,9 +173,17 @@ export default function PhoneBookApp() {
               key={key}
             >
               <h3 className="flex flex-col items-start justify-center">
-                <div className="text-2xl font-semibold">
+                <button
+                  className="group flex items-center justify-center text-2xl font-semibold"
+                  onClick={() =>
+                    setDialogState({ type: "UPDATE", phoneBookEntry })
+                  }
+                >
                   {firstName} {lastName}
-                </div>
+                  <div className="invisible pl-1 text-sm text-gray-400 group-hover:visible">
+                    edit
+                  </div>
+                </button>
                 <a
                   href={`tel:${phoneNumber}`}
                   className="group flex items-center justify-center space-x-1 text-sm font-medium"
@@ -108,16 +195,26 @@ export default function PhoneBookApp() {
                   <span className="text-gray-400 group-hover:text-gray-500">
                     {phoneNumber}
                   </span>
+                  <div className="invisible text-xs font-bold text-green-400 group-hover:visible">
+                    call
+                  </div>
                 </a>
               </h3>
               <button
-                className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500"
-                onClick={() => deletePhoneBookEntry({ phoneBookEntry })}
+                className="group flex items-center justify-center"
+                onClick={() =>
+                  setDialogState({ type: "DELETE", phoneBookEntry })
+                }
               >
-                <TrashIcon
-                  className="h-4 w-4 fill-white "
-                  aria-label={`Delete ${firstName} ${lastName} ${phoneNumber}`}
-                />
+                <div className="invisible pr-1 text-sm font-bold text-red-600 group-hover:visible">
+                  delete
+                </div>
+                <div className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500">
+                  <TrashIcon
+                    className="h-4 w-4 fill-white"
+                    aria-label={`Delete ${firstName} ${lastName} ${phoneNumber}`}
+                  />
+                </div>
               </button>
             </div>
           )
