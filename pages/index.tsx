@@ -51,20 +51,28 @@ export default function PhoneBookApp() {
     phoneBookEntry?: PhoneBookEntry
   }>({ type: "CLOSED" })
 
+  /** We set up our form handlers for React Hook Form, including reset. */
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<PhoneBookEntry>()
 
-  /** This is our master form handler that handles all the action types. */
+  /** We have a helper to reset the dialog state and thus close the dialog. */
+  const closeDialog = () => {
+    setDialogState({ type: "CLOSED", phoneBookEntry: undefined })
+    reset() // Reset the form in the dialog, not just the dialog state.
+  }
+
+  /**
+   * This is our master form handler that handles all the action types.
+   *
+   * The `data` are the updated (or new) fields from the form.
+   * The `dialogState.type` is the action that we want to take.
+   * The `dialogState.phoneBookEntry` is the active contact.
+   */
   const onSubmit = (data: PhoneBookEntry) => {
-    // The `data` are the updated (or new) fields from the form.
-    // The `dialogState.type` is the action that we want to take.
-    // The `dialogState.phoneBookEntry` is the active contact.
-    const resetPhoneBook = () => send({ type: "RESET" })
-    // send({ type: "DELETE", phoneBookEntry })
-    // {() => deletePhoneBookEntry({ phoneBookEntry })}
     if (dialogState.type === "CREATE") {
       // We used React Hook Form to make sure we're getting all of the items:
       const { firstName, lastName, phoneNumber } = data
@@ -75,12 +83,31 @@ export default function PhoneBookApp() {
         phoneBookEntry: { id: maxId + 1, firstName, lastName, phoneNumber },
       })
     }
-    // Close and reset the dialog once we've finished.
-    setDialogState({ type: "CLOSED", phoneBookEntry: undefined })
 
-    console.log(data)
-    console.log(dialogState.type)
-    console.log(dialogState.phoneBookEntry)
+    if (dialogState.type === "UPDATE") {
+      // We should have values from the form OR the existing entry.
+      const firstName =
+        data.firstName || dialogState?.phoneBookEntry?.firstName || ""
+      const lastName =
+        data.lastName || dialogState?.phoneBookEntry?.lastName || ""
+      const phoneNumber =
+        data.phoneNumber || dialogState?.phoneBookEntry?.phoneNumber || ""
+      const id = dialogState.phoneBookEntry?.id || -1
+      send({
+        type: "UPDATE",
+        phoneBookEntry: { id, firstName, lastName, phoneNumber },
+      })
+    }
+
+    if (dialogState.type === "DELETE" && dialogState?.phoneBookEntry)
+      // We should have the entry from the dialog state, but data will be blank.
+      send({ type: "DELETE", phoneBookEntry: dialogState?.phoneBookEntry })
+
+    if (dialogState.type === "RESET") send({ type: "RESET" })
+
+    // Close and reset the dialog once we've finished sending the action.
+    closeDialog()
+    // We handle flushing the state to `localStorage` in the `useEffect` hook.
   }
 
   return (
@@ -91,7 +118,7 @@ export default function PhoneBookApp() {
       </Head>
       <Dialog
         open={dialogState.type !== "CLOSED"}
-        onClose={() => setDialogState({ type: "CLOSED" })}
+        onClose={closeDialog}
         className="relative z-50"
       >
         {/* The backdrop (a fixed sibling to the panel container). */}
@@ -103,7 +130,7 @@ export default function PhoneBookApp() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Dialog.Panel className="relative mx-auto flex min-h-[75vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
               <button
-                onClick={() => setDialogState({ type: "CLOSED" })}
+                onClick={closeDialog}
                 className="group absolute top-2 right-2 h-6 w-6 rounded-lg hover:outline hover:outline-1 hover:outline-gray-600"
               >
                 <XMarkIcon
@@ -141,12 +168,6 @@ export default function PhoneBookApp() {
 
               {dialogState.type !== "RESET" && (
                 <>
-                  <input
-                    type="hidden"
-                    value={dialogState?.phoneBookEntry?.id || -1}
-                    {...register("id")}
-                  />
-
                   <div className="space-y-1 whitespace-nowrap">
                     <label className="flex space-x-1 text-sm text-gray-700">
                       <span>First Name</span>
@@ -197,7 +218,7 @@ export default function PhoneBookApp() {
               <div className="flex w-full items-center justify-end space-x-2">
                 <button
                   className="rounded-md bg-gray-800 px-6 py-2 text-white hover:bg-gray-700 hover:outline hover:outline-1 hover:outline-gray-800"
-                  onClick={() => setDialogState({ type: "CLOSED" })}
+                  onClick={closeDialog}
                 >
                   Cancel
                 </button>
