@@ -3,11 +3,11 @@ import "@/styles/globals.css"
 import { QueryClient, QueryClientProvider } from "react-query"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
+import Layout from "@/pages/app/layout"
 import phoneBookMachine from "@/utils/phoneBookMachine"
 import { useInterpret } from "@xstate/react"
 
 import type { AppProps } from "next/app"
-
 const queryClient = new QueryClient()
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -18,7 +18,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient} contextSharing={true}>
       <GlobalStateContext.Provider value={{ phoneBookService }}>
         {/* We can access React context in the app via Provider */}
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </GlobalStateContext.Provider>
     </QueryClientProvider>
   )
