@@ -1,34 +1,70 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=phonebook-app)](https://phonebook-app.vercel.app/) [![codecov](https://codecov.io/gh/DoctorDerek/phonebook-app/branch/main/graph/badge.svg?token=3gfQ4azgws)](https://codecov.io/gh/DoctorDerek/phonebook-app) [![Build Status](https://app.travis-ci.com/DoctorDerek/phonebook-app.svg?branch=main)](https://app.travis-ci.com/DoctorDerek/phonebook-app)
 
-## Getting Started
+# 🃏 Phonebook App - Next.js 13 + React 18 + Tailwind CSS + XState + CRUD Operations
 
-First, run the development server:
+# 👀 View Production Build at https://phonebook-app.vercel.app/
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+This is a simple phonebook app that supports CRUD operations (create, read, update, delete).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app provides a form where you can enter in first name, last name, and phone number for each phonebook entry.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Below you will find the complete feature set, a discussion section, and my technical journal.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Required Technologies
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+1. ✅ TypeScript
+2. ✅ React
+3. ✅ React Context
+4. ✅ React Query
+5. ❌ Material UI (see [https://github.com/DoctorDerek/calendar-appointments](https://github.com/DoctorDerek/calendar-appointments))
+   - ✅ Tailwind CSS used instead
+6. ❌ Apollo GraphQL (overkill for this project)
+   - ✅ Next.js API Routes used instead
+7. ❌ Database of your choice (overkill for this project)
+   - ✅ `localStorage` used instead
+8. ❌ Docker Compose (overkill for this project)
+   - ✅ Next.js + Vercel used instead
 
-## Learn More
+## Feature List
 
-To learn more about Next.js, take a look at the following resources:
+### ✅ === DONE
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🌠 === TODO
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. 🌠 Used Next.js version 13.0.0 with React 18.2.0 and Tailwind CSS ...
+1. 🌠 Deployed production build of Next.js to Vercel with CI/CD
+1. 🌠 Established engineering best practices:
+   - Prettier, ESLint, Husky (Git Hooks), `tsconfig.json`, TypeScript Import Sorter, XState
+1. 🌠 Crafted unit tests for new code features (TDD / Test Driven Development)
+   - Jest + React Testing Library with React Test Renderer
+1. 🌠 Wrote unit testing (100% test coverage)
+1. 🌠 Developed mobile-first, responsive UX design with Tailwind CSS
+1. 🌠 Implemented Tailwind CSS dark mode for app with animated SVG toggle
 
-## Deploy on Vercel
+## Discussion Section
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. ...
+2. ...
+3. ...
+4. ...
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Test Coverage Report - Jest & React Testing Library
+
+### `yarn run test`
+
+Launches the test runner and generates code coverage report.
+
+### `yarn test:watch`
+
+Launches the test runner in the interactive watch mode.
+
+## Technical Journal
+
+- `0.1.0` New app: create next-app w/TypeScript + Yarn 3
+- `0.2.0` Added all best practices & basic dependencies
+- `0.3.0` ...
+- `0.4.0` ...
+- `0.5.0` ...
+- `0.6.0` ...
+- `0.7.0` ...
+- `0.8.0` ...
