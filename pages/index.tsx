@@ -86,10 +86,18 @@ export default function PhoneBookApp() {
                 <div className="text-2xl font-semibold">
                   {firstName} {lastName}
                 </div>
-                <div className="flex items-center justify-center space-x-1 text-sm font-medium text-gray-400">
-                  <PhoneIcon className="h-2.5 w-2.5 fill-gray-400" />
-                  <span>{phoneNumber}</span>
-                </div>
+                <a
+                  href={`tel:${phoneNumber}`}
+                  className="group flex items-center justify-center space-x-1 text-sm font-medium"
+                >
+                  <PhoneIcon
+                    className="h-2.5 w-2.5 fill-gray-400 group-hover:fill-green-400"
+                    aria-label="Call"
+                  />
+                  <span className="text-gray-400 group-hover:text-gray-500">
+                    {phoneNumber}
+                  </span>
+                </a>
               </h3>
               <div className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500">
                 <TrashIcon
