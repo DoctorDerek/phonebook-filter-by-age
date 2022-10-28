@@ -31,8 +31,13 @@ export default function PhoneBookApp() {
 
   const [filterText, setFilterText] = useState("")
 
-  const filteredPhoneBookEntries = phoneBookEntries.filter(({ lastName }) =>
-    new RegExp(filterText, "i").exec(lastName)
+  /**
+   * We allow the user to filter by last name. Note that the empty
+   * string "" will always return true for the regular expression.
+   */
+  const filteredPhoneBookEntries = phoneBookEntries.filter(
+    ({ lastName }) => new RegExp(filterText, "i").exec(lastName)
+    // The "i" flag means we use a case-insensitive search.
   )
 
   return (
