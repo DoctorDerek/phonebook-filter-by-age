@@ -2,6 +2,7 @@ import Head from "next/head"
 import { useContext, useEffect, useState } from "react"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
+import { PhoneBookEntry } from "@/utils/phoneBookMachine"
 import {
   DevicePhoneMobileIcon,
   MagnifyingGlassIcon,
@@ -39,6 +40,12 @@ export default function PhoneBookApp() {
     ({ lastName }) => new RegExp(filterText, "i").exec(lastName)
     // The "i" flag means we use a case-insensitive search.
   )
+
+  const deletePhoneBookEntry = ({
+    phoneBookEntry,
+  }: {
+    phoneBookEntry: PhoneBookEntry
+  }) => send({ type: "DELETE", phoneBookEntry })
 
   return (
     <>
@@ -99,12 +106,15 @@ export default function PhoneBookApp() {
                   </span>
                 </a>
               </h3>
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500">
+              <button
+                className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500"
+                onClick={() => deletePhoneBookEntry({ phoneBookEntry })}
+              >
                 <TrashIcon
                   className="h-4 w-4 fill-white "
                   aria-label={`Delete ${firstName} ${lastName} ${phoneNumber}`}
                 />
-              </div>
+              </button>
             </div>
           )
         })}
