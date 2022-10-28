@@ -31,9 +31,9 @@ Below you will find the complete feature set, a discussion section, and my techn
 
 ### 🌠 === TODO
 
-1. 🌠 Used Next.js version 13.0.0 with React 18.2.0 and Tailwind CSS ...
-1. 🌠 Deployed production build of Next.js to Vercel with CI/CD
-1. 🌠 Established engineering best practices:
+1. ✅ Used Next.js version 13.0.0 with React 18.2.0 and Tailwind CSS 3.2.1
+1. ✅ Deployed production build of Next.js to Vercel with CI/CD
+1. ✅ Established engineering best practices:
    - Prettier, ESLint, Husky (Git Hooks), `tsconfig.json`, TypeScript Import Sorter, XState
 1. 🌠 Crafted unit tests for new code features (TDD / Test Driven Development)
    - Jest + React Testing Library with React Test Renderer
