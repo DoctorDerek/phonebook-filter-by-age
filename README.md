@@ -1,4 +1,4 @@
-[![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=phonebook-app)](https://phonebook-app.vercel.app/) [![codecov](https://codecov.io/gh/DoctorDerek/phonebook-app/branch/main/graph/badge.svg?token=3gfQ4azgws)](https://codecov.io/gh/DoctorDerek/phonebook-app) [![Build Status](https://app.travis-ci.com/DoctorDerek/phonebook-app.svg?branch=main)](https://app.travis-ci.com/DoctorDerek/phonebook-app)
+[![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=phonebook-app)](https://phonebook-app.vercel.app/) [![Build Status](https://app.travis-ci.com/DoctorDerek/phonebook-app.svg?branch=main)](https://app.travis-ci.com/DoctorDerek/phonebook-app)
 
 # 🃏 Phonebook App - Next.js 13 + React 18 + Tailwind CSS + XState + CRUD Operations
 
@@ -15,11 +15,12 @@ Below you will find the complete feature set, a discussion section, and my techn
 1. ✅ TypeScript
 2. ✅ React
 3. ✅ React Context
-4. ✅ React Query
+4. ❌ React Query (overkill for this project)
+   - XState (React) used instead
 5. ❌ Material UI (see [https://github.com/DoctorDerek/calendar-appointments](https://github.com/DoctorDerek/calendar-appointments))
    - ✅ Tailwind CSS used instead
 6. ❌ Apollo GraphQL (overkill for this project)
-   - ✅ Next.js API Routes used instead
+   - ✅ XState (TypeScript) used instead
 7. ❌ Database of your choice (overkill for this project)
    - ✅ `localStorage` used instead
 8. ❌ Docker Compose (overkill for this project)
@@ -35,11 +36,7 @@ Below you will find the complete feature set, a discussion section, and my techn
 1. ✅ Deployed production build of Next.js to Vercel with CI/CD
 1. ✅ Established engineering best practices:
    - Prettier, ESLint, Husky (Git Hooks), `tsconfig.json`, TypeScript Import Sorter, XState
-1. 🌠 Crafted unit tests for new code features (TDD / Test Driven Development)
-   - Jest + React Testing Library with React Test Renderer
-1. 🌠 Wrote unit testing (100% test coverage)
-1. 🌠 Developed mobile-first, responsive UX design with Tailwind CSS
-1. 🌠 Implemented Tailwind CSS dark mode for app with animated SVG toggle
+1. ✅ Implemented XState finite state machine to handle application state
 
 ## Discussion Section
 
@@ -48,21 +45,11 @@ Below you will find the complete feature set, a discussion section, and my techn
 3. ...
 4. ...
 
-## Test Coverage Report - Jest & React Testing Library
-
-### `yarn run test`
-
-Launches the test runner and generates code coverage report.
-
-### `yarn test:watch`
-
-Launches the test runner in the interactive watch mode.
-
 ## Technical Journal
 
 - `0.1.1` New app: create next-app w/TypeScript + Yarn 3
 - `0.2.0` Added all best practices & basic dependencies
-- `0.3.0` ...
+- `0.3.0` Create XState finite state machine for app
 - `0.4.0` ...
 - `0.5.0` ...
 - `0.6.0` ...
