@@ -1,5 +1,5 @@
 import Head from "next/head"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
 import {
@@ -28,6 +28,12 @@ export default function PhoneBookApp() {
   const { phoneBookEntries } = context || {}
 
   const resetPhoneBook = () => send({ type: "RESET" })
+
+  const [filterText, setFilterText] = useState("")
+
+  const filteredPhoneBookEntries = phoneBookEntries.filter(({ lastName }) =>
+    new RegExp(filterText, "i").exec(lastName)
+  )
 
   return (
     <>
@@ -58,11 +64,12 @@ export default function PhoneBookApp() {
           type="text"
           placeholder="Search for contact by last name..."
           className="border-sm w-full rounded-md border border-gray-300 placeholder:pl-6 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
+          onChange={(event) => setFilterText(event?.target?.value)}
         />
         <MagnifyingGlassIcon className="absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2" />
       </div>
       <div className="divide-y-gray-300 relative w-full divide-y-2 border border-solid border-gray-300">
-        {phoneBookEntries.map((phoneBookEntry) => {
+        {filteredPhoneBookEntries.map((phoneBookEntry) => {
           const { id, firstName, lastName, phoneNumber } = phoneBookEntry
           const key = `${id}${firstName}${lastName}${phoneNumber}`
           return (
