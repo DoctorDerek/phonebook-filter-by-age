@@ -34,8 +34,6 @@ export default function PhoneBookApp() {
   const { context } = state || {}
   const { phoneBookEntries } = context || {}
 
-  const resetPhoneBook = () => send({ type: "RESET" })
-
   const [filterText, setFilterText] = useState("")
 
   /**
@@ -46,13 +44,6 @@ export default function PhoneBookApp() {
     ({ lastName }) => new RegExp(filterText, "i").exec(lastName)
     // The "i" flag means we use a case-insensitive search.
   )
-
-  const deletePhoneBookEntry = ({
-    phoneBookEntry,
-  }: {
-    phoneBookEntry: PhoneBookEntry
-  }) => send({ type: "DELETE", phoneBookEntry })
-  // {() => deletePhoneBookEntry({ phoneBookEntry })}
 
   /** We model the dialogState off the XState action patterns. */
   const [dialogState, setDialogState] = useState<{
@@ -66,7 +57,27 @@ export default function PhoneBookApp() {
     formState: { errors },
   } = useForm<PhoneBookEntry>()
 
+  /** This is our master form handler that handles all the action types. */
   const onSubmit = (data: PhoneBookEntry) => {
+    // The `data` are the updated (or new) fields from the form.
+    // The `dialogState.type` is the action that we want to take.
+    // The `dialogState.phoneBookEntry` is the active contact.
+    const resetPhoneBook = () => send({ type: "RESET" })
+    // send({ type: "DELETE", phoneBookEntry })
+    // {() => deletePhoneBookEntry({ phoneBookEntry })}
+    if (dialogState.type === "CREATE") {
+      // We used React Hook Form to make sure we're getting all of the items:
+      const { firstName, lastName, phoneNumber } = data
+      // We need the max id from the current contacts to avoid hash collisions.
+      const maxId = Math.max(...phoneBookEntries.map(({ id }) => id))
+      send({
+        type: "CREATE",
+        phoneBookEntry: { id: maxId + 1, firstName, lastName, phoneNumber },
+      })
+    }
+    // Close and reset the dialog once we've finished.
+    setDialogState({ type: "CLOSED", phoneBookEntry: undefined })
+
     console.log(data)
     console.log(dialogState.type)
     console.log(dialogState.phoneBookEntry)
