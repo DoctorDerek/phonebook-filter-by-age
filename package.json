@@ -6,12 +6,21 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write .",
+    "test": "jest test --collectCoverage",
+    "test:watch": "jest test --watch",
+    "test:watchAll": "jest test --watchAll",
+    "prepare": "husky install"
   },
   "dependencies": {
+    "@xstate/react": "^3.0.1",
     "next": "13.0.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.38.0",
+    "react-query": "^3.39.2",
+    "xstate": "^4.33.6"
   },
   "devDependencies": {
     "@types/node": "18.11.7",
