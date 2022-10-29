@@ -24,12 +24,12 @@ export default function PhoneBookApp() {
 
   useEffect(() => {
     // Make sure that the window object is available before we start to render.
-    if (!router.isReady) return // void
+    if (!router?.isReady) return // void
     // When we first load or are idle, load the phone book from localStorage:
     if (state.matches("idle")) send({ type: "READ" })
     // When we're running, we need to write the phone book to localStorage:
     if (state.matches("running")) send({ type: "FINISH" })
-  }, [state, send, router.isReady])
+  }, [state, send, router?.isReady])
 
   /** Unpack our current XState machine context (i.e. the phone book entries) */
   const { context } = state || {}
@@ -42,7 +42,7 @@ export default function PhoneBookApp() {
    * We allow the user to filter by last name. Note that the empty
    * string "" will always return true for the regular expression.
    */
-  const filteredPhoneBookEntries = phoneBookEntries.filter(
+  const filteredPhoneBookEntries = phoneBookEntries?.filter(
     ({ lastName }) => new RegExp(filterText, "i").exec(lastName)
     // The "i" flag means we use a case-insensitive search.
   )
@@ -79,7 +79,7 @@ export default function PhoneBookApp() {
       // We used React Hook Form to make sure we're getting all of the items:
       const { firstName, lastName, phoneNumber } = data
       // We need the max id from the current contacts to avoid hash collisions.
-      const maxId = Math.max(...phoneBookEntries.map(({ id }) => id))
+      const maxId = Math.max(...phoneBookEntries?.map(({ id }) => id))
       send({
         type: "CREATE",
         phoneBookEntry: { id: maxId + 1, firstName, lastName, phoneNumber },
@@ -282,7 +282,7 @@ export default function PhoneBookApp() {
         <MagnifyingGlassIcon className="absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2" />
       </div>
       <div className="divide-y-gray-300 relative w-full divide-y-2 border border-solid border-gray-300">
-        {filteredPhoneBookEntries.map((phoneBookEntry) => {
+        {filteredPhoneBookEntries?.map((phoneBookEntry) => {
           const { id, firstName, lastName, phoneNumber } = phoneBookEntry
           const key = `${id}${firstName}${lastName}${phoneNumber}`
           return (
