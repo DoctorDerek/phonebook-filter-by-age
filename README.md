@@ -55,3 +55,4 @@ Below you will find the complete feature set, a discussion section, and my techn
 - `0.6.0` Build out the search filter and DELETE action
 - `0.7.0` Make the dialog (modal) to handle CRUD actions
 - `0.8.0` Use React Hook Form to handle dialog actions
+- `0.9.0` Enable CREATE, UPDATE, DELETE, RESET actions
