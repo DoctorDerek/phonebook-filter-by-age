@@ -54,7 +54,7 @@ Below you will find the complete feature set, a discussion section, and my techn
 6. The app is difficult to test with React Testing Library without refactoring, because everything is closely coupled with XState.
 7. Docker is unnecessary for this project, and I find it almost always reduces the performance of Next.js vs. deploying at Vercel.
 8. Material UI has some benefits, but it can be hard to customize unless the designer uses it, while Tailwind is very easy to use.
-   - See [https://github.com/DoctorDerek/calendar-appointments](https://github.com/DoctorDerek/calendar-appointments)) for an example from my portfolio using Material UI in depth.
+   - See [https://github.com/DoctorDerek/calendar-appointments](https://github.com/DoctorDerek/calendar-appointments) for an example from my portfolio using Material UI in depth.
 9. Like with many projects, the design document left out certain features: RESET, dialogs (modals), hover styles, and animations.
 10. Because of the combination of `localStorage` with XState, we have auto-save functionality that supports refreshing the page.
 
