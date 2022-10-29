@@ -37,6 +37,11 @@ Below you will find the complete feature set, a discussion section, and my techn
 1. ✅ Established engineering best practices:
    - Prettier, ESLint, Husky (Git Hooks), `tsconfig.json`, TypeScript Import Sorter, XState
 1. ✅ Implemented XState finite state machine to handle application state
+1. ✅ Matched design document with READ and search by last name functionality
+1. ✅ Built accessible dialog (modal) using Headless UI and Tailwind CSS
+1. ✅ Added various tooltips that appear on hover to improve user experience
+1. ✅ Enabled CREATE, UPDATE, DELETE, and RESET actions using React Hook Form
+1. ✅ Sorted data by last name for a consistent user experience in the app
 
 ## Discussion Section
 
