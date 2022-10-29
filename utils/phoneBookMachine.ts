@@ -40,7 +40,8 @@ const INITIAL_PHONE_BOOK_ENTRIES = [
     lastName: "Gates",
     phoneNumber: "343-654-9688",
   },
-]
+].sort((a, b) => a.lastName.localeCompare(b.lastName))
+// We pre-sort the initial phone book entries before we use them.
 
 const phoneBookMachine = createMachine(
   {
@@ -126,12 +127,18 @@ const phoneBookMachine = createMachine(
           const localStorageString = localStorage.getItem(LOCALSTORAGE_KEY_AUTH)
           if (localStorageString)
             try {
-              const localStorageObject = JSON.parse(localStorageString)
+              const localStorageObject = JSON.parse(
+                localStorageString
+              ) as PhoneBookEntry[]
+              // We sort the phone book entries whenever we load them from disk.
+              localStorageObject.sort((a, b) =>
+                String(a?.lastName).localeCompare(String(b?.lastName))
+              )
               return localStorageObject as PhoneBookEntry[]
             } catch (error: any) {
               console.log(error) // Probably a JSON.parse error 😁
             }
-          return INITIAL_PHONE_BOOK_ENTRIES as PhoneBookEntry[]
+          return INITIAL_PHONE_BOOK_ENTRIES
         },
       }),
       createPhoneBookEntry: assign({
