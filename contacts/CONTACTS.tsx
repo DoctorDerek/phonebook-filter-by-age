@@ -1,18 +1,29 @@
+/** All fields are optional for a Contact, except for the name and unique ID. */
 export type Contact = {
-  photo: string
+  /** Uniqueness of the ID is enforced by the XState finite state machine. */
+  id: number
+  /** We don't separate first and last names, but we do require a name. */
   name: string
-  birthday: Date
-  streetAddress: string
-  city: string
-  state: string
-  zipCode: string
-  phoneNumber: string
-  email: string
+  /** Birthdays are initialized using the syntax `new Date("1990-01-01")`. */
+  birthday?: Date
+  /** The contact's age is calculated from their birthday automatically. */
   age?: number
+  /** The contact's photo, a filename in the `@/public/contacts/` directory. */
+  photo?: string
+  streetAddress?: string
+  city?: string
+  state?: string
+  zipCode?: string
+  phoneNumber?: string
+  email?: string
 }
 
+/**
+ * Our mock data is used to initialize the XState finite state machine and
+ * contains all fields for each contact, except age, which will be calculated. */
 const CONTACTS: Contact[] = [
   {
+    id: 1,
     photo: "Unsplash Jessica Christian.png",
     name: "Jessica Christian",
     birthday: new Date("2022-05-30"), // Baby
@@ -24,6 +35,7 @@ const CONTACTS: Contact[] = [
     email: "Jessica.Christian@fakeEmail.com",
   },
   {
+    id: 2,
     photo: "Unsplash Lia Bekyan.png",
     name: "Lia Bekyan",
     birthday: new Date("2010-09-24"), // Child
@@ -35,6 +47,7 @@ const CONTACTS: Contact[] = [
     email: "Lia.Bekyan@fakeEmail.com",
   },
   {
+    id: 3,
     photo: "Unsplash Remy Loz.png",
     name: "Remy Loz",
     birthday: new Date("2000-07-04"), // Young Adult
@@ -46,6 +59,7 @@ const CONTACTS: Contact[] = [
     email: "Remy.Loz@fakeEmail.com",
   },
   {
+    id: 4,
     photo: "Unsplash Ryan Hoffman.png",
     name: "Ryan Hoffman",
     birthday: new Date("1990-04-06"), // Middle Aged Adult
@@ -57,6 +71,7 @@ const CONTACTS: Contact[] = [
     email: "Ryan.Hoffman@fakeEmail.com",
   },
   {
+    id: 5,
     photo: "Unsplash Tadas Petrokas.png",
     name: "Tadas Petrokas",
     birthday: new Date("1956-08-07"), // Senior
@@ -68,6 +83,7 @@ const CONTACTS: Contact[] = [
     email: "Tadas.Petrokas@fakeEmail.com",
   },
   {
+    id: 6,
     photo: "Unsplash Yohan Marion.png",
     name: "Yohan Marion",
     birthday: new Date("1890-11-24"), // Senior
@@ -80,7 +96,8 @@ const CONTACTS: Contact[] = [
   },
 ]
 
-const calculateAge = ({ birthday }: { birthday: Date }) => {
+const calculateAge = ({ birthday }: { birthday?: Date }) => {
+  if (!birthday) return undefined // We can't calculate age without a birthday.
   const today = new Date()
   const age = today.getFullYear() - birthday.getFullYear()
   // This may not be their age, if their birthday hasn't yet occurred this year.
@@ -92,6 +109,7 @@ const calculateAge = ({ birthday }: { birthday: Date }) => {
   return age
 }
 
+/** We flesh out the mock data by calculating the age for each contact. */
 const CONTACTS_WITH_AGES: Contact[] = CONTACTS.map((contact) => {
   const { birthday } = contact
   const age = calculateAge({ birthday })
@@ -99,7 +117,7 @@ const CONTACTS_WITH_AGES: Contact[] = CONTACTS.map((contact) => {
 })
 
 // Let's pre-sort the contacts before we use them, so we'll have a default sort.
-const sortByLastName = (a: Contact, b: Contact) => {
+export const sortByLastName = (a: Contact, b: Contact) => {
   // We're going to assume that the last name is the last word in the name, but
   // that may be incorrect, especially with many Asian or Hispanic names.
   const aName = a?.name || ""
