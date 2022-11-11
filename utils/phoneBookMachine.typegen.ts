@@ -13,11 +13,11 @@ export interface Typegen0 {
     delays: never
   }
   eventsCausingActions: {
-    createPhoneBookEntry: "CREATE"
-    deletePhoneBookEntry: "DELETE"
+    createContact: "CREATE"
+    deleteContact: "DELETE"
     readPhoneBookFromLocalStorage: "READ"
     resetPhoneBookEntries: "RESET"
-    updatePhoneBookEntry: "UPDATE"
+    updateContact: "UPDATE"
     writePhoneBookToLocalStorage: "FINISH"
   }
   eventsCausingServices: {}

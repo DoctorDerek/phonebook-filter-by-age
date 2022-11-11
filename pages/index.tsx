@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
-import { PhoneBookEntry } from "@/utils/phoneBookMachine"
+import { Contact } from "@/contacts/CONTACTS"
 import { Dialog } from "@headlessui/react"
 import {
   DevicePhoneMobileIcon,
@@ -33,24 +33,24 @@ export default function PhoneBookApp() {
 
   /** Unpack our current XState machine context (i.e. the phone book entries) */
   const { context } = state || {}
-  const { phoneBookEntries } = context || {}
+  const { contacts } = context || {}
 
-  /** Set up a state handler for the "search by last name" filter logic. */
+  /** Set up a state handler for the "search by name" filter logic. */
   const [filterText, setFilterText] = useState("")
 
   /**
-   * We allow the user to filter by last name. Note that the empty
-   * string "" will always return true for the regular expression.
+   * We allow the user to filter by name. Note that the empty string "" will
+   * always return true for the regular expression, which is the initial state.
    */
-  const filteredPhoneBookEntries = phoneBookEntries?.filter(
-    ({ lastName }) => new RegExp(filterText, "i").exec(lastName)
+  const filteredPhoneBookEntries = contacts?.filter(
+    ({ name }) => new RegExp(filterText, "i").exec(name)
     // The "i" flag means we use a case-insensitive search.
   )
 
   /** We model the dialogState off the XState action patterns. */
   const [dialogState, setDialogState] = useState<{
     type: "CLOSED" | "CREATE" | "UPDATE" | "DELETE" | "RESET"
-    phoneBookEntry?: PhoneBookEntry
+    contact?: Contact
   }>({ type: "CLOSED" })
 
   /** We set up our form handlers for React Hook Form, including reset. */
@@ -59,11 +59,11 @@ export default function PhoneBookApp() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<PhoneBookEntry>()
+  } = useForm<Contact>()
 
   /** We have a helper to reset the dialog state and thus close the dialog. */
   const closeDialog = () => {
-    setDialogState({ type: "CLOSED", phoneBookEntry: undefined })
+    setDialogState({ type: "CLOSED", contact: undefined })
     reset() // Reset the form in the dialog, not just the dialog state.
   }
 
@@ -72,38 +72,36 @@ export default function PhoneBookApp() {
    *
    * The `data` are the updated (or new) fields from the form.
    * The `dialogState.type` is the action that we want to take.
-   * The `dialogState.phoneBookEntry` is the active contact.
+   * The `dialogState.contact` is the active contact.
    */
-  const onSubmit = (data: PhoneBookEntry) => {
+  const onSubmit = (data: Contact) => {
     if (dialogState.type === "CREATE") {
       // We used React Hook Form to make sure we're getting all of the items:
-      const { firstName, lastName, phoneNumber } = data
+      const { name, phoneNumber } = data
       // We need the max id from the current contacts to avoid hash collisions.
-      const maxId = Math.max(...phoneBookEntries?.map(({ id }) => id))
+      const maxId = Math.max(...contacts?.map(({ id }) => id))
       send({
         type: "CREATE",
-        phoneBookEntry: { id: maxId + 1, firstName, lastName, phoneNumber },
+        contact: { id: maxId + 1, name, phoneNumber },
       })
     }
 
     if (dialogState.type === "UPDATE") {
       // We should have values from the form OR the existing entry.
-      const firstName =
-        data.firstName || dialogState?.phoneBookEntry?.firstName || ""
-      const lastName =
-        data.lastName || dialogState?.phoneBookEntry?.lastName || ""
+      const name = data.name || dialogState?.contact?.name || ""
       const phoneNumber =
-        data.phoneNumber || dialogState?.phoneBookEntry?.phoneNumber || ""
-      const id = dialogState.phoneBookEntry?.id || -1
+        data.phoneNumber || dialogState?.contact?.phoneNumber || ""
+      /** The id should come from the existing entry, but we fall back to -1. */
+      const id = dialogState.contact?.id || -1
       send({
         type: "UPDATE",
-        phoneBookEntry: { id, firstName, lastName, phoneNumber },
+        contact: { id, name, phoneNumber },
       })
     }
 
-    if (dialogState.type === "DELETE" && dialogState?.phoneBookEntry)
+    if (dialogState.type === "DELETE" && dialogState?.contact)
       // We should have the entry from the dialog state, but data will be blank.
-      send({ type: "DELETE", phoneBookEntry: dialogState?.phoneBookEntry })
+      send({ type: "DELETE", contact: dialogState?.contact })
 
     if (dialogState.type === "RESET") send({ type: "RESET" })
 
@@ -115,7 +113,7 @@ export default function PhoneBookApp() {
   return (
     <>
       <Head>
-        <title>Phonebook App by @DoctorDerek</title>
+        <title>Phonebook &ldquo;Filter by Age&rdquo; App by @DoctorDerek</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Dialog
@@ -172,23 +170,11 @@ export default function PhoneBookApp() {
                 <>
                   <div className="space-y-1 whitespace-nowrap">
                     <label className="flex space-x-1 text-sm text-gray-700">
-                      <span>First Name</span>
+                      <span>Name</span>
                       <input
                         type="text"
-                        placeholder={dialogState.phoneBookEntry?.firstName}
-                        {...register("firstName", {
-                          required: dialogState.type === "CREATE",
-                        })}
-                        className="w-full rounded-md border border-gray-300 pl-1 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
-                        disabled={dialogState.type === "DELETE"}
-                      />
-                    </label>
-                    <label className="flex space-x-1 text-sm text-gray-700">
-                      <span>Last Name</span>
-                      <input
-                        type="text"
-                        placeholder={dialogState.phoneBookEntry?.lastName}
-                        {...register("lastName", {
+                        placeholder={dialogState.contact?.name}
+                        {...register("name", {
                           required: dialogState.type === "CREATE",
                         })}
                         className="w-full rounded-md border border-gray-300  pl-1 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
@@ -199,7 +185,7 @@ export default function PhoneBookApp() {
                       <span>Phone Number</span>
                       <input
                         type="tel"
-                        placeholder={dialogState.phoneBookEntry?.phoneNumber}
+                        placeholder={dialogState.contact?.phoneNumber}
                         {...register("phoneNumber", {
                           required: dialogState.type === "CREATE",
                         })}
@@ -215,9 +201,7 @@ export default function PhoneBookApp() {
                       />
                     </label>
                     {dialogState.type === "CREATE" &&
-                      (errors.firstName ||
-                        errors.lastName ||
-                        errors.phoneNumber) && (
+                      (errors.name || errors.phoneNumber) && (
                         <div>All fields are required.</div>
                       )}
                   </div>
@@ -275,16 +259,17 @@ export default function PhoneBookApp() {
       <div className="relative w-full">
         <input
           type="text"
-          placeholder="Search for contact by last name..."
+          placeholder="Search for contact by name..."
           className="w-full rounded-md border border-gray-300 pl-6 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
           onChange={(event) => setFilterText(event?.target?.value)}
         />
         <MagnifyingGlassIcon className="absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2" />
       </div>
       <div className="divide-y-gray-300 relative w-full divide-y-2 border border-solid border-gray-300">
-        {filteredPhoneBookEntries?.map((phoneBookEntry) => {
-          const { id, firstName, lastName, phoneNumber } = phoneBookEntry
-          const key = `${id}${firstName}${lastName}${phoneNumber}`
+        {filteredPhoneBookEntries?.map((contact) => {
+          const { id, name, phoneNumber } = contact
+          // ID should be unique, but there's no penalty for adding to the key.
+          const key = `${id}${name}${phoneNumber}`
           return (
             <div
               className="flex w-full items-center justify-between p-3"
@@ -293,11 +278,9 @@ export default function PhoneBookApp() {
               <h3 className="flex flex-col items-start justify-center">
                 <button
                   className="group flex items-center justify-center text-2xl font-semibold"
-                  onClick={() =>
-                    setDialogState({ type: "UPDATE", phoneBookEntry })
-                  }
+                  onClick={() => setDialogState({ type: "UPDATE", contact })}
                 >
-                  {firstName} {lastName}
+                  {name}
                   <div className="invisible pl-1 text-sm text-gray-400 group-hover:visible">
                     edit
                   </div>
@@ -320,9 +303,7 @@ export default function PhoneBookApp() {
               </h3>
               <button
                 className="group flex items-center justify-center"
-                onClick={() =>
-                  setDialogState({ type: "DELETE", phoneBookEntry })
-                }
+                onClick={() => setDialogState({ type: "DELETE", contact })}
               >
                 <div className="invisible pr-1 text-sm font-bold text-red-600 group-hover:visible">
                   delete
@@ -330,7 +311,7 @@ export default function PhoneBookApp() {
                 <div className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500">
                   <TrashIcon
                     className="h-4 w-4 fill-white"
-                    aria-label={`Delete ${firstName} ${lastName} ${phoneNumber}`}
+                    aria-label={`Delete ${name} ${phoneNumber}`}
                   />
                 </div>
               </button>

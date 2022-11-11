@@ -1,47 +1,11 @@
 import { assign, createMachine } from "xstate"
 
-export const LOCALSTORAGE_KEY_AUTH = "phonebook-context-key"
+import CONTACTS_WITH_AGES, {
+  Contact,
+  sortByLastName,
+} from "@/contacts/CONTACTS"
 
-export type PhoneBookEntry = {
-  id: number
-  firstName: string
-  lastName: string
-  phoneNumber: string
-}
-
-const INITIAL_PHONE_BOOK_ENTRIES = [
-  {
-    id: 1,
-    firstName: "Eric",
-    lastName: "Elliot",
-    phoneNumber: "222-555-6575",
-  },
-  {
-    id: 2,
-    firstName: "Steve",
-    lastName: "Jobs",
-    phoneNumber: "220-454-6754",
-  },
-  {
-    id: 3,
-    firstName: "Fred",
-    lastName: "Allen",
-    phoneNumber: "210-657-9886",
-  },
-  {
-    id: 4,
-    firstName: "Steve",
-    lastName: "Wozniak",
-    phoneNumber: "343-675-8786",
-  },
-  {
-    id: 5,
-    firstName: "Bill",
-    lastName: "Gates",
-    phoneNumber: "343-654-9688",
-  },
-].sort((a, b) => a.lastName.localeCompare(b.lastName))
-// We pre-sort the initial phone book entries before we use them.
+export const LOCALSTORAGE_KEY_AUTH = "phonebook-filter-by-age"
 
 const phoneBookMachine = createMachine(
   {
@@ -52,15 +16,15 @@ const phoneBookMachine = createMachine(
     tsTypes: {} as import("./phoneBookMachine.typegen").Typegen0,
     schema: {
       // The context (extended state) of the finite state machine:
-      context: {} as { phoneBookEntries: PhoneBookEntry[] },
+      context: {} as { contacts: Contact[] },
       // The events handled by this fininte state machine:
       events: {} as  // CRUD operations + FINISH + RESET
-        | { type: "CREATE"; phoneBookEntry: PhoneBookEntry }
+        | { type: "CREATE"; contact: Contact }
         | {
             type: "READ"
           }
-        | { type: "UPDATE"; phoneBookEntry: PhoneBookEntry }
-        | { type: "DELETE"; phoneBookEntry: PhoneBookEntry }
+        | { type: "UPDATE"; contact: Contact }
+        | { type: "DELETE"; contact: Contact }
         | {
             type: "FINISH"
           }
@@ -72,7 +36,7 @@ const phoneBookMachine = createMachine(
     initial: "idle",
     // The initial context (initial state) of the state machine:
     context: {
-      phoneBookEntries: INITIAL_PHONE_BOOK_ENTRIES as PhoneBookEntry[],
+      contacts: CONTACTS_WITH_AGES as Contact[],
     },
     states: {
       idle: {
@@ -89,17 +53,17 @@ const phoneBookMachine = createMachine(
           CREATE: {
             target: "running",
             // Run these actions on state transition via trigger CREATE:
-            actions: ["createPhoneBookEntry"],
+            actions: ["createContact"],
           },
           UPDATE: {
             target: "running",
             // Run these actions on state transition via trigger UPDATE:
-            actions: ["updatePhoneBookEntry"],
+            actions: ["updateContact"],
           },
           DELETE: {
             target: "running",
             // Run these actions on state transition via trigger DELETE:
-            actions: ["deletePhoneBookEntry"],
+            actions: ["deleteContact"],
           },
           RESET: {
             target: "running",
@@ -123,49 +87,47 @@ const phoneBookMachine = createMachine(
     actions: {
       readPhoneBookFromLocalStorage: assign({
         // We always have to include context and event, even when unused:
-        phoneBookEntries: (context, event) => {
+        contacts: (context, event) => {
           const localStorageString = localStorage.getItem(LOCALSTORAGE_KEY_AUTH)
           if (localStorageString)
             try {
               const localStorageObject = JSON.parse(
                 localStorageString
-              ) as PhoneBookEntry[]
+              ) as Contact[]
               // We sort the phone book entries whenever we load them from disk.
-              localStorageObject.sort((a, b) =>
-                String(a?.lastName).localeCompare(String(b?.lastName))
-              )
-              return localStorageObject as PhoneBookEntry[]
+              localStorageObject.sort(sortByLastName)
+              return localStorageObject as Contact[]
             } catch (error: any) {
               console.log(error) // Probably a JSON.parse error 😁
             }
-          return INITIAL_PHONE_BOOK_ENTRIES
+          return CONTACTS_WITH_AGES
         },
       }),
-      createPhoneBookEntry: assign({
-        phoneBookEntries: (context, event) => {
-          const currentPhoneBookEntries = context.phoneBookEntries
-          const newPhoneBookEntry = event.phoneBookEntry
-          currentPhoneBookEntries.push(newPhoneBookEntry)
+      createContact: assign({
+        contacts: (context, event) => {
+          const currentPhoneBookEntries = context.contacts
+          const newContact = event.contact
+          currentPhoneBookEntries.push(newContact)
           return currentPhoneBookEntries
         },
       }),
-      updatePhoneBookEntry: assign({
-        phoneBookEntries: (context, event) => {
-          const currentPhoneBookEntries = context.phoneBookEntries
-          const updatedPhoneBookEntry = event.phoneBookEntry
+      updateContact: assign({
+        contacts: (context, event) => {
+          const currentPhoneBookEntries = context.contacts
+          const updatedContact = event.contact
           const filteredPhoneBookEntries = currentPhoneBookEntries.filter(
-            ({ id }) => id !== updatedPhoneBookEntry.id
+            ({ id }) => id !== updatedContact.id
           )
-          filteredPhoneBookEntries.push(updatedPhoneBookEntry)
+          filteredPhoneBookEntries.push(updatedContact)
           return filteredPhoneBookEntries
         },
       }),
-      deletePhoneBookEntry: assign({
-        phoneBookEntries: (context, event) => {
-          const currentPhoneBookEntries = context.phoneBookEntries
-          const deletedPhoneBookEntry = event.phoneBookEntry
+      deleteContact: assign({
+        contacts: (context, event) => {
+          const currentPhoneBookEntries = context.contacts
+          const deletedContact = event.contact
           const filteredPhoneBookEntries = currentPhoneBookEntries.filter(
-            ({ id }) => id !== deletedPhoneBookEntry.id
+            ({ id }) => id !== deletedContact.id
           )
           return filteredPhoneBookEntries
         },
@@ -174,14 +136,14 @@ const phoneBookMachine = createMachine(
         try {
           localStorage.setItem(
             LOCALSTORAGE_KEY_AUTH,
-            JSON.stringify(context.phoneBookEntries)
+            JSON.stringify(context.contacts)
           )
         } catch (error: any) {
           console.log(error) // Something went horribly, horribly wrong. 🤯
         }
       },
       resetPhoneBookEntries: assign({
-        phoneBookEntries: (context, event) => INITIAL_PHONE_BOOK_ENTRIES,
+        contacts: (context, event) => CONTACTS_WITH_AGES,
       }),
     },
   }
