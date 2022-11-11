@@ -1,4 +1,5 @@
 import Head from "next/head"
+import Image from "next/image"
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -267,40 +268,50 @@ export default function PhoneBookApp() {
       </div>
       <div className="divide-y-gray-300 relative w-full divide-y-2 border border-solid border-gray-300">
         {filteredPhoneBookEntries?.map((contact) => {
-          const { id, name, phoneNumber } = contact
+          const { id, name, phoneNumber, photo } = contact
           // ID should be unique, but there's no penalty for adding to the key.
-          const key = `${id}${name}${phoneNumber}`
+          const key = `${id}${name}${phoneNumber}${photo}`
           return (
             <div
               className="flex w-full items-center justify-between p-3"
               key={key}
             >
-              <h3 className="flex flex-col items-start justify-center">
-                <button
-                  className="group flex items-center justify-center text-2xl font-semibold"
-                  onClick={() => setDialogState({ type: "UPDATE", contact })}
-                >
-                  {name}
-                  <div className="invisible pl-1 text-sm text-gray-400 group-hover:visible">
-                    edit
-                  </div>
-                </button>
-                <a
-                  href={`tel:${phoneNumber}`}
-                  className="group flex items-center justify-center space-x-1 text-sm font-medium"
-                >
-                  <PhoneIcon
-                    className="h-2.5 w-2.5 fill-gray-400 group-hover:fill-green-400"
-                    aria-label="Call"
+              <div className="flex items-center justify-center space-x-2">
+                <div className="relative h-16 w-16">
+                  <Image
+                    src={`/contacts/${photo}`}
+                    alt={name} // Screen readers will announce "Image of {name}"
+                    fill
+                    className="object-fit rounded-full"
                   />
-                  <span className="text-gray-400 group-hover:text-gray-500">
-                    {phoneNumber}
-                  </span>
-                  <div className="invisible text-xs font-bold text-green-400 group-hover:visible">
-                    call
-                  </div>
-                </a>
-              </h3>
+                </div>
+                <h3 className="flex flex-col items-start justify-center">
+                  <button
+                    className="group flex items-center justify-center text-2xl font-semibold"
+                    onClick={() => setDialogState({ type: "UPDATE", contact })}
+                  >
+                    {name}
+                    <div className="invisible pl-1 text-sm text-gray-400 group-hover:visible">
+                      edit
+                    </div>
+                  </button>
+                  <a
+                    href={`tel:${phoneNumber}`}
+                    className="group flex items-center justify-center space-x-1 text-sm font-medium"
+                  >
+                    <PhoneIcon
+                      className="h-2.5 w-2.5 fill-gray-400 group-hover:fill-green-400"
+                      aria-label="Call"
+                    />
+                    <span className="text-gray-400 group-hover:text-gray-500">
+                      {phoneNumber}
+                    </span>
+                    <div className="invisible text-xs font-bold text-green-400 group-hover:visible">
+                      call
+                    </div>
+                  </a>
+                </h3>
+              </div>
               <button
                 className="group flex items-center justify-center"
                 onClick={() => setDialogState({ type: "DELETE", contact })}
