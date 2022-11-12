@@ -33,7 +33,6 @@ export default function PhoneBookApp() {
 
   /** READ the XState machine if it's `idle` or FINISH if it's `running`. */
   useEffect(() => {
-    // Make sure that the window object is available before we start to render.
     // When we first load or are idle, load the phone book from localStorage:
     if (state.matches("idle")) send({ type: "READ" })
     // When we're running, we need to write the phone book to localStorage:
@@ -118,6 +117,11 @@ export default function PhoneBookApp() {
     closeDialog()
     // We handle flushing the state to `localStorage` in the `useEffect` hook.
   }
+
+  // Guard clause: Don't render the component until the state machine is ready.
+  if (!state.matches("ready")) return null
+  // This prevents the default contacts list from being rendered and then being
+  // replaced with the contacts list from localStorage, causing layout shift.
 
   return (
     <>
