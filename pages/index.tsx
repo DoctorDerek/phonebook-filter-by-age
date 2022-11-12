@@ -16,6 +16,12 @@ import {
 } from "@heroicons/react/24/solid"
 import { useActor } from "@xstate/react"
 
+/**
+ * We have to specify the `sizes` prop when using `next/image` with `fill`.
+ * These screen sizes correspond to Tailwind's sm: and xl: breakpoints.
+ * The image sizes correspond to Tailwind's w-16 class, which is 4rem. */
+const IMAGE_SIZES = "(max-width: 640px) 4rem, (max-width: 1280px) 4rem, 4rem"
+
 export default function PhoneBookApp() {
   // Retrieve our global context from the XState finite state machine:
   const globalServices = useContext(GlobalStateContext)
@@ -284,6 +290,7 @@ export default function PhoneBookApp() {
                     alt={name} // Screen readers will announce "Image of {name}"
                     fill
                     className="object-fit rounded-full"
+                    sizes={IMAGE_SIZES}
                   />
                 </div>
                 <h3 className="flex flex-col items-start justify-center">
