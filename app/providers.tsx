@@ -1,26 +1,27 @@
-import "@/styles/globals.css"
+"use client" // Specify this is a Client Component, not a Server Component.
 
+import { ReactNode } from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
-import Layout from "@/pages/app/layout"
 import phoneBookMachine from "@/utils/phoneBookMachine"
 import { useInterpret } from "@xstate/react"
 
-import type { AppProps } from "next/app"
 const queryClient = new QueryClient()
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+/**
+ * Context is not supported in Server Components, so we make a Client Component.
+ * Reference: https://beta.nextjs.org/docs/rendering/server-and-client-components#using-context-in-client-components
+ * */
+export default function Providers({ children }: { children: ReactNode }) {
   const phoneBookService = useInterpret(phoneBookMachine)
 
-  // Note that we load React Query here but don't actually use it in the app.
   return (
     <QueryClientProvider client={queryClient} contextSharing={true}>
+      {/* We load React Query here but don't actually use it in the app. */}
       <GlobalStateContext.Provider value={{ phoneBookService }}>
         {/* We can access React context in the app via Provider */}
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        {children}
       </GlobalStateContext.Provider>
     </QueryClientProvider>
   )
