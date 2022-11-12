@@ -70,3 +70,4 @@ Below you will find the complete feature set, a discussion section, and my techn
 - `0.8.0` Use React Hook Form to handle dialog actions
 - `0.9.0` Enable CREATE, UPDATE, DELETE, RESET actions
 - `0.9.1` Finish the discussion section in the `README.md`
+- `1.0.0` Upload photos and migrate to Next 13's `@/app`
