@@ -5,7 +5,7 @@ export type Contact = {
   /** We don't separate first and last names, but we do require a name. */
   name: string
   /** Birthdays are initialized using the syntax `new Date("1990-01-01")`. */
-  birthday?: Date
+  birthday?: string
   /** The contact's age is calculated from their birthday automatically. */
   age?: number
   /** The contact's photo, a filename in the `@/public/contacts/` directory. */
@@ -26,7 +26,7 @@ const CONTACTS: Contact[] = [
     id: 1,
     photo: "Unsplash Jessica Christian.png",
     name: "Jessica Christian",
-    birthday: new Date("2022-05-30"), // Baby
+    birthday: "2022-05-30", // Baby
     streetAddress: "1234 Main St",
     city: "San Francisco",
     state: "CA",
@@ -38,7 +38,7 @@ const CONTACTS: Contact[] = [
     id: 2,
     photo: "Unsplash Lia Bekyan.png",
     name: "Lia Bekyan",
-    birthday: new Date("2010-09-24"), // Child
+    birthday: "2010-09-24", // Child
     streetAddress: "1234 Happy Lane",
     city: "San Diego",
     state: "CA",
@@ -50,7 +50,7 @@ const CONTACTS: Contact[] = [
     id: 3,
     photo: "Unsplash Remy Loz.png",
     name: "Remy Loz",
-    birthday: new Date("2000-07-04"), // Young Adult
+    birthday: "2000-07-04", // Young Adult
     streetAddress: "1234 Main St",
     city: "San Francisco",
     state: "CA",
@@ -62,7 +62,7 @@ const CONTACTS: Contact[] = [
     id: 4,
     photo: "Unsplash Ryan Hoffman.png",
     name: "Ryan Hoffman",
-    birthday: new Date("1990-04-06"), // Middle Aged Adult
+    birthday: "1990-04-06", // Middle Aged Adult
     streetAddress: "1234 Main St",
     city: "San Francisco",
     state: "CA",
@@ -74,7 +74,7 @@ const CONTACTS: Contact[] = [
     id: 5,
     photo: "Unsplash Tadas Petrokas.png",
     name: "Tadas Petrokas",
-    birthday: new Date("1956-08-07"), // Senior
+    birthday: "1956-08-07", // Senior
     streetAddress: "1234 Main St",
     city: "San Francisco",
     state: "CA",
@@ -86,7 +86,7 @@ const CONTACTS: Contact[] = [
     id: 6,
     photo: "Unsplash Yohan Marion.png",
     name: "Yohan Marion",
-    birthday: new Date("1890-11-24"), // Senior
+    birthday: "1890-11-24", // Senior
     streetAddress: "1234 Main St",
     city: "San Francisco",
     state: "CA",
@@ -96,13 +96,14 @@ const CONTACTS: Contact[] = [
   },
 ]
 
-const calculateAge = ({ birthday }: { birthday?: Date }) => {
+const calculateAge = ({ birthday }: { birthday?: string }) => {
   if (!birthday) return undefined // We can't calculate age without a birthday.
   const today = new Date()
-  const age = today.getFullYear() - birthday.getFullYear()
+  const birthDate = new Date(birthday)
+  const age = today.getFullYear() - birthDate.getFullYear()
   // This may not be their age, if their birthday hasn't yet occurred this year.
-  const month = today.getMonth() - birthday.getMonth()
-  if (month < 0 || (month === 0 && today.getDate() < birthday.getDate())) {
+  const month = today.getMonth() - birthDate.getMonth()
+  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
     // They haven't had their birthday yet this year, so their age is one less.
     return age - 1
   }
