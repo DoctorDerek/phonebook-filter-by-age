@@ -23,6 +23,7 @@ export default function PhoneBookApp() {
   const { send } = globalServices.phoneBookService
   const router = useRouter()
 
+  /** READ the XState machine if it's `idle` or FINISH if it's `running`. */
   useEffect(() => {
     // Make sure that the window object is available before we start to render.
     if (!router?.isReady) return // void
