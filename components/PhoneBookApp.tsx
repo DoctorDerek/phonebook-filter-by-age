@@ -281,7 +281,7 @@ export default function PhoneBookApp() {
         <div className="divide-y-gray-300 relative w-full divide-y-2 border border-solid border-gray-300">
           {filteredPhoneBookEntries?.map((contact) => {
             const { id, name, phoneNumber, photo } = contact
-            // ID should be unique, but there's no penalty for adding to the key.
+            // ID should be unique, but there's no penalty for adding to key.
             const key = `${id}${name}${phoneNumber}${photo}`
             return (
               <div
@@ -292,7 +292,7 @@ export default function PhoneBookApp() {
                   <div className="relative h-16 w-16">
                     <Image
                       src={`/contacts/${photo}`}
-                      alt={name} // Screen readers will announce "Image of {name}"
+                      alt={name} // Screen readers announce "Image of {name}"
                       fill
                       className="object-fit rounded-full"
                       sizes={IMAGE_SIZES}
