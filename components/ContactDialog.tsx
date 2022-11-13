@@ -53,7 +53,7 @@ export default function ContactDialog({
    * The `dialogState.type` is the action that we want to take.
    * The `dialogState.contact` is the active (old) contact.
    */
-  const onSubmit = (data: Contact) => {
+  const onDialogSubmit = (data: Contact) => {
     if (dialogState.type === "CREATE") {
       // We used React Hook Form to make sure we're getting all of the items:
       const { name, phoneNumber } = data
@@ -126,7 +126,7 @@ export default function ContactDialog({
       {/* A full-screen container that will center the dialog. */}
       <div className="fixed inset-0 flex items-center justify-center p-4">
         {/* The actual dialog panel, centered inside the box. */}
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onDialogSubmit)}>
           <Dialog.Panel className="relative mx-auto flex min-h-[75vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
             <ContactDialogClose closeDialog={closeDialog} />
 
