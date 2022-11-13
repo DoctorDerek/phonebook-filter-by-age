@@ -1,17 +1,24 @@
 "use client" // Specify this is a Client Component, not a Server Component.
+
 import { Dispatch, SetStateAction, useContext } from "react"
 import { useForm } from "react-hook-form"
 
+import ContactDialogButtons from "@/components/ContactDialogButtons"
+import ContactDialogClose from "@/components/ContactDialogClose"
+import ContactDialogDescription from "@/components/ContactDialogDescription"
+import ContactDialogInputs from "@/components/ContactDialogInputs"
+import ContactDialogTitle from "@/components/ContactDialogTitle"
+import ContactDialogWarning from "@/components/ContactDialogWarning"
 import GlobalStateContext from "@/components/GlobalStateContext"
 import { Contact } from "@/contacts/CONTACTS"
 import { Dialog } from "@headlessui/react"
-import { XMarkIcon } from "@heroicons/react/24/solid"
 
 export type DialogState = {
   type: "CLOSED" | "CREATE" | "UPDATE" | "DELETE" | "RESET"
   contact?: Contact
 }
 
+/** We show a dialog to confirm user intent before performing any action. */
 export default function ContactDialog({
   dialogState,
   setDialogState,
@@ -96,99 +103,24 @@ export default function ContactDialog({
         {/* The actual dialog panel, centered inside the box. */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Dialog.Panel className="relative mx-auto flex min-h-[75vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
-            <button
-              onClick={closeDialog}
-              className="group absolute top-2 right-2 h-6 w-6 rounded-lg hover:outline hover:outline-1 hover:outline-gray-600"
-            >
-              <XMarkIcon
-                aria-label="Close dialog"
-                className="fill-gray-500 group-hover:fill-gray-600"
-              />
-            </button>
-            <Dialog.Title className="text-center text-2xl font-bold">
-              {/** We transform the dialog state to title case: "Update" */}
-              {`${dialogState.type.slice(0, 1)}${dialogState.type
-                .slice(1)
-                .toLocaleLowerCase()}`}{" "}
-              {dialogState.type !== "RESET" && "Phone Book Entry"}
-              {dialogState.type === "RESET" && "Contacts"}
-            </Dialog.Title>
+            <ContactDialogClose closeDialog={closeDialog} />
 
-            <Dialog.Description>
-              {dialogState.type === "CREATE" &&
-                "This will create a new entry in your contacts."}
-              {dialogState.type === "UPDATE" &&
-                "This will update the entry in your contacts."}
-              {dialogState.type === "DELETE" &&
-                "This will permanently delete the entry."}
-              {dialogState.type === "RESET" &&
-                "This will permanently reset your contacts."}
-            </Dialog.Description>
+            <ContactDialogTitle dialogState={dialogState} />
 
-            {(dialogState.type === "DELETE" ||
-              dialogState.type === "RESET") && (
-              <p>
-                Are you sure you want to proceed? Your data will be permanently
-                removed. This action cannot be undone.
-              </p>
-            )}
+            <ContactDialogDescription dialogState={dialogState} />
 
-            {dialogState.type !== "RESET" && (
-              <>
-                <div className="space-y-1 whitespace-nowrap">
-                  <label className="flex space-x-1 text-sm text-gray-700">
-                    <span>Name</span>
-                    <input
-                      type="text"
-                      placeholder={dialogState.contact?.name}
-                      {...register("name", {
-                        required: dialogState.type === "CREATE",
-                      })}
-                      className="w-full rounded-md border border-gray-300  pl-1 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
-                      disabled={dialogState.type === "DELETE"}
-                    />
-                  </label>
-                  <label className="flex space-x-1 text-sm text-gray-700">
-                    <span>Phone Number</span>
-                    <input
-                      type="tel"
-                      placeholder={dialogState.contact?.phoneNumber}
-                      {...register("phoneNumber", {
-                        required: dialogState.type === "CREATE",
-                      })}
-                      /**
-                       * Note that we don't try to validate the phone number,
-                       * because formats for telephone numbers vary so much
-                       * around the world. For example, many validations for
-                       * telephone numbers will reject any country code, such
-                       * as +1 for United States, even though that is wrong.
-                       * */
-                      className="w-full rounded-md border border-gray-300 pl-1 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
-                      disabled={dialogState.type === "DELETE"}
-                    />
-                  </label>
-                  {dialogState.type === "CREATE" &&
-                    (errors.name || errors.phoneNumber) && (
-                      <div>All fields are required.</div>
-                    )}
-                </div>
-              </>
-            )}
+            <ContactDialogWarning dialogState={dialogState} />
 
-            <div className="flex w-full items-center justify-end space-x-2">
-              <button
-                className="rounded-md bg-gray-800 px-6 py-2 text-white hover:bg-gray-700 hover:outline hover:outline-1 hover:outline-gray-800"
-                onClick={closeDialog}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="rounded-md bg-blue-400 px-6 py-2 text-white hover:bg-blue-500 hover:outline hover:outline-1 hover:outline-blue-400"
-              >
-                {dialogState.type}
-              </button>
-            </div>
+            <ContactDialogInputs
+              dialogState={dialogState}
+              register={register}
+              errors={errors}
+            />
+
+            <ContactDialogButtons
+              dialogState={dialogState}
+              closeDialog={closeDialog}
+            />
           </Dialog.Panel>
         </form>
       </div>
