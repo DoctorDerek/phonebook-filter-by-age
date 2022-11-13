@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { Dispatch, SetStateAction } from "react"
 
-import { DialogState } from "@/components/ContactActionDialog"
+import { DialogState } from "@/components/ContactDialog"
 import { Contact } from "@/contacts/CONTACTS"
 import { PhoneIcon, TrashIcon } from "@heroicons/react/24/solid"
 

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
 
-import { DialogState } from "@/components/ContactActionDialog"
 import ContactCard from "@/components/ContactCard"
+import { DialogState } from "@/components/ContactDialog"
 import { Contact } from "@/contacts/CONTACTS"
 
 export default function ContactList({

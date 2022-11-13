@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react"
 
 import ButtonCreate from "@/components/ButtonCreate"
 import ButtonReset from "@/components/ButtonReset"
-import { DialogState } from "@/components/ContactActionDialog"
+import { DialogState } from "@/components/ContactDialog"
 import { DevicePhoneMobileIcon } from "@heroicons/react/24/solid"
 
 export default function PhoneBookHeadings({

@@ -12,7 +12,7 @@ export type DialogState = {
   contact?: Contact
 }
 
-export default function ContactActionDialog({
+export default function ContactDialog({
   dialogState,
   setDialogState,
   contacts,

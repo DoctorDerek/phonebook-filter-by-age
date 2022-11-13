@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useState } from "react"
 
-import ContactActionDialog, { DialogState } from "@/components/ContactActionDialog"
+import ContactActionDialog, { DialogState } from "@/components/ContactDialog"
 import ContactList from "@/components/ContactList"
 import GlobalStateContext from "@/components/GlobalStateContext"
 import PhoneBookHeadings from "@/components/PhoneBookHeadings"

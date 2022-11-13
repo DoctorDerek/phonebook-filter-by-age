@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react"
 
-import { DialogState } from "@/components/ContactActionDialog"
+import { DialogState } from "@/components/ContactDialog"
 import { TrashIcon } from "@heroicons/react/24/solid"
 
 export default function ButtonReset({
