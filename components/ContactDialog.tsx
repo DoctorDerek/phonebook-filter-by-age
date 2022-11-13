@@ -11,6 +11,7 @@ import ContactDialogTitle from "@/components/ContactDialogTitle"
 import ContactDialogWarning from "@/components/ContactDialogWarning"
 import GlobalStateContext from "@/components/GlobalStateContext"
 import { Contact } from "@/contacts/CONTACTS"
+import usePhoneBookService from "@/utils/usePhoneBookService"
 import { Dialog } from "@headlessui/react"
 
 export type DialogState = {
@@ -29,8 +30,7 @@ export default function ContactDialog({
   contacts: Contact[]
 }) {
   // Retrieve our global context from the XState finite state machine:
-  const globalServices = useContext(GlobalStateContext)
-  const { send } = globalServices.phoneBookService
+  const { send } = usePhoneBookService()
 
   /** We set up our form handlers for React Hook Form, including reset. */
   const {

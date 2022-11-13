@@ -7,6 +7,7 @@ import ContactList from "@/components/ContactList"
 import GlobalStateContext from "@/components/GlobalStateContext"
 import PhoneBookHeadings from "@/components/PhoneBookHeadings"
 import SearchBar from "@/components/SearchBar"
+import usePhoneBookService from "@/utils/usePhoneBookService"
 import { useActor } from "@xstate/react"
 
 /**
@@ -22,9 +23,7 @@ import { useActor } from "@xstate/react"
  * */
 export default function PhoneBookApp() {
   // Retrieve our global context from the XState finite state machine:
-  const globalServices = useContext(GlobalStateContext)
-  const [phoneBookState] = useActor(globalServices.phoneBookService)
-  const { send } = globalServices.phoneBookService
+  const { phoneBookState, send } = usePhoneBookService()
 
   /** READ the XState machine if it's `idle` or FINISH if it's `running`. */
   useEffect(() => {
