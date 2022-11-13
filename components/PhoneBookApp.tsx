@@ -290,13 +290,15 @@ export default function PhoneBookApp() {
               >
                 <div className="flex items-center justify-center space-x-2">
                   <div className="relative h-16 w-16">
-                    <Image
-                      src={`/contacts/${photo}`}
-                      alt={name} // Screen readers announce "Image of {name}"
-                      fill
-                      className="object-fit rounded-full"
-                      sizes={IMAGE_SIZES}
-                    />
+                    {photo && ( // Only show the photo if there's a `photo` URL.
+                      <Image
+                        src={`/contacts/${photo}`}
+                        alt={name} // Screen readers announce "Image of {name}"
+                        fill
+                        className="object-fit rounded-full"
+                        sizes={IMAGE_SIZES}
+                      />
+                    )}
                   </div>
                   <h3 className="flex flex-col items-start justify-center">
                     <button
