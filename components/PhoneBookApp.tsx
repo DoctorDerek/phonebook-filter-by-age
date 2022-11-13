@@ -1,7 +1,6 @@
 "use client" // Specify this is a Client Component, not a Server Component.
 
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
@@ -28,7 +27,6 @@ export default function PhoneBookApp() {
   const globalServices = useContext(GlobalStateContext)
   const [state] = useActor(globalServices.phoneBookService)
   const { send } = globalServices.phoneBookService
-  const router = useRouter()
 
   /** READ the XState machine if it's `idle` or FINISH if it's `running`. */
   useEffect(() => {
