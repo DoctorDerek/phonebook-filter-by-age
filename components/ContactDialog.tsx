@@ -51,7 +51,7 @@ export default function ContactDialog({
    *
    * The `data` are the updated (or new) fields from the form.
    * The `dialogState.type` is the action that we want to take.
-   * The `dialogState.contact` is the active contact.
+   * The `dialogState.contact` is the active (old) contact.
    */
   const onSubmit = (data: Contact) => {
     if (dialogState.type === "CREATE") {
@@ -66,16 +66,41 @@ export default function ContactDialog({
     }
 
     if (dialogState.type === "UPDATE") {
-      // We should have values from the form OR the existing entry.
-      const name = data.name || dialogState?.contact?.name || ""
-      const phoneNumber =
-        data.phoneNumber || dialogState?.contact?.phoneNumber || ""
+      /** We unpack the existing contact from the `dialogState`. */
+      const oldContact = dialogState?.contact
+      // We have values from the form OR the contact for name and phoneNumber.
+      const name = data.name || oldContact?.name || ""
+      const phoneNumber = data.phoneNumber || oldContact?.phoneNumber || ""
       /** The id should come from the existing entry, but we fall back to -1. */
-      const id = dialogState.contact?.id || -1
-      send({
-        type: "UPDATE",
-        contact: { id, name, phoneNumber },
-      })
+      const id = oldContact?.id || -1
+      // We preserve data we didn't update in the form so we don't overwrite it.
+      const {
+        birthday,
+        age,
+        photo,
+        streetAddress,
+        city,
+        state,
+        zipCode,
+        email,
+      } = oldContact || {}
+
+      /** This is the contact that's ready to send to the state machine. */
+      const contact = {
+        id,
+        name,
+        phoneNumber,
+        birthday,
+        age,
+        photo,
+        streetAddress,
+        city,
+        state,
+        zipCode,
+        email,
+      }
+
+      send({ type: "UPDATE", contact })
     }
 
     if (dialogState.type === "DELETE" && dialogState?.contact)
