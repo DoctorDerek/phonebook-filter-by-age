@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useContext, useEffect, useState } from "react"
 
+import ButtonReset from "@/components/ButtonReset"
 import ContactActionDialog, { DialogState } from "@/components/ContactActionDialog"
 import GlobalStateContext from "@/components/GlobalStateContext"
 import {
@@ -76,18 +77,7 @@ export default function PhoneBookApp() {
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center justify-center space-x-2">
             <h2 className="text-2xl font-semibold">Contacts</h2>
-            <button
-              onClick={() => setDialogState({ type: "RESET" })}
-              className="group flex items-center justify-center"
-            >
-              <TrashIcon
-                aria-label="Delete all phone book entries and reset"
-                className="h-6 w-6 rounded-md group-hover:fill-red-600 group-hover:outline group-hover:outline-1 group-hover:outline-red-600"
-              />
-              <div className="invisible pl-1 font-bold text-red-600 group-hover:visible">
-                reset
-              </div>
-            </button>
+            <ButtonReset setDialogState={setDialogState} />
           </div>
           <button
             className="rounded-md bg-blue-400 px-6 py-2 text-white hover:bg-blue-500 hover:outline hover:outline-1 hover:outline-blue-400"
@@ -106,6 +96,7 @@ export default function PhoneBookApp() {
           />
           <MagnifyingGlassIcon className="absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2" />
         </div>
+
         <div className="divide-y-gray-300 relative w-full divide-y-2 border border-solid border-gray-300">
           {filteredPhoneBookEntries?.map((contact) => {
             const { id, name, phoneNumber, photo } = contact
