@@ -9,6 +9,17 @@ import PhoneBookHeadings from "@/components/PhoneBookHeadings"
 import SearchBar from "@/components/SearchBar"
 import { useActor } from "@xstate/react"
 
+/**
+ * The `<PhoneBookApp>` handles our global state using 3 state handlers:
+ * 1. `dialogState` is used to control the dialog box that appears when the user
+ *    clicks on a contact card.
+ * 2. `filterText` is used to filter the contacts list by name using the
+ *    `<SearchBar>` component.
+ * 3. `phoneBookState` is used to control the state of the phone book. It's
+ *    managed by the `phoneBookMachine` state machine.
+ *
+ * This component also handles the layout of the main content area of the app.
+ * */
 export default function PhoneBookApp() {
   // Retrieve our global context from the XState finite state machine:
   const globalServices = useContext(GlobalStateContext)
@@ -42,6 +53,10 @@ export default function PhoneBookApp() {
 
   return (
     <>
+      {/**
+       * The Dialog doesn't belong in the main content area because we use
+       * space-y-2, which wouldn't work correctly with the hidden element.
+       * */}
       <ContactActionDialog
         dialogState={dialogState}
         setDialogState={setDialogState}
