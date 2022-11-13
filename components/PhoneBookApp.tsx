@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useContext, useEffect, useState } from "react"
 
+import ButtonCreate from "@/components/ButtonCreate"
 import ButtonReset from "@/components/ButtonReset"
 import ContactActionDialog, { DialogState } from "@/components/ContactActionDialog"
 import GlobalStateContext from "@/components/GlobalStateContext"
@@ -79,12 +80,7 @@ export default function PhoneBookApp() {
             <h2 className="text-2xl font-semibold">Contacts</h2>
             <ButtonReset setDialogState={setDialogState} />
           </div>
-          <button
-            className="rounded-md bg-blue-400 px-6 py-2 text-white hover:bg-blue-500 hover:outline hover:outline-1 hover:outline-blue-400"
-            onClick={() => setDialogState({ type: "CREATE" })}
-          >
-            + Add Contact
-          </button>
+          <ButtonCreate setDialogState={setDialogState} />
         </div>
 
         <div className="relative w-full">
