@@ -74,3 +74,4 @@ Below you will find the complete feature set, a discussion section, and my techn
 - ⬆️ https://github.com/DoctorDerek/phonebook-app
 - 🧠 Features after this point are the "filter by age" app
 - 🔽 https://github.com/DoctorDerek/phonebook-filter-by-age
+- `1.1.0` Refactor 15 components & fix photo deletion bug
