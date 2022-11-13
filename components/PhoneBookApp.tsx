@@ -2,14 +2,11 @@
 
 import { useContext, useEffect, useState } from "react"
 
-import ButtonCreate from "@/components/ButtonCreate"
-import ButtonReset from "@/components/ButtonReset"
 import ContactActionDialog, { DialogState } from "@/components/ContactActionDialog"
-import ContactCard from "@/components/ContactCard"
 import ContactList from "@/components/ContactList"
 import GlobalStateContext from "@/components/GlobalStateContext"
+import PhoneBookHeadings from "@/components/PhoneBookHeadings"
 import SearchBar from "@/components/SearchBar"
-import { DevicePhoneMobileIcon } from "@heroicons/react/24/solid"
 import { useActor } from "@xstate/react"
 
 export default function PhoneBookApp() {
@@ -52,18 +49,7 @@ export default function PhoneBookApp() {
       />
 
       <div className="flex flex-col items-center justify-center space-y-2">
-        <div className="group flex items-center justify-center space-x-2 text-4xl font-semibold">
-          <DevicePhoneMobileIcon className="h-10 w-10 group-hover:animate-spin" />
-          <h1>Phone Book App</h1>
-        </div>
-
-        <div className="flex w-full items-center justify-between">
-          <div className="flex items-center justify-center space-x-2">
-            <h2 className="text-2xl font-semibold">Contacts</h2>
-            <ButtonReset setDialogState={setDialogState} />
-          </div>
-          <ButtonCreate setDialogState={setDialogState} />
-        </div>
+        <PhoneBookHeadings setDialogState={setDialogState} />
 
         <SearchBar setFilterText={setFilterText} />
 
