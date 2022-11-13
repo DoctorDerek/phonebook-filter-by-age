@@ -7,9 +7,9 @@ import ButtonCreate from "@/components/ButtonCreate"
 import ButtonReset from "@/components/ButtonReset"
 import ContactActionDialog, { DialogState } from "@/components/ContactActionDialog"
 import GlobalStateContext from "@/components/GlobalStateContext"
+import SearchBar from "@/components/SearchBar"
 import {
   DevicePhoneMobileIcon,
-  MagnifyingGlassIcon,
   PhoneIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid"
@@ -83,15 +83,7 @@ export default function PhoneBookApp() {
           <ButtonCreate setDialogState={setDialogState} />
         </div>
 
-        <div className="relative w-full">
-          <input
-            type="text"
-            placeholder="Search for contact by name..."
-            className="w-full rounded-md border border-gray-300 pl-6 placeholder:text-sm placeholder:font-medium placeholder:text-gray-500"
-            onChange={(event) => setFilterText(event?.target?.value)}
-          />
-          <MagnifyingGlassIcon className="absolute left-1 top-1/2 h-4 w-4 -translate-y-1/2" />
-        </div>
+        <SearchBar setFilterText={setFilterText} />
 
         <div className="divide-y-gray-300 relative w-full divide-y-2 border border-solid border-gray-300">
           {filteredPhoneBookEntries?.map((contact) => {
