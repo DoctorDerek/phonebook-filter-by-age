@@ -1,6 +1,5 @@
 "use client" // Specify this is a Client Component, not a Server Component.
 
-import Head from "next/head"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
@@ -125,9 +124,6 @@ export default function PhoneBookApp() {
 
   return (
     <>
-      <Head>
-        <title>Phonebook &ldquo;Filter by Age&rdquo; App by @DoctorDerek</title>
-      </Head>
       <Dialog
         open={dialogState.type !== "CLOSED"}
         onClose={closeDialog}
