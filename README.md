@@ -89,3 +89,4 @@ Launches the test runner in the interactive watch mode.
 - `1.3.0` Match `<ContactCard>` to design & pass tests
 - `1.4.0` Implement accessible mobile navigation menu
 - `1.5.0` Fix the mobile design to match design document
+- `1.6.0` Enact the "filter by age" logic and dropdown
