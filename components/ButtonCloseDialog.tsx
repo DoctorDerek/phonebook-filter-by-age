@@ -3,7 +3,9 @@ import { XMarkIcon } from "@heroicons/react/24/solid"
 /** Helper function to merge Tailwind CSS classNames. */
 const classNames = (...classes: string[]) => classes.filter(Boolean).join(" ")
 
-export default function ContactDialogClose({
+/**
+ * This close button is used in the `<CloseDialog>` and `<NavBar>` components. */
+export default function ButtonCloseDialog({
   closeDialog,
   size = "h-6 w-6",
 }: {

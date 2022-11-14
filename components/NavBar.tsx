@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useState } from "react"
 import Confetti from "react-confetti"
 
-import ContactDialogClose from "@/components/ContactDialogClose"
+import ContactDialogClose from "@/components/ButtonCloseDialog"
 import ReactConfetti from "@/components/ReactConfetti"
 import { Dialog } from "@headlessui/react"
 import { Bars3Icon, DevicePhoneMobileIcon } from "@heroicons/react/24/solid"

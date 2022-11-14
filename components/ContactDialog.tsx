@@ -3,8 +3,8 @@
 import { Dispatch, SetStateAction, useContext } from "react"
 import { useForm } from "react-hook-form"
 
+import ContactDialogClose from "@/components/ButtonCloseDialog"
 import ContactDialogButtons from "@/components/ContactDialogButtons"
-import ContactDialogClose from "@/components/ContactDialogClose"
 import ContactDialogDescription from "@/components/ContactDialogDescription"
 import ContactDialogInputs from "@/components/ContactDialogInputs"
 import ContactDialogTitle from "@/components/ContactDialogTitle"
