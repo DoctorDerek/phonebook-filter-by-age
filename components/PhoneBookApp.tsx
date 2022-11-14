@@ -13,7 +13,7 @@ import usePhoneBookService from "@/utils/usePhoneBookService"
  * The `<PhoneBookApp>` handles our global state using 3 state handlers:
  * 1. `dialogState` is used to control the dialog box that appears when the user
  *    clicks on a contact card.
- * 2. `filterText` is used to filter the contacts list by name using the
+ * 2. `filterText` is used to filter the contacts list by age using the
  *    `<SearchBar>` component.
  * 3. `phoneBookState` is used to control the state of the phone book. It's
  *    managed by the `phoneBookMachine` state machine.
@@ -36,7 +36,7 @@ export default function PhoneBookApp() {
   const { context } = phoneBookState || {}
   const { contacts } = context || {}
 
-  /** Set up a state handler for the "search by name" filter logic. */
+  /** Set up a state handler for the "search by age range" filter logic. */
   const [filterText, setFilterText] = useState("")
 
   /** We model the dialogState off the XState action patterns. */
