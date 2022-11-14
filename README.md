@@ -62,6 +62,9 @@ Launches the test runner in the interactive watch mode.
 
 ## Technical Journal
 
+#### 🧠 Features up to `1.0.0` are the "filter by name" app
+
+- 🔽 https://github.com/DoctorDerek/phonebook-app
 - `0.1.1` New app: create next-app w/TypeScript + Yarn 3
 - `0.2.0` Added all best practices & basic dependencies
 - `0.3.0` Create XState finite state machine for app
@@ -73,8 +76,9 @@ Launches the test runner in the interactive watch mode.
 - `0.9.0` Enable CREATE, UPDATE, DELETE, RESET actions
 - `0.9.1` Finish the discussion section in the `README.md`
 - `1.0.0` Upload photos and migrate to Next 13's `@/app`
-- ⬆️ https://github.com/DoctorDerek/phonebook-app
-- 🧠 Features after this point are the "filter by age" app
+
+#### 🧠 Features after this point are the "filter by age" app
+
 - 🔽 https://github.com/DoctorDerek/phonebook-filter-by-age
 - `1.1.0` Refactor 15 components & fix photo deletion bug
 - `1.2.0` Extract `<ContactCard>` components and TDD test
