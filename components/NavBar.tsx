@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import Confetti from "react-confetti"
 
 import ContactDialogClose from "@/components/ButtonCloseDialog"
 import ReactConfetti from "@/components/ReactConfetti"
@@ -32,6 +31,28 @@ function PhoneBookHeading() {
   )
 }
 
+function MobileNavigationMenu({
+  isDialogOpen,
+  closeDialog,
+}: {
+  isDialogOpen: boolean
+  closeDialog: () => void
+}) {
+  return (
+    <Dialog open={isDialogOpen} onClose={closeDialog} className="relative z-50">
+      {/* We don't need a wrapper because the mobile menu is full-screen. */}
+      <Dialog.Panel className="fixed inset-0 bg-black py-4 text-5xl uppercase text-white">
+        <ContactDialogClose closeDialog={closeDialog} size="h-12 w-12" />
+        <ReactConfetti />
+        <div className="flex flex-col items-center space-y-12">
+          <PhoneBookHeading />
+          <NavBarLinks />
+        </div>
+      </Dialog.Panel>
+    </Dialog>
+  )
+}
+
 /** The `<NavBar>` is a Client Component because it uses the useState hook. */
 export default function NavBar() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -57,21 +78,10 @@ export default function NavBar() {
           />
         </div>
       </nav>
-      <Dialog
-        open={isDialogOpen}
-        onClose={closeDialog}
-        className="relative z-50"
-      >
-        {/* We don't need a wrapper because the mobile menu is full-screen. */}
-        <Dialog.Panel className="fixed inset-0 bg-black py-4 text-5xl uppercase text-white">
-          <ContactDialogClose closeDialog={closeDialog} size="h-12 w-12" />
-          <ReactConfetti />
-          <div className="flex flex-col items-center space-y-12">
-            <PhoneBookHeading />
-            <NavBarLinks />
-          </div>
-        </Dialog.Panel>
-      </Dialog>
+      <MobileNavigationMenu
+        isDialogOpen={isDialogOpen}
+        closeDialog={closeDialog}
+      />
     </>
   )
 }
