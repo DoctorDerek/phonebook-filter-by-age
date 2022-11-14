@@ -11,13 +11,16 @@ describe("@/components/ContactCard", () => {
     render(<ContactCard contact={contact} setDialogState={() => {}} />)
 
   // We unpack the contact's properties for easier access and fallback values.
-  const photo = contact.photo || ""
+
+  // For the photo, we have to transform it into a URL for the `src` attribute.
+  const photo = contact?.photo?.replaceAll(" ", "%20") || ""
   // We always use case-insensitive search since we expect all UPPERCASE text.
   const name = new RegExp(contact.name, "i")
   const birthday = new RegExp(contact.birthday || "", "i")
   const streetAddress = new RegExp(contact.streetAddress || "", "i")
   const city = new RegExp(contact.city || "", "i")
-  const state = new RegExp(contact.state || "", "i")
+  // The state is the exception; it's uppercase, so we search case-sensitive.
+  const state = new RegExp(contact.state || "", "")
   const zipCode = new RegExp(contact.zipCode || "", "i")
   const phoneNumber = new RegExp(contact.phoneNumber || "", "i")
   const email = new RegExp(contact.email || "", "i")
@@ -27,15 +30,24 @@ describe("@/components/ContactCard", () => {
   it("renders the expected labels of birthday, address, phone number, and email address", () => {
     renderContact()
     expect(screen.getByText(/birthday/i)).toBeVisible()
-    expect(screen.getByText(/address/i)).toBeVisible()
+    // We expect the word address twice: 1 for street address and 1 for email.
+    const addresses = screen.getAllByText(/address/i)
+    expect(addresses[0]).toBeVisible()
+    expect(addresses[1]).toBeVisible()
+    // There is no "street" in the text so we can't search "street address".
     expect(screen.getByText(/phone number/i)).toBeVisible()
     expect(screen.getByText(/email address/i)).toBeVisible()
   })
 
-  it("renders the contact's photo", () => {
+  it("renders the contact's photo with alt text", () => {
     renderContact()
+    // We check for the required alt text for accessibility.
     const image = screen.getByRole("img", { name })
-    expect(image).toHaveAttribute("src", photo)
+    // The src attribute should include the URL `/contacts/${photo}`.
+    expect(image).toHaveAttribute(
+      "src",
+      expect.stringMatching(`%2Fcontacts%2F${photo}`) // %2F is a forward slash.
+    )
   })
 
   it("renders the contact's name", () => {
