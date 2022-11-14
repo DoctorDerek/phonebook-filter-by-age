@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react"
 
+import ContactCardEmail from "@/components/ContactCardEmail"
 import ContactCardLabelAndData from "@/components/ContactCardLabelAndData"
 import ContactCardPhoneNumber from "@/components/ContactCardPhoneNumber"
 import ContactCardPhotoAndHeading from "@/components/ContactCardPhotoAndHeading"
@@ -47,7 +48,7 @@ export default function ContactCard({
         contact={contact}
         setDialogState={setDialogState}
       />
-      <div className="grid w-full grid-cols-1 space-y-6 xl:grid-cols-4 xl:space-y-0">
+      <div className="grid w-full grid-cols-1 space-y-6 sm:grid-cols-2 sm:gap-y-4 sm:space-y-0 xl:grid-cols-4 xl:gap-0">
         <ContactCardLabelAndData
           label="Birthday"
           data={transformBirthday({ birthday: birthday || "" })}
@@ -60,7 +61,10 @@ export default function ContactCard({
           label="Phone Number"
           data={<ContactCardPhoneNumber phoneNumber={phoneNumber || ""} />}
         />
-        <ContactCardLabelAndData label="Email Address" data={email} />
+        <ContactCardLabelAndData
+          label="Email Address"
+          data={<ContactCardEmail email={email || ""} />}
+        />
       </div>
     </div>
   )
