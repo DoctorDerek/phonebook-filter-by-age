@@ -9,10 +9,13 @@ export default function useFilterByAgeRange({
   filterText: string
 }) {
   function filterByAgeRange(contact: Contact) {
-    const age = contact?.age || -Infinity
+    filterText.replaceAll(" ", "") // Remove spaces from the filter text.
     if (filterText === "") return true // Show all contacts.
+
+    const age = contact?.age
     if (age === undefined) return false // Don't show contacts without age.
-    // We expect the `filterText` to match one of five formats:
+
+    // We expect the `filterText` to match one of 7 formats:
     // Greater than: ">18"
     if (filterText.includes(">")) {
       const ageFilter = parseInt(filterText.replace(">", ""))
