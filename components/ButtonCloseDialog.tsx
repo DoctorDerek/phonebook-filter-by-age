@@ -1,7 +1,5 @@
+import classNames from "@/utils/classNames"
 import { XMarkIcon } from "@heroicons/react/24/solid"
-
-/** Helper function to merge Tailwind CSS classNames. */
-const classNames = (...classes: string[]) => classes.filter(Boolean).join(" ")
 
 /**
  * This close button is used in the `<CloseDialog>` and `<NavBar>` components. */
