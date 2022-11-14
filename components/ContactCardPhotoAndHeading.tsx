@@ -25,7 +25,7 @@ export default function ContactCardPhotoAndHeading({
   const { name, photo } = contact || { name: "", photo: "" }
   return (
     <div className="flex items-center justify-center space-x-4">
-      <div className="relative h-20 w-20 flex-shrink-0">
+      <div className="group relative h-20 w-20 flex-shrink-0">
         {/** We don't want to shrink and distort the image. */}
         {photo && ( // Only show the photo if there's a `photo` URL.
           <Image
@@ -36,9 +36,11 @@ export default function ContactCardPhotoAndHeading({
             sizes={IMAGE_SIZES}
           />
         )}
+        <div className="invisible absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform group-hover:visible">
+          <ButtonDelete contact={contact} setDialogState={setDialogState} />
+        </div>
       </div>
       <ContactCardName contact={contact} setDialogState={setDialogState} />
-      <ButtonDelete contact={contact} setDialogState={setDialogState} />
     </div>
   )
 }

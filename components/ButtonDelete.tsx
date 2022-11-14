@@ -14,10 +14,14 @@ export default function ButtonDelete({
   const { name, phoneNumber } = contact || { name: "", phoneNumber: "" }
   return (
     <button
-      className="group flex items-center justify-center"
+      className="group relative flex items-center justify-center"
       onClick={() => setDialogState({ type: "DELETE", contact })}
     >
-      <div className="invisible pr-1 text-sm font-bold text-red-600 group-hover:visible">
+      {/**
+       * The "top-15" here is based on the "h-20" class of the photo, so that,
+       * on hover, the delete text is below the photo, centered horizontally.
+       * */}
+      <div className="invisible absolute top-15 pr-1 text-sm font-bold text-red-600 group-hover:visible">
         delete
       </div>
       <div className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500">
