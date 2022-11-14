@@ -35,11 +35,11 @@ Below you will find the complete feature set, a discussion section, and my techn
 1. ✅ Enabled CREATE, UPDATE, DELETE, and RESET actions using React Hook Form.
 1. ✅ Sorted data by last name for a consistent user experience in the app.
 1. ✅ Matched design document with READ and filter by age range functionality.
-1. ✅ Add unit test coverage for the app using Jest & React Testing Library.
+1. ✅ Add some unit testing for the app with Jest & React Testing Library.
 
 ## Discussion Section
 
-1. ✅ We use XState finite state machines. The benefit of XState is the finite set of states, without additional testing.
+1. ✅ We use XState finite state machines. The benefit of XState is the finite set of states, without the need for additional testing.
 2. ✅ It would be easy to connect any database without affecting the frontend by simplying replacing the `localStorage` calls in XState.
 3. ✅ We don't handle phone or email validation at all, but we would probably want some type of reliable validation in production.
 4. ✅ The entire codebase could use more testing, which is made easier by the large number of small, easily-testable components.
@@ -47,7 +47,8 @@ Below you will find the complete feature set, a discussion section, and my techn
 6. ✅ Because of the combination of `localStorage` with XState, we have auto-save functionality that supports refreshing the page.
 7. ✅ Since the only major touch screen interaction difference is swiping, we shouldn't have much differences with desktop vs. mobile.
 8. ✅ Accessibility has been baked into the app, but we might find some issues when writing tests or using the app with the keyboard.
-9. 🌠 "We have comps for mobile and desktop, but the list needs to look good at any width. We'll leave the details of the in-between views up to you."
+9. ✅ I implemented 3 breakpoints: phone portrait (<640px), tablet or phone landscape (>=640px <1280px), and desktop (>1280px).
+10. ✅ There are numerous improvements that could still be made to the user experience, such as a hover effect to show the contact's age.
 
 ## Test Coverage Report - Jest & React Testing Library
 
@@ -82,3 +83,4 @@ Launches the test runner in the interactive watch mode.
 - `1.5.0` Align the mobile design with design document
 - `1.6.0` Enact the "filter by age" logic and dropdown
 - `1.7.0` Fix the CREATE & UPDATE actions with new fields
+- `1.8.0` Invent a 2-column design for tablet screens
