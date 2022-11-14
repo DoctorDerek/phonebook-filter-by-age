@@ -62,9 +62,9 @@ export default function PhoneBookApp() {
       />
 
       <div className="flex flex-col items-center justify-center space-y-6">
-        <div className="grid w-full grid-cols-2">
+        <div className="grid w-full grid-cols-1 space-y-6 xl:grid-cols-2 xl:space-y-0">
           <SearchBar setFilterText={setFilterText} />
-          <div className="flex w-full items-center justify-end space-x-1">
+          <div className="flex w-full items-center justify-between space-x-1 xl:justify-end">
             <ButtonReset setDialogState={setDialogState} />
             <ButtonCreate setDialogState={setDialogState} />
           </div>
