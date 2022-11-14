@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <Providers>
           <NavBar />
-          <main className="mx-auto flex min-h-screen w-[95vw] cursor-crosshair flex-col items-center justify-center p-8">
+          <main className="mx-auto flex min-h-screen w-[95vw] cursor-crosshair flex-col p-8">
             {children}
           </main>
         </Providers>
