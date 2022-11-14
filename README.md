@@ -76,3 +76,4 @@ Below you will find the complete feature set, a discussion section, and my techn
 - 🔽 https://github.com/DoctorDerek/phonebook-filter-by-age
 - `1.1.0` Refactor 15 components & fix photo deletion bug
 - `1.2.0` Refactor `<ContactCard>` and create TDD test
+- `1.3.0` Match `<ContactCard>` to design & pass tests
