@@ -9,16 +9,14 @@ export default function ContactCardPhoneNumber({
   return (
     <a
       href={`tel:${phoneNumber}`}
-      className="group flex items-center justify-center space-x-1 text-sm font-medium"
+      className="group flex items-center justify-start space-x-1 text-sm font-medium"
     >
       <PhoneIcon
-        className="h-2.5 w-2.5 fill-gray-400 group-hover:fill-green-400"
+        className="invisible h-2.5 w-2.5 fill-gray-400 group-hover:visible group-hover:fill-green-400"
         aria-label="Call"
       />
-      <span className="text-gray-400 group-hover:text-gray-500">
-        {phoneNumber}
-      </span>
-      <div className="invisible text-xs font-bold text-green-400 group-hover:visible">
+      <span className="font-bold text-black">{phoneNumber}</span>
+      <div className="invisible pt-0.5 text-xs font-bold text-green-400 group-hover:visible">
         call
       </div>
     </a>

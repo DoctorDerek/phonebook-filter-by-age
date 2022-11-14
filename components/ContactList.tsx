@@ -23,7 +23,7 @@ export default function ContactList({
   )
 
   return (
-    <div className="divide-y-gray-300 relative w-full divide-y-2 border border-solid border-gray-300">
+    <div className="relative w-full space-y-6">
       {filteredPhoneBookEntries?.map((contact) => {
         const { id, name, phoneNumber, photo } = contact
         // ID should be unique, but there's no penalty for adding to key.
