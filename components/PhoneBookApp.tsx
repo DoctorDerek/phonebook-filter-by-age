@@ -1,14 +1,13 @@
 "use client" // Specify this is a Client Component, not a Server Component.
 
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
+import ButtonCreate from "@/components/ButtonCreate"
+import ButtonReset from "@/components/ButtonReset"
 import ContactActionDialog, { DialogState } from "@/components/ContactDialog"
 import ContactList from "@/components/ContactList"
-import GlobalStateContext from "@/components/GlobalStateContext"
-import PhoneBookHeadings from "@/components/PhoneBookHeadings"
 import SearchBar from "@/components/SearchBar"
 import usePhoneBookService from "@/utils/usePhoneBookService"
-import { useActor } from "@xstate/react"
 
 /**
  * The `<PhoneBookApp>` handles our global state using 3 state handlers:
@@ -62,10 +61,13 @@ export default function PhoneBookApp() {
         contacts={contacts}
       />
 
-      <div className="flex flex-col items-center justify-center space-y-2">
-        <div className="flex w-full items-center justify-between">
+      <div className="flex flex-col items-center justify-center space-y-6">
+        <div className="grid w-full grid-cols-2">
           <SearchBar setFilterText={setFilterText} />
-          <PhoneBookHeadings setDialogState={setDialogState} />
+          <div className="flex w-full items-center justify-end space-x-1">
+            <ButtonReset setDialogState={setDialogState} />
+            <ButtonCreate setDialogState={setDialogState} />
+          </div>
         </div>
 
         <ContactList
