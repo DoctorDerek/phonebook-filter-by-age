@@ -87,3 +87,4 @@ Launches the test runner in the interactive watch mode.
 - `1.1.0` Refactor 15 components & fix photo deletion bug
 - `1.2.0` Refactor `<ContactCard>` and create TDD test
 - `1.3.0` Match `<ContactCard>` to design & pass tests
+- `1.4.0` Implement accessible mobile navigation menu
