@@ -4,4 +4,7 @@ node_js:
   - lts/*
 scripts:
   - yarn --immutable-cache
+  - yarn test
+  - yarn add codecov
 after_success:
+  - yarn codecov

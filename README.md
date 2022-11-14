@@ -58,6 +58,16 @@ Below you will find the complete feature set, a discussion section, and my techn
 12. 🌠 "Consider best practices in regard to accessibility."
 13. 🌠 "We have comps for mobile and desktop, but the list needs to look good at any width. We'll leave the details of the in-between views up to you."
 
+## Test Coverage Report - Jest & React Testing Library
+
+### `yarn test`
+
+Launches the test runner and generates code coverage report.
+
+### `yarn test:watch`
+
+Launches the test runner in the interactive watch mode.
+
 ## Technical Journal
 
 - `0.1.1` New app: create next-app w/TypeScript + Yarn 3
