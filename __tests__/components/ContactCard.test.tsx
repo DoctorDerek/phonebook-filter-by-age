@@ -27,7 +27,10 @@ describe("@/components/ContactCard", () => {
   const state = new RegExp(contact.state || "", "")
   const zipCode = new RegExp(contact.zipCode || "", "i")
   const phoneNumber = new RegExp(contact.phoneNumber || "", "i")
-  const email = new RegExp(contact.email || "", "i")
+  const splitEmail = contact.email?.split("@") || []
+  // We don't use RegExp here to avoid matching John.Doe (email) as John Doe.
+  const emailName = splitEmail[0] || ""
+  const emailDomain = splitEmail[1] || ""
   // The age isn't rendered to the screen, so we're not going to test it here.
   // const age = contact.age || -Infinity
 
@@ -88,6 +91,9 @@ describe("@/components/ContactCard", () => {
 
   it("renders the contact's email", () => {
     renderContact()
-    expect(screen.getByText(email)).toBeVisible()
+    // We allow the email address to wrap on some screen sizes, mainly tablet.
+    expect(screen.getByText(emailName)).toBeVisible()
+    expect(screen.getByText(emailDomain)).toBeVisible()
+    expect(screen.getByText("@")).toBeVisible()
   })
 })
