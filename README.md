@@ -85,6 +85,7 @@ Launches the test runner in the interactive watch mode.
 - 🧠 Features after this point are the "filter by age" app
 - 🔽 https://github.com/DoctorDerek/phonebook-filter-by-age
 - `1.1.0` Refactor 15 components & fix photo deletion bug
-- `1.2.0` Refactor `<ContactCard>` and create TDD test
+- `1.2.0` Extract `<ContactCard>` components and TDD test
 - `1.3.0` Match `<ContactCard>` to design & pass tests
 - `1.4.0` Implement accessible mobile navigation menu
+- `1.5.0` Fix the mobile design to match design document
