@@ -1,6 +1,7 @@
 import { render, screen } from "@/__tests__/test-utils"
 import ContactCard from "@/components/ContactCard"
 import CONTACTS from "@/contacts/CONTACTS"
+import transformBirthday from "@/utils/transformBirthday"
 
 describe("@/components/ContactCard", () => {
   /** We extract the first contact from CONTACTS for our test suite. */
@@ -16,7 +17,10 @@ describe("@/components/ContactCard", () => {
   const photo = contact?.photo?.replaceAll(" ", "%20") || ""
   // We always use case-insensitive search since we expect all UPPERCASE text.
   const name = new RegExp(contact.name, "i")
-  const birthday = new RegExp(contact.birthday || "", "i")
+  const birthday = new RegExp(
+    transformBirthday({ birthday: contact.birthday || "" }),
+    "i"
+  )
   const streetAddress = new RegExp(contact.streetAddress || "", "i")
   const city = new RegExp(contact.city || "", "i")
   // The state is the exception; it's uppercase, so we search case-sensitive.

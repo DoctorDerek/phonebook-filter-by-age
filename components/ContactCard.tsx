@@ -5,6 +5,7 @@ import ContactCardPhoneNumber from "@/components/ContactCardPhoneNumber"
 import ContactCardPhotoAndHeading from "@/components/ContactCardPhotoAndHeading"
 import { DialogState } from "@/components/ContactDialog"
 import { Contact } from "@/contacts/CONTACTS"
+import transformBirthday from "@/utils/transformBirthday"
 
 function Address({ contact }: { contact: Contact }) {
   const { streetAddress, city, state, zipCode } = contact || {
@@ -47,7 +48,10 @@ export default function ContactCard({
         setDialogState={setDialogState}
       />
       <div className="grid w-full grid-cols-1 space-y-6 xl:grid-cols-4 xl:space-y-0">
-        <ContactCardLabelAndData label="Birthday" data={birthday} />
+        <ContactCardLabelAndData
+          label="Birthday"
+          data={transformBirthday({ birthday: birthday || "" })}
+        />
         <ContactCardLabelAndData
           label="Address"
           data={<Address contact={contact} />}
