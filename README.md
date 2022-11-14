@@ -25,10 +25,6 @@ Below you will find the complete feature set, a discussion section, and my techn
 
 ## Feature List
 
-### ✅ === DONE
-
-### 🌠 === TODO
-
 1. ✅ Used Next.js version 13.0.3 with React 18.2.0 and Tailwind CSS 3.2.4.
 1. ✅ Deployed Next.js production build to Vercel with CI/CD at Travis CI.
 1. ✅ Established engineering best practices:
@@ -38,25 +34,20 @@ Below you will find the complete feature set, a discussion section, and my techn
 1. ✅ Added various tooltips that appear on hover to improve user experience.
 1. ✅ Enabled CREATE, UPDATE, DELETE, and RESET actions using React Hook Form.
 1. ✅ Sorted data by last name for a consistent user experience in the app.
-1. 🌠 Matched design document with READ and search by last name functionality.
-1. 🌠 Add unit test coverage for entire app with Jest & React Testing Library.
+1. ✅ Matched design document with READ and filter by age range functionality.
+1. ✅ Add unit test coverage for the app using Jest & React Testing Library.
 
 ## Discussion Section
 
-1. 🌠 XState takes the place of React Query in the app. The benefit of XState is the finite set of states, without additional testing.
-2. 🌠 It would be easy to connect any database without affecting the frontend by simplying replacing the `localStorage` calls in XState.
-3. 🌠 The app isn't particularly well-suited to GraphQL given the CRUD model, simplistic data objects, and extremely small data size.
-4. 🌠 We don't handle phone validation at all, but we would probably want some type of validation in production, as long as it's reliable.
-5. 🌠 The entire codebase could use extensive refactoring, since everything is simply built in the homepage (`@/pages/index.tsx`).
-6. 🌠 The app is difficult to test with React Testing Library without refactoring, because everything is closely coupled with XState.
-7. 🌠 Docker is unnecessary for this project, and I find it almost always reduces the performance of Next.js vs. deploying at Vercel.
-8. 🌠 Material UI has some benefits, but it can be hard to customize unless the designer uses it, while Tailwind is very easy to use.
-   - See [https://github.com/DoctorDerek/calendar-appointments](https://github.com/DoctorDerek/calendar-appointments) for an example from my portfolio using Material UI in depth.
-9. 🌠 Like with many projects, the design document left out certain features: RESET, dialogs (modals), hover styles, and animations.
-10. 🌠 Because of the combination of `localStorage` with XState, we have auto-save functionality that supports refreshing the page.
-11. 🌠 "Consider how interactions might occur on a touch screen vs standard keyboard / mouse"
-12. 🌠 "Consider best practices in regard to accessibility."
-13. 🌠 "We have comps for mobile and desktop, but the list needs to look good at any width. We'll leave the details of the in-between views up to you."
+1. ✅ We use XState finite state machines. The benefit of XState is the finite set of states, without additional testing.
+2. ✅ It would be easy to connect any database without affecting the frontend by simplying replacing the `localStorage` calls in XState.
+3. ✅ We don't handle phone or email validation at all, but we would probably want some type of reliable validation in production.
+4. ✅ The entire codebase could use more testing, which is made easier by the large number of small, easily-testable components.
+5. ✅ Like with many projects, the design document left out certain features: RESET, dialogs (modals), hover styles, and animations.
+6. ✅ Because of the combination of `localStorage` with XState, we have auto-save functionality that supports refreshing the page.
+7. ✅ Since the only major touch screen interaction difference is swiping, we shouldn't have much differences with desktop vs. mobile.
+8. ✅ Accessibility has been baked into the app, but we might find some issues when writing tests or using the app with the keyboard.
+9. 🌠 "We have comps for mobile and desktop, but the list needs to look good at any width. We'll leave the details of the in-between views up to you."
 
 ## Test Coverage Report - Jest & React Testing Library
 
@@ -88,5 +79,6 @@ Launches the test runner in the interactive watch mode.
 - `1.2.0` Extract `<ContactCard>` components and TDD test
 - `1.3.0` Match `<ContactCard>` to design & pass tests
 - `1.4.0` Implement accessible mobile navigation menu
-- `1.5.0` Fix the mobile design to match design document
+- `1.5.0` Align the mobile design with design document
 - `1.6.0` Enact the "filter by age" logic and dropdown
+- `1.7.0` Fix the CREATE & UPDATE actions with new fields
