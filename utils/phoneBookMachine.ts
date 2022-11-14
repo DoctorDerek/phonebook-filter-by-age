@@ -1,6 +1,7 @@
 import { assign, createMachine } from "xstate"
 
 import CONTACTS_WITH_AGES, {
+  calculateAge,
   Contact,
   sortByLastName,
 } from "@/contacts/CONTACTS"
@@ -107,6 +108,9 @@ const phoneBookMachine = createMachine(
         contacts: (context, event) => {
           const currentPhoneBookEntries = context.contacts
           const newContact = event.contact
+          // Calculate the age and add it to the object:
+          const { birthday } = newContact
+          newContact.age = calculateAge({ birthday })
           currentPhoneBookEntries.push(newContact)
           return currentPhoneBookEntries
         },

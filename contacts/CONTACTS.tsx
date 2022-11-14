@@ -96,7 +96,7 @@ const CONTACTS: Contact[] = [
   },
 ]
 
-const calculateAge = ({ birthday }: { birthday?: string }) => {
+export const calculateAge = ({ birthday }: { birthday?: string }) => {
   if (!birthday) return undefined // We can't calculate age without a birthday.
   const today = new Date()
   const birthDate = new Date(birthday)
