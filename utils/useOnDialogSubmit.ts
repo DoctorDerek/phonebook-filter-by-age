@@ -1,5 +1,5 @@
 import { DialogState } from "@/components/ContactDialog"
-import { Contact } from "@/contacts/CONTACTS"
+import { calculateAge, Contact } from "@/contacts/CONTACTS"
 import usePhoneBookService from "@/utils/usePhoneBookService"
 
 /**
@@ -24,34 +24,54 @@ export default function useOnDialogSubmit({
   const onDialogSubmit = (data: Contact) => {
     if (dialogState.type === "CREATE") {
       // We used React Hook Form to make sure we're getting all of the items:
-      const { name, phoneNumber } = data
+      const {
+        name,
+        birthday,
+        streetAddress,
+        city,
+        state,
+        zipCode,
+        phoneNumber,
+        email,
+      } = data
       // We need the max id from the current contacts to avoid hash collisions.
       const maxId = Math.max(...contacts?.map(({ id }) => id))
-      send({
-        type: "CREATE",
-        contact: { id: maxId + 1, name, phoneNumber },
-      })
+
+      /** This is the contact that's ready to send to the state machine. */
+      const contact = {
+        id: maxId + 1,
+        name,
+        birthday,
+        streetAddress,
+        city,
+        state,
+        zipCode,
+        phoneNumber,
+        email,
+        // The `age` is calculated by CREATE in `phoneBookMachine`.
+      }
+
+      send({ type: "CREATE", contact })
     }
 
     if (dialogState.type === "UPDATE") {
       /** We unpack the existing contact from the `dialogState`. */
       const oldContact = dialogState?.contact
-      // We have values from the form OR the contact for name and phoneNumber.
+      // We have values from the form OR the contact for each of the fields.
       const name = data.name || oldContact?.name || ""
+      const birthday = data.birthday || oldContact?.birthday || ""
+      const streetAddress =
+        data.streetAddress || oldContact?.streetAddress || ""
+      const city = data.city || oldContact?.city || ""
+      const state = data.state || oldContact?.state || ""
+      const zipCode = data.zipCode || oldContact?.zipCode || ""
       const phoneNumber = data.phoneNumber || oldContact?.phoneNumber || ""
+      const email = data.email || oldContact?.email || ""
       /** The id should come from the existing entry, but we fall back to -1. */
       const id = oldContact?.id || -1
       // We preserve data we didn't update in the form so we don't overwrite it.
-      const {
-        birthday,
-        age,
-        photo,
-        streetAddress,
-        city,
-        state,
-        zipCode,
-        email,
-      } = oldContact || {}
+      const photo = oldContact?.photo || ""
+      const age = oldContact?.age || calculateAge({ birthday }) || -1
 
       /** This is the contact that's ready to send to the state machine. */
       const contact = {

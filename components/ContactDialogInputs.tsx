@@ -63,15 +63,56 @@ export default function ContactDialogInputs({
               register={register}
             />
             <ContactDialogInput
+              label="Birthday"
+              fieldName="birthday"
+              dialogState={dialogState}
+              register={register}
+            />
+            <ContactDialogInput
+              label="Street Address"
+              fieldName="streetAddress"
+              dialogState={dialogState}
+              register={register}
+            />
+            <ContactDialogInput
+              label="City"
+              fieldName="city"
+              dialogState={dialogState}
+              register={register}
+            />
+            <ContactDialogInput
+              label="State"
+              fieldName="state"
+              dialogState={dialogState}
+              register={register}
+            />
+            <ContactDialogInput
+              label="ZIP Code"
+              fieldName="zipCode"
+              dialogState={dialogState}
+              register={register}
+            />
+            <ContactDialogInput
               label="Phone Number"
               fieldName="phoneNumber"
               dialogState={dialogState}
               register={register}
             />
+            <ContactDialogInput
+              label="Email Address"
+              fieldName="email"
+              dialogState={dialogState}
+              register={register}
+            />
             {dialogState.type === "CREATE" &&
-              (errors.name || errors.phoneNumber) && (
-                <div>All fields are required.</div>
-              )}
+              (errors.name ||
+                errors.birthday ||
+                errors.streetAddress ||
+                errors.city ||
+                errors.state ||
+                errors.zipCode ||
+                errors.phoneNumber ||
+                errors.email) && <div>All fields are required.</div>}
           </div>
         </>
       )}
