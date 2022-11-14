@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from "react"
 import ContactCard from "@/components/ContactCard"
 import { DialogState } from "@/components/ContactDialog"
 import { Contact } from "@/contacts/CONTACTS"
+import useFilterByAgeRange from "@/utils/useFilterByAgeRange"
 
 export default function ContactList({
   contacts,
@@ -13,14 +14,12 @@ export default function ContactList({
   filterText: string
   setDialogState: Dispatch<SetStateAction<DialogState>>
 }) {
+  const { filterByAgeRange } = useFilterByAgeRange({ filterText })
   /**
-   * We allow the user to filter by name. Note that the empty string "" will
-   * always return true for the regular expression, which is the initial state.
+   * We allow the user to filter by age range. Note that the empty string ""
+   * will always return true for the filter function. That is the initial state.
    */
-  const filteredPhoneBookEntries = contacts?.filter(
-    ({ name }) => new RegExp(filterText, "i").exec(name)
-    // The "i" flag means we use a case-insensitive search.
-  )
+  const filteredPhoneBookEntries = contacts?.filter(filterByAgeRange)
 
   return (
     <div className="relative w-full space-y-6">
