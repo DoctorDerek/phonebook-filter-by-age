@@ -63,9 +63,10 @@ export default function PhoneBookApp() {
       />
 
       <div className="flex flex-col items-center justify-center space-y-2">
-        <PhoneBookHeadings setDialogState={setDialogState} />
-
-        <SearchBar setFilterText={setFilterText} />
+        <div className="flex w-full items-center justify-between">
+          <SearchBar setFilterText={setFilterText} />
+          <PhoneBookHeadings setDialogState={setDialogState} />
+        </div>
 
         <ContactList
           contacts={contacts}

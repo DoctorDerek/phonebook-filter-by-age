@@ -3,6 +3,7 @@ import "@/styles/globals.css"
 import { ReactNode } from "react"
 
 import Providers from "@/app/providers"
+import NavBar from "@/components/NavBar"
 import { Inter } from "@next/font/google"
 
 /**
@@ -25,10 +26,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={inter.className}>
       <body>
         <Providers>
-          <main className="my-2 mx-auto flex min-h-screen w-[95vw] cursor-crosshair flex-col items-center justify-center">
-            <div className="min-w-104 max-w-3xl rounded-xl border border-solid border-gray-600 p-2">
-              {children}
-            </div>
+          <NavBar />
+          <main className="mx-auto flex min-h-screen w-[95vw] cursor-crosshair flex-col items-center justify-center p-8">
+            {children}
           </main>
         </Providers>
       </body>
