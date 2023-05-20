@@ -19,7 +19,7 @@ jobs:
       - name: Use Node.js LTS (v18)
         uses: actions/setup-node@v3
         with:
-          node-version: lts # Node 18 LTS
+          node-version: 18.x # Node 18 LTS
 
       - name: Install dependencies
         run: |
