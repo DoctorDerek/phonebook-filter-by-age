@@ -23,7 +23,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yarn --immutable-cache
+          yarn --frozen-lockfile
+
+      # We don't want immutable-cache, just a frozen `yarn.lock` file
 
       - name: Run tests
         run: |
