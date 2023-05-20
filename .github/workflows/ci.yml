@@ -38,7 +38,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           RESULT="Failed :x:"
-          if success(); then
+          if success; then
             RESULT="Success :white_check_mark:"
           fi
 
