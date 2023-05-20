@@ -1,0 +1,57 @@
+name: CI for Phonebook Filter By Age App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix: # Node 18 LTS
+        node-version: 18.x # [14.x, 16.x, 18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: |
+          yarn --immutable-cache
+
+      - name: Run tests
+        run: |
+          yarn test
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+
+      - name: Update PR with Result
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+          RESULT="Failed :x:"
+          if ${{ success() }}; then
+            RESULT="Success :white_check_mark:"
+          fi
+
+          PR_COMMENT="Test $RESULT"
+
+          echo "Adding PR comment: $PR_COMMENT"
+
+          echo $PR_COMMENT | gh pr comment ${{ github.event.pull_request.number }} --body -
+
+      - name: Log git history
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          git log --oneline | gh pr comment ${{ github.event.pull_request.number }} --body -
