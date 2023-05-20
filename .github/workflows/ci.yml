@@ -12,18 +12,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix: # Node 18 LTS
-        node-version: 18.x # [14.x, 16.x, 18.x]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js LTS (v18)
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: lts # Node 18 LTS
 
       - name: Install dependencies
         run: |
