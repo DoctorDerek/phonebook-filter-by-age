@@ -37,13 +37,12 @@ jobs:
       - name: Update PR with Result
         if: ${{ github.event_name == 'pull_request' }}
         run: |
-          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
           RESULT="Failed :x:"
           if success(); then
             RESULT="Success :white_check_mark:"
           fi
 
-          PR_COMMENT="Test $RESULT"
+          PR_COMMENT="Tests $RESULT"
 
           echo "Adding PR comment: $PR_COMMENT"
 
