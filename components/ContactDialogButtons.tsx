@@ -127,27 +127,46 @@ export default function ContactDialogButtons({
         {/* Show "Cancel" on the 1st slide; otherwise show a "Back" button. */}
         <ContactDialogButton
           type="button"
-          label={slideIndex === 0 ? "Cancel" : "Back"}
+          label={
+            slideIndex === 0 ||
+            (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
+              ? "Cancel"
+              : "Back"
+          }
           color="bg-gray-800 text-white hover:bg-gray-700 hover:outline-gray-800"
           onClick={
-            slideIndex === 0
+            slideIndex === 0 ||
+            (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
               ? () => closeDialog()
               : () => instanceRef?.current?.prev()
           }
         />
         {/* Show "Next" on slides except the last; show "Submit" on last. */}
         <ContactDialogButton
-          type={slideIndex !== maxIndex ? "button" : "submit"}
-          label={slideIndex !== maxIndex ? "Next" : dialogState.type}
+          type={
+            slideIndex === maxIndex ||
+            (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
+              ? "submit"
+              : "button"
+          }
+          label={
+            slideIndex === maxIndex ||
+            (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
+              ? dialogState.type
+              : "Next"
+          }
           color="bg-blue-400 text-white hover:bg-blue-500 hover:outline-blue-400"
           onClick={
-            slideIndex !== maxIndex
-              ? () => instanceRef?.current?.next()
-              : undefined
+            slideIndex === maxIndex ||
+            (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
+              ? undefined
+              : () => instanceRef?.current?.next()
           }
         />
       </div>
-      <ProgressIndicators slideIndex={slideIndex} />
+      {(dialogState.type === "CREATE" || dialogState.type === "UPDATE") && (
+        <ProgressIndicators slideIndex={slideIndex} />
+      )}
     </>
   )
 }
