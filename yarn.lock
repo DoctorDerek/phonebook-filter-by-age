@@ -388,16 +388,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/polyfill@npm:^7.2.5":
-  version: 7.12.1
-  resolution: "@babel/polyfill@npm:7.12.1"
-  dependencies:
-    core-js: ^2.6.5
-    regenerator-runtime: ^0.13.4
-  checksum: 3f59a9d85a41b390b044a1be13e11ae6d8efbfcf4e07217964585c7cef337b828eecfc5e164083227189146d2b6efc1affae8f59c831438eb40b848ab6fe5f39
-  languageName: node
-  linkType: hard
-
 "@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.9.2":
   version: 7.21.5
   resolution: "@babel/runtime@npm:7.21.5"
@@ -521,16 +511,6 @@ __metadata:
   version: 8.41.0
   resolution: "@eslint/js@npm:8.41.0"
   checksum: af013d70fe8d0429cdf5cd8b5dcc6fc384ed026c1eccb0cfe30f5849b968ab91645111373fd1b83282b38955b1bdfbe667c1a7dbda3b06cae753521223cad775
-  languageName: node
-  linkType: hard
-
-"@fullpage/react-fullpage@npm:^0.1.39":
-  version: 0.1.39
-  resolution: "@fullpage/react-fullpage@npm:0.1.39"
-  dependencies:
-    "@babel/polyfill": ^7.2.5
-    fullpage.js: ^4.0.19
-  checksum: 9919e3d11520c2e8627136b148e9ee5bd9cb83a43ba6908feb346b416dbad352dc26fea916192135e049552f1afc0c8a19cc99a66288c18fe62e2c567f4bc619
   languageName: node
   linkType: hard
 
@@ -2217,13 +2197,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^2.6.5":
-  version: 2.6.12
-  resolution: "core-js@npm:2.6.12"
-  checksum: 44fa9934a85f8c78d61e0c8b7b22436330471ffe59ec5076fe7f324d6e8cf7f824b14b1c81ca73608b13bdb0fef035bd820989bf059767ad6fa13123bb8bd016
-  languageName: node
-  linkType: hard
-
 "cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
@@ -3226,13 +3199,6 @@ __metadata:
   dependencies:
     node-gyp: latest
   conditions: os=darwin
-  languageName: node
-  linkType: hard
-
-"fullpage.js@npm:^4.0.19":
-  version: 4.0.19
-  resolution: "fullpage.js@npm:4.0.19"
-  checksum: 78172415ebc548423f4908a0dce1df8be09132da0d559434763c86214f838c0f67c70263d8838ef10ac12ace6f2af44e04c76d00b52c9d0f945351af5de5ba04
   languageName: node
   linkType: hard
 
@@ -5581,7 +5547,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "phonebook-app@workspace:."
   dependencies:
-    "@fullpage/react-fullpage": ^0.1.39
     "@headlessui/react": ^1.7.14
     "@heroicons/react": ^2.0.18
     "@testing-library/jest-dom": ^5.16.5
@@ -6035,7 +6000,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:^0.13.11, regenerator-runtime@npm:^0.13.4":
+"regenerator-runtime@npm:^0.13.11":
   version: 0.13.11
   resolution: "regenerator-runtime@npm:0.13.11"
   checksum: 27481628d22a1c4e3ff551096a683b424242a216fee44685467307f14d58020af1e19660bf2e26064de946bad7eff28950eae9f8209d55723e2d9351e632bbb4

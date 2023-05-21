@@ -14,7 +14,6 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@fullpage/react-fullpage": "^0.1.39",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.18",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",

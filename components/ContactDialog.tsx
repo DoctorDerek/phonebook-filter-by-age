@@ -1,7 +1,6 @@
 "use client"
 
 // Specify this is a Client Component, not a Server Component.
-import ReactFullpage from "@fullpage/react-fullpage"
 import { Dialog } from "@headlessui/react"
 import { Dispatch, SetStateAction, useContext } from "react"
 import { useForm } from "react-hook-form"
@@ -56,59 +55,35 @@ export default function ContactDialog({
       onClose={closeDialog}
       className="relative z-50"
     >
-      <ReactFullpage
-        //fullpage options
-        licenseKey={"YOUR_KEY_HERE"}
-        scrollingSpeed={1000} /* Options here */
-        credits={{
-          enabled: false,
-        }}
-        render={({ state, fullpageApi }) => {
-          return (
-            <ReactFullpage.Wrapper>
-              <div className="section">
-                <p>Section 1 (welcome to fullpage.js)</p>
-                <button onClick={() => fullpageApi.moveSectionDown()}>
-                  Click me to move down
-                </button>
-              </div>
-              <div className="section">
-                <p>Section 2</p>
-              </div>
+      {/* The backdrop (a fixed sibling to the panel container). */}
+      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
-              {/* The backdrop (a fixed sibling to the panel container). */}
-              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+      {/* A full-screen container that will center the dialog. */}
+      <div className="fixed inset-0 flex items-center justify-center p-4">
+        {/* The actual dialog panel, centered inside the box. */}
+        <form onSubmit={handleSubmit(onDialogSubmit)}>
+          <Dialog.Panel className="relative mx-auto flex min-h-[75vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
+            <ContactDialogClose closeDialog={closeDialog} />
 
-              {/* A full-screen container that will center the dialog. */}
-              <div className="fixed inset-0 flex items-center justify-center p-4">
-                {/* The actual dialog panel, centered inside the box. */}
-                <form onSubmit={handleSubmit(onDialogSubmit)}>
-                  <Dialog.Panel className="relative mx-auto flex min-h-[75vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
-                    <ContactDialogClose closeDialog={closeDialog} />
+            <ContactDialogTitle dialogState={dialogState} />
 
-                    <ContactDialogTitle dialogState={dialogState} />
+            <ContactDialogDescription dialogState={dialogState} />
 
-                    <ContactDialogDescription dialogState={dialogState} />
+            <ContactDialogWarning dialogState={dialogState} />
 
-                    <ContactDialogWarning dialogState={dialogState} />
+            <ContactDialogInputs
+              dialogState={dialogState}
+              register={register}
+              errors={errors}
+            />
 
-                    <ContactDialogInputs
-                      dialogState={dialogState}
-                      register={register}
-                      errors={errors}
-                    />
-
-                    <ContactDialogButtons
-                      dialogState={dialogState}
-                      closeDialog={closeDialog}
-                    />
-                  </Dialog.Panel>
-                </form>
-              </div>
-            </ReactFullpage.Wrapper>
-          )
-        }}
-      />
+            <ContactDialogButtons
+              dialogState={dialogState}
+              closeDialog={closeDialog}
+            />
+          </Dialog.Panel>
+        </form>
+      </div>
     </Dialog>
   )
 }
