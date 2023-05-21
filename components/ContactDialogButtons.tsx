@@ -37,15 +37,17 @@ function ProgressIndicator({
   return (
     <li
       className={classNames(
-        "flex items-center",
-        slideIndex === thisSlideIndex ? "text-blue-600" : "text-gray-600"
+        "flex items-center border border-solid  pr-2 rounded",
+        slideIndex === thisSlideIndex
+          ? "text-blue-600 border-blue-600"
+          : "text-gray-600 border-gray-200"
       )}
     >
       <span className="font-bold w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-end">
         {slideIndex >= thisSlideIndex ? (
           <CheckMark />
         ) : (
-          <span className="mr-2">{thisSlideIndex + 1}</span>
+          <span className="mr-2.5">{thisSlideIndex + 1}</span>
         )}
       </span>
       {children}
@@ -55,7 +57,7 @@ function ProgressIndicator({
 
 function ProgressIndicators({ slideIndex }: { slideIndex: number }) {
   return (
-    <ol className="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base justify-between">
+    <ol className="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base justify-between mt-4">
       <ProgressIndicator slideIndex={slideIndex} thisSlideIndex={0}>
         Email
       </ProgressIndicator>
@@ -122,7 +124,7 @@ export default function ContactDialogButtons({
   return (
     <>
       <div className="flex w-full items-center justify-between space-x-2">
-        {/* Show "Cancel" on the first slide; otherwise show a "Back" button. */}
+        {/* Show "Cancel" on the 1st slide; otherwise show a "Back" button. */}
         <ContactDialogButton
           type="button"
           label={slideIndex === 0 ? "Cancel" : "Back"}

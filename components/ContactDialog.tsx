@@ -78,23 +78,30 @@ export default function ContactDialog({
         {/* The actual dialog panel, centered inside the box. */}
         <form onSubmit={handleSubmit(onDialogSubmit)}>
           <Dialog.Panel className="relative mx-auto flex min-h-[75vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
-            <ContactDialogClose closeDialog={closeDialog} />
-            <ContactDialogTitle dialogState={dialogState} />
-            <ContactDialogDescription dialogState={dialogState} />
-            <ContactDialogWarning dialogState={dialogState} />
+            <div>
+              {/* Top section */}
+              <ContactDialogClose closeDialog={closeDialog} />
+              <ContactDialogTitle dialogState={dialogState} />
+              <ContactDialogDescription dialogState={dialogState} />
+              <ContactDialogWarning dialogState={dialogState} />
+            </div>
             <div ref={sliderRef} className="keen-slider">
+              {/* Middle section */}
               <ContactDialogInputs
                 dialogState={dialogState}
                 register={register}
                 errors={errors}
               />
             </div>
-            <ContactDialogButtons
-              dialogState={dialogState}
-              closeDialog={closeDialog}
-              instanceRef={instanceRef}
-              slideIndex={slideIndex}
-            />
+            <div>
+              {/* Bottom section */}
+              <ContactDialogButtons
+                dialogState={dialogState}
+                closeDialog={closeDialog}
+                instanceRef={instanceRef}
+                slideIndex={slideIndex}
+              />
+            </div>
           </Dialog.Panel>
         </form>
       </div>
