@@ -4,7 +4,13 @@
 import { Dialog } from "@headlessui/react"
 import "keen-slider/keen-slider.min.css"
 import { useKeenSlider } from "keen-slider/react.es"
-import { Dispatch, SetStateAction, useContext, useState } from "react"
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 import { useForm } from "react-hook-form"
 
 import ContactDialogClose from "@/components/ButtonCloseDialog"
@@ -65,6 +71,37 @@ export default function ContactDialog({
     },
   })
 
+  /**
+   * We don't want to validate the entire form every time the slide changes.
+   * These fields correspond to the slides in `<ContactDialogInputs>`.
+   */
+  async function validateSlide() {
+    if (slideIndex === 0) {
+      await trigger("email")
+      await trigger("password")
+    }
+    if (slideIndex === 1) {
+      await trigger("firstName")
+      await trigger("lastName")
+      await trigger("birthday")
+      await trigger("streetAddress")
+      await trigger("city")
+      await trigger("state")
+      await trigger("zipCode")
+      await trigger("phoneNumber")
+    }
+  }
+
+  useEffect(() => {
+    async function showSlideWithError() {
+      if (errors?.email || errors?.password) {
+        setSlideIndex(0)
+        instanceRef?.current?.moveToIdx(0, true)
+      }
+    }
+    showSlideWithError()
+  }, [errors?.email, errors?.password, instanceRef, slideIndex, trigger])
+
   return (
     <Dialog
       open={dialogState.type !== "CLOSED"}
@@ -94,7 +131,7 @@ export default function ContactDialog({
                 errors={errors}
               />
             </div>
-            <div onClick={() => trigger()}>
+            <div onClick={() => validateSlide()}>
               {/* Bottom section */}
               <ContactDialogButtons
                 dialogState={dialogState}
