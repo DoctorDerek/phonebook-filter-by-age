@@ -902,13 +902,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/font@npm:^13.4.3":
-  version: 13.4.3
-  resolution: "@next/font@npm:13.4.3"
-  checksum: 9feca5b6181505b85d9c198535ddd1dd26bc0e435dbfb53af06c14debe8eb021c78842100ef7f37e21d75701156ee4ae060db1de3d4bcb6ce6e82eb54b441634
-  languageName: node
-  linkType: hard
-
 "@next/swc-darwin-arm64@npm:13.4.3":
   version: 13.4.3
   resolution: "@next/swc-darwin-arm64@npm:13.4.3"
@@ -5591,7 +5584,6 @@ __metadata:
     "@fullpage/react-fullpage": ^0.1.39
     "@headlessui/react": ^1.7.14
     "@heroicons/react": ^2.0.18
-    "@next/font": ^13.4.3
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^14.0.0
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
