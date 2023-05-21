@@ -1,5 +1,5 @@
 import { DialogState } from "@/components/ContactDialog"
-import { calculateAge, Contact } from "@/contacts/CONTACTS"
+import { Contact, calculateAge } from "@/contacts/CONTACTS"
 import usePhoneBookService from "@/utils/usePhoneBookService"
 
 /**

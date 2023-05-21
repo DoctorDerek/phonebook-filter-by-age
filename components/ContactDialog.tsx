@@ -1,5 +1,8 @@
-"use client" // Specify this is a Client Component, not a Server Component.
+"use client"
 
+// Specify this is a Client Component, not a Server Component.
+import ReactFullpage from "@fullpage/react-fullpage"
+import { Dialog } from "@headlessui/react"
 import { Dispatch, SetStateAction, useContext } from "react"
 import { useForm } from "react-hook-form"
 
@@ -11,8 +14,6 @@ import ContactDialogTitle from "@/components/ContactDialogTitle"
 import ContactDialogWarning from "@/components/ContactDialogWarning"
 import { Contact } from "@/contacts/CONTACTS"
 import useOnDialogSubmit from "@/utils/useOnDialogSubmit"
-import { Dialog } from "@headlessui/react"
-import ReactFullpage from "@fullpage/react-fullpage"
 
 export type DialogState = {
   type: "CLOSED" | "CREATE" | "UPDATE" | "DELETE" | "RESET"

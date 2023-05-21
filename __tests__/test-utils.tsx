@@ -7,9 +7,8 @@
 //
 // Note: This syntax replaces any imports from "@testing-library/react".
 //
+import { RenderOptions, render } from "@testing-library/react"
 import { ReactElement, ReactNode } from "react"
-
-import { render, RenderOptions } from "@testing-library/react"
 
 // **Global Mocks**
 // Mocks that are included here in `@/__tests__/test-utils` apply to all tests.

@@ -1,8 +1,8 @@
 import { assign, createMachine } from "xstate"
 
 import CONTACTS_WITH_AGES, {
-  calculateAge,
   Contact,
+  calculateAge,
   sortByLastName,
 } from "@/contacts/CONTACTS"
 

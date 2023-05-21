@@ -1,11 +1,12 @@
-"use client" // Specify this is a Client Component, not a Server Component.
+"use client"
 
+// Specify this is a Client Component, not a Server Component.
+import { useInterpret } from "@xstate/react"
 import { ReactNode } from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
 import phoneBookMachine from "@/utils/phoneBookMachine"
-import { useInterpret } from "@xstate/react"
 
 const queryClient = new QueryClient()
 

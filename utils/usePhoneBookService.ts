@@ -1,7 +1,7 @@
+import { useActor } from "@xstate/react"
 import { useContext } from "react"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
-import { useActor } from "@xstate/react"
 
 /** Return `phoneBookState` and `send` from the XState finite state machine. */
 export default function usePhoneBookService() {
