@@ -74,6 +74,10 @@ export default function ContactDialogInputs({
           dialogState={dialogState}
           register={register}
         />
+        <div className="text-base italic pt-4">
+          Note: The password is only to demonstrate password validation. Do not
+          use a real password.
+        </div>
       </div>
       <div className="keen-slider__slide">
         <ContactDialogInput
