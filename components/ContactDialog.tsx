@@ -2,7 +2,9 @@
 
 // Specify this is a Client Component, not a Server Component.
 import { Dialog } from "@headlessui/react"
-import { Dispatch, SetStateAction, useContext } from "react"
+import "keen-slider/keen-slider.min.css"
+import { useKeenSlider } from "keen-slider/react.es"
+import { Dispatch, SetStateAction, useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import ContactDialogClose from "@/components/ButtonCloseDialog"
@@ -49,6 +51,19 @@ export default function ContactDialog({
     closeDialog,
   })
 
+  const [slideIndex, setSlideIndex] = useState(0)
+  const [sliderRef, instanceRef] = useKeenSlider({
+    slideChanged() {
+      setSlideIndex(instanceRef?.current?.track?.details?.abs || 0)
+    },
+    created() {
+      setSlideIndex(0)
+    },
+    destroyed() {
+      setSlideIndex(0)
+    },
+  })
+
   return (
     <Dialog
       open={dialogState.type !== "CLOSED"}
@@ -64,22 +79,21 @@ export default function ContactDialog({
         <form onSubmit={handleSubmit(onDialogSubmit)}>
           <Dialog.Panel className="relative mx-auto flex min-h-[75vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
             <ContactDialogClose closeDialog={closeDialog} />
-
             <ContactDialogTitle dialogState={dialogState} />
-
             <ContactDialogDescription dialogState={dialogState} />
-
             <ContactDialogWarning dialogState={dialogState} />
-
-            <ContactDialogInputs
-              dialogState={dialogState}
-              register={register}
-              errors={errors}
-            />
-
+            <div ref={sliderRef} className="keen-slider">
+              <ContactDialogInputs
+                dialogState={dialogState}
+                register={register}
+                errors={errors}
+              />
+            </div>
             <ContactDialogButtons
               dialogState={dialogState}
               closeDialog={closeDialog}
+              instanceRef={instanceRef}
+              slideIndex={slideIndex}
             />
           </Dialog.Panel>
         </form>

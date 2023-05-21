@@ -55,7 +55,16 @@ export default function ContactDialogInputs({
     <>
       {dialogState.type !== "RESET" && (
         <>
-          <div className="space-y-1 whitespace-nowrap">
+          <div className="keen-slider__slide">
+            <ContactDialogInput
+              label="Email Address"
+              fieldName="email"
+              dialogState={dialogState}
+              register={register}
+            />
+            Password
+          </div>
+          <div className="keen-slider__slide">
             <ContactDialogInput
               label="Name"
               fieldName="name"
@@ -68,6 +77,13 @@ export default function ContactDialogInputs({
               dialogState={dialogState}
               register={register}
             />
+            <ContactDialogInput
+              label="Phone Number"
+              fieldName="phoneNumber"
+              dialogState={dialogState}
+              register={register}
+            />
+            Toggle
             <ContactDialogInput
               label="Street Address"
               fieldName="streetAddress"
@@ -92,28 +108,18 @@ export default function ContactDialogInputs({
               dialogState={dialogState}
               register={register}
             />
-            <ContactDialogInput
-              label="Phone Number"
-              fieldName="phoneNumber"
-              dialogState={dialogState}
-              register={register}
-            />
-            <ContactDialogInput
-              label="Email Address"
-              fieldName="email"
-              dialogState={dialogState}
-              register={register}
-            />
-            {dialogState.type === "CREATE" &&
-              (errors.name ||
-                errors.birthday ||
-                errors.streetAddress ||
-                errors.city ||
-                errors.state ||
-                errors.zipCode ||
-                errors.phoneNumber ||
-                errors.email) && <div>All fields are required.</div>}
           </div>
+          <div className="keen-slider__slide">Security Questions</div>
+          <div className="keen-slider__slide">Review and Submit</div>
+          {dialogState.type === "CREATE" &&
+            (errors.name ||
+              errors.birthday ||
+              errors.streetAddress ||
+              errors.city ||
+              errors.state ||
+              errors.zipCode ||
+              errors.phoneNumber ||
+              errors.email) && <div>All fields are required.</div>}
         </>
       )}
     </>
