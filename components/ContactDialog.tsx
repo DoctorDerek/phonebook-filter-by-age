@@ -86,9 +86,6 @@ export default function ContactDialog({
               <ContactDialogDescription dialogState={dialogState} />
               <ContactDialogWarning dialogState={dialogState} />
             </div>
-            {errors?.name?.message && (
-              <p className="text-red-500 text-sm">{errors.name.message}</p>
-            )}
             <div ref={sliderRef} className="keen-slider">
               {/* Middle section */}
               <ContactDialogInputs

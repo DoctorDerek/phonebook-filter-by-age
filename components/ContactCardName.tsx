@@ -11,7 +11,11 @@ export default function ContactCardNameAndCity({
   contact: Contact
   setDialogState: Dispatch<SetStateAction<DialogState>>
 }) {
-  const { name, city } = contact || { name: "", city: "" }
+  const { firstName, lastName, city } = contact || {
+    firstName: "",
+    lastName: "",
+    city: "",
+  }
   return (
     <h3 className="flex flex-col items-start justify-center">
       <button
@@ -19,7 +23,7 @@ export default function ContactCardNameAndCity({
         // We have to reapply the UPPERCASE style here because it's overridden.
         onClick={() => setDialogState({ type: "UPDATE", contact })}
       >
-        {name}
+        {firstName} {lastName}
         <div className="invisible pl-1 text-sm lowercase tracking-normal text-gray-400 group-hover:visible">
           edit
         </div>

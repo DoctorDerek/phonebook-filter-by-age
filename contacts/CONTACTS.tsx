@@ -2,8 +2,9 @@
 export type Contact = {
   /** Uniqueness of the ID is enforced by the XState finite state machine. */
   id: number
-  /** We don't separate first and last names, but we do require a name. */
-  name: string
+  /** We separate first and last names, and both are required. */
+  firstName: string
+  lastName: string
   /** Birthdays are initialized using the syntax `new Date("1990-01-01")`. */
   birthday?: string
   /** The contact's age is calculated from their birthday automatically. */
@@ -26,7 +27,8 @@ const CONTACTS: Contact[] = [
   {
     id: 1,
     photo: "Unsplash Jessica Christian.png",
-    name: "Jessica Christian",
+    firstName: "Jessica",
+    lastName: "Christian",
     birthday: "2022-05-30", // Baby
     streetAddress: "1234 Main St",
     city: "San Francisco",
@@ -38,7 +40,8 @@ const CONTACTS: Contact[] = [
   {
     id: 2,
     photo: "Unsplash Lia Bekyan.png",
-    name: "Lia Bekyan",
+    firstName: "Lia",
+    lastName: "Bekyan",
     birthday: "2010-09-24", // Child
     streetAddress: "1234 Happy Lane",
     city: "San Diego",
@@ -50,7 +53,8 @@ const CONTACTS: Contact[] = [
   {
     id: 3,
     photo: "Unsplash Remy Loz.png",
-    name: "Remy Loz",
+    firstName: "Remy",
+    lastName: "Loz",
     birthday: "2000-07-04", // Young Adult
     streetAddress: "1234 Main St",
     city: "San Francisco",
@@ -62,7 +66,8 @@ const CONTACTS: Contact[] = [
   {
     id: 4,
     photo: "Unsplash Ryan Hoffman.png",
-    name: "Ryan Hoffman",
+    firstName: "Ryan",
+    lastName: "Hoffman",
     birthday: "1990-04-06", // Middle Aged Adult
     streetAddress: "1234 Main St",
     city: "San Francisco",
@@ -74,7 +79,8 @@ const CONTACTS: Contact[] = [
   {
     id: 5,
     photo: "Unsplash Tadas Petrokas.png",
-    name: "Tadas Petrokas",
+    firstName: "Tadas",
+    lastName: "Petrokas",
     birthday: "1956-08-07", // Senior
     streetAddress: "1234 Main St",
     city: "San Francisco",
@@ -86,7 +92,8 @@ const CONTACTS: Contact[] = [
   {
     id: 6,
     photo: "Unsplash Yohan Marion.png",
-    name: "Yohan Marion",
+    firstName: "Yohan",
+    lastName: "Marion",
     birthday: "1890-11-24", // Senior
     streetAddress: "1234 Main St",
     city: "San Francisco",
@@ -122,8 +129,8 @@ const CONTACTS_WITH_AGES: Contact[] = CONTACTS.map((contact) => {
 export const sortByLastName = (a: Contact, b: Contact) => {
   // We're going to assume that the last name is the last word in the name, but
   // that may be incorrect, especially with many Asian or Hispanic names.
-  const aName = a?.name || ""
-  const bName = b?.name || ""
+  const aName = a?.lastName || ""
+  const bName = b?.lastName || ""
   // We .pop() to get the last word in the name, and then we use .toLowerCase():
   const aLastName = aName.split(" ").pop()?.toLocaleLowerCase() || ""
   const bLastName = bName.split(" ").pop()?.toLocaleLowerCase() || ""

@@ -24,9 +24,9 @@ export default function ContactList({
   return (
     <div className="relative w-full space-y-6">
       {filteredPhoneBookEntries?.map((contact) => {
-        const { id, name, phoneNumber, photo } = contact
+        const { id, firstName, lastName, phoneNumber, photo } = contact
         // ID should be unique, but there's no penalty for adding to key.
-        const key = `${id}${name}${phoneNumber}${photo}`
+        const key = `${id}${firstName}${lastName}${phoneNumber}${photo}`
         return (
           <ContactCard
             key={key}

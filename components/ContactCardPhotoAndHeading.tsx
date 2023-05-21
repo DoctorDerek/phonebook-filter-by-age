@@ -22,7 +22,11 @@ export default function ContactCardPhotoAndHeading({
   contact: Contact
   setDialogState: Dispatch<SetStateAction<DialogState>>
 }) {
-  const { name, photo } = contact || { name: "", photo: "" }
+  const { firstName, lastName, photo } = contact || {
+    firstName: "",
+    lastName: "",
+    photo: "",
+  }
   return (
     <div className="flex items-center justify-center space-x-4">
       <div className="group relative h-20 w-20 flex-shrink-0">
@@ -30,7 +34,8 @@ export default function ContactCardPhotoAndHeading({
         {photo && ( // Only show the photo if there's a `photo` URL.
           <Image
             src={`/contacts/${photo}`}
-            alt={name} // Screen readers announce "Image of {name}"
+            alt={`${firstName} ${lastName}`}
+            // Screen readers announce "Image of `${firstName} ${lastName}`"
             fill
             className="object-fit rounded-full"
             sizes={IMAGE_SIZES}

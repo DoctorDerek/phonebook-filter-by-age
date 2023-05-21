@@ -25,7 +25,8 @@ export default function useOnDialogSubmit({
     if (dialogState.type === "CREATE") {
       // We used React Hook Form to make sure we're getting all of the items:
       const {
-        name,
+        firstName,
+        lastName,
         birthday,
         streetAddress,
         city,
@@ -40,7 +41,8 @@ export default function useOnDialogSubmit({
       /** This is the contact that's ready to send to the state machine. */
       const contact = {
         id: maxId + 1,
-        name,
+        firstName,
+        lastName,
         birthday,
         streetAddress,
         city,
@@ -58,7 +60,8 @@ export default function useOnDialogSubmit({
       /** We unpack the existing contact from the `dialogState`. */
       const oldContact = dialogState?.contact
       // We have values from the form OR the contact for each of the fields.
-      const name = data.name || oldContact?.name || ""
+      const firstName = data.firstName || oldContact?.firstName || ""
+      const lastName = data.lastName || oldContact?.lastName || ""
       const birthday = data.birthday || oldContact?.birthday || ""
       const streetAddress =
         data.streetAddress || oldContact?.streetAddress || ""
@@ -76,7 +79,8 @@ export default function useOnDialogSubmit({
       /** This is the contact that's ready to send to the state machine. */
       const contact = {
         id,
-        name,
+        firstName,
+        lastName,
         phoneNumber,
         birthday,
         age,

@@ -93,7 +93,8 @@ export default function ContactDialogInputs({
           use a real password.
         </div>
         {dialogState.type === "CREATE" &&
-          (errors.name ||
+          (errors.firstName ||
+            errors.lastName ||
             errors.birthday ||
             errors.streetAddress ||
             errors.city ||
@@ -104,8 +105,15 @@ export default function ContactDialogInputs({
       </div>
       <div className="keen-slider__slide">
         <ContactDialogInput
-          label="Name"
-          fieldName="name"
+          label="First Name"
+          fieldName="firstName"
+          dialogState={dialogState}
+          register={register}
+          errors={errors}
+        />
+        <ContactDialogInput
+          label="Last Name"
+          fieldName="lastName"
           dialogState={dialogState}
           register={register}
           errors={errors}
@@ -154,7 +162,8 @@ export default function ContactDialogInputs({
           errors={errors}
         />
         {dialogState.type === "CREATE" &&
-          (errors.name ||
+          (errors.firstName ||
+            errors.lastName ||
             errors.birthday ||
             errors.streetAddress ||
             errors.city ||

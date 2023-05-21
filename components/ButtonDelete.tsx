@@ -11,7 +11,11 @@ export default function ButtonDelete({
   contact: Contact
   setDialogState: Dispatch<SetStateAction<DialogState>>
 }) {
-  const { name, phoneNumber } = contact || { name: "", phoneNumber: "" }
+  const { firstName, lastName, phoneNumber } = contact || {
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+  }
   return (
     <button
       className="group relative flex items-center justify-center"
@@ -27,7 +31,7 @@ export default function ButtonDelete({
       <div className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500">
         <TrashIcon
           className="h-4 w-4 fill-white"
-          aria-label={`Delete ${name} ${phoneNumber}`}
+          aria-label={`Delete ${firstName} ${lastName} ${phoneNumber}`}
         />
       </div>
     </button>
