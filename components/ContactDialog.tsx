@@ -37,7 +37,8 @@ export default function ContactDialog({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<Contact>()
+    trigger,
+  } = useForm<Contact>({ mode: "onTouched" })
 
   /** We have a helper to reset the dialog state and thus close the dialog. */
   const closeDialog = () => {
@@ -85,6 +86,9 @@ export default function ContactDialog({
               <ContactDialogDescription dialogState={dialogState} />
               <ContactDialogWarning dialogState={dialogState} />
             </div>
+            {errors?.name?.message && (
+              <p className="text-red-500 text-sm">{errors.name.message}</p>
+            )}
             <div ref={sliderRef} className="keen-slider">
               {/* Middle section */}
               <ContactDialogInputs
@@ -93,7 +97,7 @@ export default function ContactDialog({
                 errors={errors}
               />
             </div>
-            <div>
+            <div onClick={() => trigger()}>
               {/* Bottom section */}
               <ContactDialogButtons
                 dialogState={dialogState}
