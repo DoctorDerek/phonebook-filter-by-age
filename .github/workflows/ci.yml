@@ -54,3 +54,5 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           git log --oneline | gh pr comment ${{ github.event.pull_request.number }} --body -
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
