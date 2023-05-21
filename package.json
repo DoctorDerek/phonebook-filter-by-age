@@ -14,6 +14,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@fullpage/react-fullpage": "^0.1.39",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.18",
     "@next/font": "^13.4.3",
@@ -24,7 +25,8 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "react-query": "^3.39.3",
-    "xstate": "^4.37.2"
+    "xstate": "^4.37.2",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
