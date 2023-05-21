@@ -18,6 +18,7 @@
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.18",
     "@next/font": "^13.4.3",
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@xstate/react": "^3.2.2",
     "next": "13.4.3",
     "react": "18.2.0",
