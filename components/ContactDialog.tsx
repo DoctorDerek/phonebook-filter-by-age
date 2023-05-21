@@ -12,6 +12,7 @@ import ContactDialogWarning from "@/components/ContactDialogWarning"
 import { Contact } from "@/contacts/CONTACTS"
 import useOnDialogSubmit from "@/utils/useOnDialogSubmit"
 import { Dialog } from "@headlessui/react"
+import ReactFullpage from "@fullpage/react-fullpage"
 
 export type DialogState = {
   type: "CLOSED" | "CREATE" | "UPDATE" | "DELETE" | "RESET"
@@ -54,35 +55,59 @@ export default function ContactDialog({
       onClose={closeDialog}
       className="relative z-50"
     >
-      {/* The backdrop (a fixed sibling to the panel container). */}
-      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+      <ReactFullpage
+        //fullpage options
+        licenseKey={"YOUR_KEY_HERE"}
+        scrollingSpeed={1000} /* Options here */
+        credits={{
+          enabled: false,
+        }}
+        render={({ state, fullpageApi }) => {
+          return (
+            <ReactFullpage.Wrapper>
+              <div className="section">
+                <p>Section 1 (welcome to fullpage.js)</p>
+                <button onClick={() => fullpageApi.moveSectionDown()}>
+                  Click me to move down
+                </button>
+              </div>
+              <div className="section">
+                <p>Section 2</p>
+              </div>
 
-      {/* A full-screen container that will center the dialog. */}
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        {/* The actual dialog panel, centered inside the box. */}
-        <form onSubmit={handleSubmit(onDialogSubmit)}>
-          <Dialog.Panel className="relative mx-auto flex min-h-[75vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
-            <ContactDialogClose closeDialog={closeDialog} />
+              {/* The backdrop (a fixed sibling to the panel container). */}
+              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
-            <ContactDialogTitle dialogState={dialogState} />
+              {/* A full-screen container that will center the dialog. */}
+              <div className="fixed inset-0 flex items-center justify-center p-4">
+                {/* The actual dialog panel, centered inside the box. */}
+                <form onSubmit={handleSubmit(onDialogSubmit)}>
+                  <Dialog.Panel className="relative mx-auto flex min-h-[75vh] max-w-lg flex-col justify-between rounded-lg bg-white p-6 text-lg">
+                    <ContactDialogClose closeDialog={closeDialog} />
 
-            <ContactDialogDescription dialogState={dialogState} />
+                    <ContactDialogTitle dialogState={dialogState} />
 
-            <ContactDialogWarning dialogState={dialogState} />
+                    <ContactDialogDescription dialogState={dialogState} />
 
-            <ContactDialogInputs
-              dialogState={dialogState}
-              register={register}
-              errors={errors}
-            />
+                    <ContactDialogWarning dialogState={dialogState} />
 
-            <ContactDialogButtons
-              dialogState={dialogState}
-              closeDialog={closeDialog}
-            />
-          </Dialog.Panel>
-        </form>
-      </div>
+                    <ContactDialogInputs
+                      dialogState={dialogState}
+                      register={register}
+                      errors={errors}
+                    />
+
+                    <ContactDialogButtons
+                      dialogState={dialogState}
+                      closeDialog={closeDialog}
+                    />
+                  </Dialog.Panel>
+                </form>
+              </div>
+            </ReactFullpage.Wrapper>
+          )
+        }}
+      />
     </Dialog>
   )
 }
