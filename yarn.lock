@@ -4666,6 +4666,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"keen-slider@npm:^6.8.5":
+  version: 6.8.5
+  resolution: "keen-slider@npm:6.8.5"
+  checksum: 1ef25cde02636068a0c66de994eb1e5ac1935a1a1f28e5cf4dcbf2c9cf2b802e0e23bdcd97dd9a9ae93de335ccc990379ab21bda75637fe04e86cbb7d799e23a
+  languageName: node
+  linkType: hard
+
 "kleur@npm:^3.0.3":
   version: 3.0.3
   resolution: "kleur@npm:3.0.3"
@@ -5563,6 +5570,7 @@ __metadata:
     husky: ^8.0.3
     jest: ^29.5.0
     jest-environment-jsdom: ^29.5.0
+    keen-slider: ^6.8.5
     next: 13.4.3
     postcss: ^8.4.23
     prettier: ^2.8.8
