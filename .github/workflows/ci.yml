@@ -47,6 +47,8 @@ jobs:
           echo "Adding PR comment: $PR_COMMENT"
 
           echo $PR_COMMENT | gh pr comment ${{ github.event.pull_request.number }} --body -
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Log git history
         if: ${{ github.event_name == 'pull_request' }}
