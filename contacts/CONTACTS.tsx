@@ -16,6 +16,7 @@ export type Contact = {
   zipCode?: string
   phoneNumber?: string
   email?: string
+  password?: string
 }
 
 /**
