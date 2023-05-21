@@ -48,6 +48,26 @@ function ContactDialogInput({
           // Fields are only required when we're creating a new user (contact).
           // When updating a user, blank fields just don't change the field.
           required: dialogState.type === "CREATE",
+          validate: (value) => {
+            if (fieldName === "email") {
+              return (
+                (typeof value === "string" && value?.includes("@")) ||
+                "Please enter a valid email address."
+              )
+            }
+            if (fieldName === "password") {
+              // 8 characters
+              if (typeof value === "string" && value?.length < 8)
+                return "Please enter a password of at least 8 characters."
+              // 1 number
+              if (typeof value === "string" && !/\d/.test(value))
+                return "Please enter a password with at least one number."
+              // 1 symbol
+              if (typeof value === "string" && !/[!@#$%^&*]/.test(value))
+                return "Please enter a password with at least one symbol."
+            }
+            return true // Don't validate other fields, but they are required.
+          },
         })}
         disabled={dialogState.type === "DELETE"}
       />
