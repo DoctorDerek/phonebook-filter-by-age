@@ -12,6 +12,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    permissions:
+      pull-requests: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -34,25 +37,14 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
 
-      - name: Update PR with Result
+      - name: Update PR with Test Results
         if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          RESULT="Failed :x:"
-          if success; then
-            RESULT="Success :white_check_mark:"
-          fi
-
-          PR_COMMENT="Tests $RESULT"
-
-          echo "Adding PR comment: $PR_COMMENT"
-
-          echo $PR_COMMENT | gh pr comment ${{ github.event.pull_request.number }} --body -
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Log git history
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          git log --oneline | gh pr comment ${{ github.event.pull_request.number }} --body -
+        uses: mshick/add-pr-comment@v2
+        with:
+          message-success: |
+            Tests passed! :white_check_mark:
+          message-failure: |
+            Tests failed! :x:
+          message-id: test-results
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
