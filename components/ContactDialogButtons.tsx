@@ -101,6 +101,13 @@ function ContactDialogButton({
   )
 }
 
+/**
+ * For "CREATE" and "UPDATE" sections, the buttons handle slide navigation for
+ * the multi-step form, so that "Submit" is only on the last slide.
+ *
+ * For "DELETE" and "RESET" dialogs, it's a single slide, so we only need the
+ * "Cancel" and "Submit" buttons.
+ * */
 export default function ContactDialogButtons({
   dialogState,
   closeDialog,
