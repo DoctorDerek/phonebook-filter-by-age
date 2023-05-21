@@ -37,7 +37,7 @@ function ProgressIndicator({
   return (
     <li
       className={classNames(
-        "flex items-center border border-solid  pr-2 rounded",
+        "flex items-center border border-solid pr-2 rounded",
         slideIndex === thisSlideIndex
           ? "text-blue-600 border-blue-600"
           : "text-gray-600 border-gray-200"
