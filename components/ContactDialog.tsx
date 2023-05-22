@@ -83,7 +83,9 @@ export default function ContactDialog({
     if (slideIndex === 1) {
       await trigger("firstName")
       await trigger("lastName")
-      await trigger("birthday")
+      await trigger("birthYear")
+      await trigger("birthMonth")
+      await trigger("birthDay")
       await trigger("streetAddress")
       await trigger("city")
       await trigger("state")
@@ -108,7 +110,9 @@ export default function ContactDialog({
       if (
         errors?.firstName ||
         errors?.lastName ||
-        errors?.birthday ||
+        errors?.birthYear ||
+        errors?.birthMonth ||
+        errors?.birthDay ||
         errors?.streetAddress ||
         errors?.city ||
         errors?.state ||
@@ -121,7 +125,9 @@ export default function ContactDialog({
     }
     showSlideWithError()
   }, [
-    errors?.birthday,
+    errors?.birthDay,
+    errors?.birthMonth,
+    errors?.birthYear,
     errors?.city,
     errors?.email,
     errors?.firstName,

@@ -109,8 +109,8 @@ const phoneBookMachine = createMachine(
           const currentPhoneBookEntries = context.contacts
           const newContact = event.contact
           // Calculate the age and add it to the object:
-          const { birthday } = newContact
-          newContact.age = calculateAge({ birthday })
+          const { birthYear, birthMonth, birthDay } = newContact
+          newContact.age = calculateAge({ birthYear, birthMonth, birthDay })
           currentPhoneBookEntries.push(newContact)
           return currentPhoneBookEntries
         },

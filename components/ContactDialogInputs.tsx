@@ -36,6 +36,16 @@ function ContactDialogInput({
   /** The address fields are only enabled when the user toggles them on. */
   addressEnabled: boolean
 }) {
+  /**
+   * Note that we don't want to use the "date" input for birthday, because it
+   * is extremely difficult to use on Android for selecting your birthday. */
+  const getInputType = () => {
+    if (fieldName === "password") return "password"
+    if (fieldName === "email") return "email"
+    if (fieldName === "phoneNumber") return "tel"
+    return "text"
+  }
+
   /** We check for undefined and then coerce to a string. */
   const placeholder = String(dialogState.contact?.[fieldName] || "")
   return (
@@ -47,7 +57,7 @@ function ContactDialogInput({
         {label}
       </label>
       <input
-        type={fieldName === "password" ? "password" : "text"}
+        type={getInputType()}
         id={fieldName}
         className={classNames(
           "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200 dark:ring-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:ring-gray-500 dark:disabled:bg-gray-800 dark:disabled:text-gray-700 dark:disabled:ring-gray-700",
@@ -81,7 +91,9 @@ function ContactDialogInput({
               fieldName === "firstName" ||
               fieldName === "lastName" ||
               fieldName === "phoneNumber" ||
-              fieldName === "birthday"
+              fieldName === "birthMonth" ||
+              fieldName === "birthDay" ||
+              fieldName === "birthYear"
             )
               // Don't validate other fields, but they are required.
               return Boolean(value) || "All fields are required."
@@ -113,7 +125,9 @@ function ErrorMessage({
       errors?.password?.message ||
       errors?.firstName?.message ||
       errors?.lastName?.message ||
-      errors?.birthday?.message ||
+      errors?.birthMonth?.message ||
+      errors?.birthDay?.message ||
+      errors?.birthYear?.message ||
       errors?.phoneNumber?.message ||
       errors?.streetAddress?.message ||
       errors?.city?.message ||
@@ -187,8 +201,24 @@ export default function ContactDialogInputs({
           addressEnabled={addressEnabled}
         />
         <ContactDialogInput
-          label="Birthday"
-          fieldName="birthday"
+          label="Date of Birth - Month"
+          fieldName="birthMonth"
+          dialogState={dialogState}
+          register={register}
+          errors={errors}
+          addressEnabled={addressEnabled}
+        />{" "}
+        <ContactDialogInput
+          label="Date of Birth - Day"
+          fieldName="birthDay"
+          dialogState={dialogState}
+          register={register}
+          errors={errors}
+          addressEnabled={addressEnabled}
+        />
+        <ContactDialogInput
+          label="Date of Birth - Year"
+          fieldName="birthYear"
           dialogState={dialogState}
           register={register}
           errors={errors}
@@ -246,7 +276,9 @@ export default function ContactDialogInputs({
           // We only show an error message if this slide has errors.
           (errors?.firstName?.message ||
             errors?.lastName?.message ||
-            errors?.birthday?.message ||
+            errors?.birthMonth?.message ||
+            errors?.birthDay?.message ||
+            errors?.birthYear?.message ||
             errors?.phoneNumber?.message ||
             errors?.streetAddress?.message ||
             errors?.city?.message ||

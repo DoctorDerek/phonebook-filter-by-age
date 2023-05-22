@@ -5,8 +5,13 @@ export type Contact = {
   /** We separate first and last names, and both are required. */
   firstName: string
   lastName: string
-  /** Birthdays are initialized using the syntax `new Date("1990-01-01")`. */
-  birthday?: string
+  /**
+   * Birthdays are initialized using the syntax `new Date("1990-01-01")`.
+   * We separate year, month & day to make it easier for the user to enter.
+   * */
+  birthYear?: string
+  birthMonth?: string
+  birthDay?: string
   /** The contact's age is calculated from their birthday automatically. */
   age?: number
   /** The contact's photo, a filename in the `@/public/contacts/` directory. */
@@ -29,7 +34,9 @@ const CONTACTS: Contact[] = [
     photo: "Unsplash Jessica Christian.png",
     firstName: "Jessica",
     lastName: "Christian",
-    birthday: "2022-05-30", // Baby
+    birthYear: "2022", // Baby
+    birthMonth: "05",
+    birthDay: "30",
     streetAddress: "1234 Main St",
     city: "San Francisco",
     state: "CA",
@@ -42,7 +49,9 @@ const CONTACTS: Contact[] = [
     photo: "Unsplash Lia Bekyan.png",
     firstName: "Lia",
     lastName: "Bekyan",
-    birthday: "2010-09-24", // Child
+    birthYear: "2010", // Child
+    birthMonth: "09",
+    birthDay: "24",
     streetAddress: "1234 Happy Lane",
     city: "San Diego",
     state: "CA",
@@ -55,7 +64,9 @@ const CONTACTS: Contact[] = [
     photo: "Unsplash Remy Loz.png",
     firstName: "Remy",
     lastName: "Loz",
-    birthday: "2000-07-04", // Young Adult
+    birthYear: "2000", // Young Adult
+    birthMonth: "07",
+    birthDay: "04",
     streetAddress: "1234 Main St",
     city: "San Francisco",
     state: "CA",
@@ -68,7 +79,9 @@ const CONTACTS: Contact[] = [
     photo: "Unsplash Ryan Hoffman.png",
     firstName: "Ryan",
     lastName: "Hoffman",
-    birthday: "1990-04-06", // Middle Aged Adult
+    birthYear: "1990", // Middle Aged Adult
+    birthMonth: "04",
+    birthDay: "06",
     streetAddress: "1234 Main St",
     city: "San Francisco",
     state: "CA",
@@ -81,7 +94,9 @@ const CONTACTS: Contact[] = [
     photo: "Unsplash Tadas Petrokas.png",
     firstName: "Tadas",
     lastName: "Petrokas",
-    birthday: "1956-08-07", // Senior
+    birthYear: "1956", // Senior
+    birthMonth: "08",
+    birthDay: "07",
     streetAddress: "1234 Main St",
     city: "San Francisco",
     state: "CA",
@@ -94,7 +109,9 @@ const CONTACTS: Contact[] = [
     photo: "Unsplash Yohan Marion.png",
     firstName: "Yohan",
     lastName: "Marion",
-    birthday: "1890-11-24", // Senior
+    birthYear: "1890", // Senior
+    birthMonth: "11",
+    birthDay: "24",
     streetAddress: "1234 Main St",
     city: "San Francisco",
     state: "CA",
@@ -104,10 +121,19 @@ const CONTACTS: Contact[] = [
   },
 ]
 
-export const calculateAge = ({ birthday }: { birthday?: string }) => {
-  if (!birthday) return undefined // We can't calculate age without a birthday.
+export const calculateAge = ({
+  birthYear,
+  birthMonth,
+  birthDay,
+}: {
+  birthYear?: string
+  birthMonth?: string
+  birthDay?: string
+}) => {
+  // We can't calculate age without a birthday.
+  if (!(birthYear && birthMonth && birthDay)) return undefined
   const today = new Date()
-  const birthDate = new Date(birthday)
+  const birthDate = new Date(`${birthYear}-${birthMonth}-${birthDay}`)
   const age = today.getFullYear() - birthDate.getFullYear()
   // This may not be their age, if their birthday hasn't yet occurred this year.
   const month = today.getMonth() - birthDate.getMonth()
@@ -120,8 +146,8 @@ export const calculateAge = ({ birthday }: { birthday?: string }) => {
 
 /** We flesh out the mock data by calculating the age for each contact. */
 const CONTACTS_WITH_AGES: Contact[] = CONTACTS.map((contact) => {
-  const { birthday } = contact
-  const age = calculateAge({ birthday })
+  const { birthYear, birthMonth, birthDay } = contact
+  const age = calculateAge({ birthYear, birthMonth, birthDay })
   return { ...contact, age }
 })
 

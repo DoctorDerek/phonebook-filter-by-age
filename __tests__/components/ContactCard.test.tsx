@@ -16,9 +16,11 @@ describe("@/components/ContactCard", () => {
   // For the photo, we have to transform it into a URL for the `src` attribute.
   const photo = contact?.photo?.replaceAll(" ", "%20") || ""
   // We always use case-insensitive search since we expect all UPPERCASE text.
-  const name = new RegExp(contact.name, "i")
-  const birthday = new RegExp(
-    transformBirthday({ birthday: contact.birthday || "" }),
+  const firstName = new RegExp(contact.firstName, "i")
+  const lastName = new RegExp(contact.lastName, "i")
+  const { birthYear, birthMonth, birthDay } = contact
+  const birthdayTransformed = new RegExp(
+    transformBirthday({ birthYear, birthMonth, birthDay }),
     "i"
   )
   const streetAddress = new RegExp(contact.streetAddress || "", "i")
@@ -49,7 +51,9 @@ describe("@/components/ContactCard", () => {
   it("renders the contact's photo with alt text", () => {
     renderContact()
     // We check for the required alt text for accessibility.
-    const image = screen.getByRole("img", { name })
+    const image = screen.getByRole("img", {
+      name: `${contact.firstName} ${contact.lastName}`,
+    })
     // The src attribute should include the URL `/contacts/${photo}`.
     expect(image).toHaveAttribute(
       "src",
@@ -59,7 +63,15 @@ describe("@/components/ContactCard", () => {
 
   it("renders the contact's name", () => {
     renderContact()
-    expect(screen.getByText(name)).toBeVisible()
+    const firstNameResults = screen.getAllByText(firstName)
+    const lastNameResults = screen.getAllByText(lastName)
+    // We expect the first name and last name to be visible.
+    expect(firstNameResults[0]).toBeVisible()
+    expect(lastNameResults[0]).toBeVisible()
+    // We expect the first name and last name to be in the same element.
+    expect(firstNameResults[0]).toBe(lastNameResults[0])
+    // We expect the first name and last name to be in the same element.
+    expect(firstNameResults[1]).toBe(lastNameResults[1])
   })
 
   it("renders the contact's city x 2 times", () => {
@@ -73,7 +85,7 @@ describe("@/components/ContactCard", () => {
 
   it("renders the contact's birthday", () => {
     renderContact()
-    expect(screen.getByText(birthday)).toBeVisible()
+    expect(screen.getByText(birthdayTransformed)).toBeVisible()
   })
 
   it("renders the contact's street address", () => {

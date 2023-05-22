@@ -27,7 +27,9 @@ export default function useOnDialogSubmit({
       const {
         firstName,
         lastName,
-        birthday,
+        birthYear,
+        birthMonth,
+        birthDay,
         streetAddress,
         city,
         state,
@@ -43,7 +45,9 @@ export default function useOnDialogSubmit({
         id: maxId + 1,
         firstName,
         lastName,
-        birthday,
+        birthYear,
+        birthMonth,
+        birthDay,
         streetAddress,
         city,
         state,
@@ -62,7 +66,9 @@ export default function useOnDialogSubmit({
       // We have values from the form OR the contact for each of the fields.
       const firstName = data.firstName || oldContact?.firstName || ""
       const lastName = data.lastName || oldContact?.lastName || ""
-      const birthday = data.birthday || oldContact?.birthday || ""
+      const birthYear = data.birthYear || oldContact?.birthYear || ""
+      const birthMonth = data.birthMonth || oldContact?.birthMonth || ""
+      const birthDay = data.birthDay || oldContact?.birthDay || ""
       const streetAddress =
         data.streetAddress || oldContact?.streetAddress || ""
       const city = data.city || oldContact?.city || ""
@@ -74,7 +80,10 @@ export default function useOnDialogSubmit({
       const id = oldContact?.id || -1
       // We preserve data we didn't update in the form so we don't overwrite it.
       const photo = oldContact?.photo || ""
-      const age = oldContact?.age || calculateAge({ birthday }) || -1
+      const age =
+        oldContact?.age ||
+        calculateAge({ birthYear, birthMonth, birthDay }) ||
+        -1
 
       /** This is the contact that's ready to send to the state machine. */
       const contact = {
@@ -82,7 +91,9 @@ export default function useOnDialogSubmit({
         firstName,
         lastName,
         phoneNumber,
-        birthday,
+        birthYear,
+        birthMonth,
+        birthDay,
         age,
         photo,
         streetAddress,
