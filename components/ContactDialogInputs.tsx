@@ -171,6 +171,10 @@ export default function ContactDialogInputs({
   // We have nothing to show if we're resetting the application state.
   if (dialogState.type === "RESET") return null
 
+  // Guard clauses -- we only have inputs for CREATE and UPDATE actions.
+  if (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
+    return null
+
   return (
     <>
       <div className="keen-slider__slide">

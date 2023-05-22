@@ -128,47 +128,52 @@ export default function ContactDialogButtons({
   slideIndex: number
 }) {
   const maxIndex = 3
+  const getBackOnClick = () => {
+    if (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
+      return () => closeDialog()
+    if (slideIndex === 0) return () => closeDialog()
+    return () => instanceRef?.current?.prev()
+  }
+  const getBackLabel = () => {
+    if (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
+      return "Cancel"
+    if (slideIndex === 0) return "Cancel"
+    return "Back"
+  }
+  const getNextButtonType = () => {
+    if (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
+      return "submit"
+    if (slideIndex === maxIndex) return "submit"
+    return "button"
+  }
+  const getNextOnClick = () => {
+    if (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
+      return undefined
+    if (slideIndex === maxIndex) return undefined
+    return () => instanceRef?.current?.next()
+  }
+  const getNextLabel = () => {
+    if (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
+      return "Submit"
+    if (slideIndex === maxIndex) return "Submit"
+    return "Next"
+  }
   return (
     <>
       <div className="flex w-full items-center justify-between space-x-2">
         {/* Show "Cancel" on the 1st slide; otherwise show a "Back" button. */}
         <ContactDialogButton
           type="button"
-          label={
-            slideIndex === 0 ||
-            (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
-              ? "Cancel"
-              : "Back"
-          }
+          label={getBackLabel()}
           color="bg-gray-800 text-white hover:bg-gray-700 hover:outline-gray-800 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:outline-gray-700"
-          onClick={
-            slideIndex === 0 ||
-            (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
-              ? () => closeDialog()
-              : () => instanceRef?.current?.prev()
-          }
+          onClick={getBackOnClick()}
         />
         {/* Show "Next" on slides except the last; show "Submit" on last. */}
         <ContactDialogButton
-          type={
-            slideIndex === maxIndex ||
-            (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
-              ? "submit"
-              : "button"
-          }
-          label={
-            slideIndex === maxIndex ||
-            (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
-              ? dialogState.type
-              : "Next"
-          }
+          type={getNextButtonType()}
+          label={getNextLabel()}
           color="bg-blue-400 text-white hover:bg-blue-500 hover:outline-blue-400"
-          onClick={
-            slideIndex === maxIndex ||
-            (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")
-              ? undefined
-              : () => instanceRef?.current?.next()
-          }
+          onClick={getNextOnClick()}
         />
       </div>
       {(dialogState.type === "CREATE" || dialogState.type === "UPDATE") && (
