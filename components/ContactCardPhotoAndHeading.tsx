@@ -1,3 +1,4 @@
+import { UserIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import { Dispatch, SetStateAction } from "react"
 
@@ -40,6 +41,12 @@ export default function ContactCardPhotoAndHeading({
             className="object-fit rounded-full"
             sizes={IMAGE_SIZES}
           />
+        )}
+        {/** If we don't have a photo, show a placeholder. */}
+        {!photo && (
+          <div className="bg-gray-300 dark:bg-gray-200 rounded-full h-full w-full flex items-center justify-center">
+            <UserIcon className="h-3/4 w-3/4 text-gray-100 dark:text-gray-400" />
+          </div>
         )}
         <div className="invisible absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform group-hover:visible">
           <ButtonDelete contact={contact} setDialogState={setDialogState} />
