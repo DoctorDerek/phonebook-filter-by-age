@@ -20,7 +20,9 @@ function Address({ contact }: { contact: Contact }) {
     <div className="flex flex-col">
       <span>{streetAddress}</span>
       <span>
-        {city}, {state}
+        {city}
+        {city ? ", " : ""}
+        {state}
       </span>
       <span>{zipCode}</span>
     </div>
