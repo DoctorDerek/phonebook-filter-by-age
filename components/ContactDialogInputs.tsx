@@ -6,6 +6,7 @@ import {
   UseFormRegister,
 } from "react-hook-form"
 
+import ContactCard from "@/components/ContactCard"
 import { DialogState } from "@/components/ContactDialog"
 import ContactDialogToggle from "@/components/ContactDialogToggle"
 import { Contact } from "@/contacts/CONTACTS"
@@ -322,7 +323,10 @@ export default function ContactDialogInputs({
             errors?.zipCode?.message) && <ErrorMessage errors={errors} />}
       </div>
       <div className="keen-slider__slide">Security Questions</div>
-      <div className="keen-slider__slide">Review and Submit</div>
+      <div className="keen-slider__slide space-y-4 text-sm">
+        <div className="font-bold italic text-base">Review and Submit</div>
+        <ContactCard contact={getValues()} setDialogState={() => {}} />
+      </div>
     </>
   )
 }
