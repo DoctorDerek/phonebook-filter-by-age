@@ -46,7 +46,6 @@ export default function ContactDialog({
     trigger,
     getValues,
     setValue,
-    setError,
   } = useForm<Contact>({ mode: "onTouched" })
 
   /** We have a helper to reset the dialog state and thus close the dialog. */
