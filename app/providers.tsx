@@ -5,6 +5,8 @@ import { ThemeProvider } from "@wits/next-themes"
 import { useInterpret } from "@xstate/react"
 import { ReactNode } from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
 import phoneBookMachine from "@/utils/phoneBookMachine"
@@ -25,6 +27,8 @@ export default function Providers({ children }: { children: ReactNode }) {
         {/* We can access React context in the app via Provider */}
         <ThemeProvider attribute="class" defaultTheme="system">
           {/* We load next-themes' automatic dark mode feature here. */}
+          <ToastContainer position="top-center" />
+          {/* We load react-toastify here. */}
           {children}
         </ThemeProvider>
       </GlobalStateContext.Provider>

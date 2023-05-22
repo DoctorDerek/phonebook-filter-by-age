@@ -1,3 +1,6 @@
+import { useMutation } from "react-query"
+import { toast } from "react-toastify"
+
 import { DialogState } from "@/components/ContactDialog"
 import { Contact, calculateAge } from "@/contacts/CONTACTS"
 import usePhoneBookService from "@/utils/usePhoneBookService"
@@ -20,6 +23,29 @@ export default function useOnDialogSubmit({
 }) {
   // Retrieve our global context from the XState finite state machine:
   const { send } = usePhoneBookService()
+
+  /**
+   * Grab the mutation for https://httpstat.us/200 to demonstrate an API call.
+   *
+   * We include header "Accept: application/json" as part of the request. */
+  const mutation = useMutation({
+    mutationFn: async (contact: Contact) => {
+      toast("Sending the contact to https://httpstat.us/200.")
+      const response = await fetch("https://httpstat.us/200", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          // Special header to demonstrate the response in the toast:
+          "X-HttpStatus-Response-Contact": JSON.stringify(contact),
+        },
+        // We send the contact as JSON:
+        body: JSON.stringify(contact),
+      })
+      // We toast the response as JSON:
+      toast(JSON.stringify(await response.json()))
+    },
+  })
 
   const onDialogSubmit = (data: Contact) => {
     if (dialogState.type === "CREATE") {
@@ -57,7 +83,10 @@ export default function useOnDialogSubmit({
         // The `age` is calculated by CREATE in `phoneBookMachine`.
       }
 
+      // Send the contact to the `phoneBookMachine` to update `localStorage`.
       send({ type: "CREATE", contact })
+      // Send the contact to the `mutation` to update the demonstration server.
+      mutation.mutate(contact)
     }
 
     if (dialogState.type === "UPDATE") {
@@ -103,7 +132,10 @@ export default function useOnDialogSubmit({
         email,
       }
 
+      // Send the contact to the `phoneBookMachine` to update `localStorage`.
       send({ type: "UPDATE", contact })
+      // Send the contact to the `mutation` to update the demonstration server.
+      mutation.mutate(contact)
     }
 
     if (dialogState.type === "DELETE" && dialogState?.contact)
