@@ -18,6 +18,7 @@
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.1.0",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/react-transition-group": "^4.4.6",
     "@xstate/react": "^3.2.2",
     "keen-slider": "^6.8.5",
     "next": "13.4.3",
