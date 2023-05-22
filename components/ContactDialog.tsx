@@ -44,6 +44,7 @@ export default function ContactDialog({
     formState: { errors },
     reset,
     trigger,
+    getValues,
   } = useForm<Contact>({ mode: "onTouched" })
 
   /** We have a helper to reset the dialog state and thus close the dialog. */
@@ -172,6 +173,7 @@ export default function ContactDialog({
                 dialogState={dialogState}
                 register={register}
                 errors={errors}
+                getValues={getValues}
               />
             </div>
             <div onClick={() => validateSlide()}>

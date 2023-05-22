@@ -1,5 +1,10 @@
+import { CheckIcon, XMarkIcon } from "@heroicons/react/24/solid"
 import { useState } from "react"
-import { FieldErrorsImpl, UseFormRegister } from "react-hook-form"
+import {
+  FieldErrorsImpl,
+  UseFormGetValues,
+  UseFormRegister,
+} from "react-hook-form"
 
 import { DialogState } from "@/components/ContactDialog"
 import ContactDialogToggle from "@/components/ContactDialogToggle"
@@ -144,10 +149,12 @@ export default function ContactDialogInputs({
   dialogState,
   register,
   errors,
+  getValues,
 }: {
   dialogState: DialogState
   register: UseFormRegister<Contact>
   errors: Partial<FieldErrorsImpl<Contact>>
+  getValues: UseFormGetValues<Contact>
 }) {
   const [addressEnabled, setAddressEnabled] = useState(false)
 
@@ -173,6 +180,35 @@ export default function ContactDialogInputs({
           errors={errors}
           addressEnabled={addressEnabled}
         />
+        <div className="flex items-center mt-4 justify-between text-sm">
+          <div className="flex items-center">
+            {(getValues("password")?.length || 0) >= 8 && (
+              <CheckIcon className="ml-2 h-5 w-5 text-green-500" />
+            )}
+            {(getValues("password")?.length || 0) < 8 && (
+              <XMarkIcon className="ml-2 h-5 w-5 text-red-500" />
+            )}
+            <span className="ml-2">At least 8 characters</span>
+          </div>
+          <div className="flex items-center">
+            {/\d/.test(String(getValues("password"))) && (
+              <CheckIcon className="ml-2 h-5 w-5 text-green-500" />
+            )}
+            {!/\d/.test(String(getValues("password"))) && (
+              <XMarkIcon className="ml-2 h-5 w-5 text-red-500" />
+            )}
+            <span className="ml-2">At least 1 number</span>
+          </div>
+          <div className="flex items-center">
+            {/[!@#$%^&*]/.test(String(getValues("password"))) && (
+              <CheckIcon className="ml-2 h-5 w-5 text-green-500" />
+            )}
+            {!/[!@#$%^&*]/.test(String(getValues("password"))) && (
+              <XMarkIcon className="ml-2 h-5 w-5 text-red-500" />
+            )}
+            <span className="ml-2">At least 1 symbol</span>
+          </div>
+        </div>
         <div className="text-base italic pt-4">
           Note: The password is only to demonstrate password validation. Do not
           use a real password.
