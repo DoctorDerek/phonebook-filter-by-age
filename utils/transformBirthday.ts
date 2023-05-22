@@ -11,7 +11,6 @@ export default function transformBirthday({
   birthMonth?: string
   birthDay?: string
 }) {
-  console.log({ birthYear, birthMonth, birthDay })
   // If we don't have a birthday, we have nothing to transform.
   if (!(birthYear && birthMonth && birthDay)) return ""
   try {
