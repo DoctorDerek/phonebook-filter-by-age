@@ -23,6 +23,8 @@ export type Contact = {
   phoneNumber?: string
   email?: string
   password?: string
+  securityQuestion?: string
+  securityQuestionAnswer?: string
 }
 
 /**

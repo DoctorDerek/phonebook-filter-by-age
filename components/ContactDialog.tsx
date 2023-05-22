@@ -45,6 +45,8 @@ export default function ContactDialog({
     reset,
     trigger,
     getValues,
+    setValue,
+    setError,
   } = useForm<Contact>({ mode: "onTouched" })
 
   /** We have a helper to reset the dialog state and thus close the dialog. */
@@ -93,6 +95,10 @@ export default function ContactDialog({
       await trigger("zipCode")
       await trigger("phoneNumber")
     }
+    if (slideIndex === 2) {
+      await trigger("securityQuestion")
+      await trigger("securityQuestionAnswer")
+    }
   }
 
   useEffect(() => {
@@ -123,6 +129,11 @@ export default function ContactDialog({
         setSlideIndex(1)
         instanceRef?.current?.moveToIdx(1, true)
       }
+      if (slideIndex === 2) return
+      if (errors?.securityQuestion || errors?.securityQuestionAnswer) {
+        setSlideIndex(2)
+        instanceRef?.current?.moveToIdx(2, true)
+      }
     }
     showSlideWithError()
   }, [
@@ -135,6 +146,8 @@ export default function ContactDialog({
     errors?.lastName,
     errors?.password,
     errors?.phoneNumber,
+    errors?.securityQuestion,
+    errors?.securityQuestionAnswer,
     errors?.state,
     errors?.streetAddress,
     errors?.zipCode,
@@ -174,6 +187,7 @@ export default function ContactDialog({
                 register={register}
                 errors={errors}
                 getValues={getValues}
+                setValue={setValue}
               />
             </div>
             <div onClick={() => validateSlide()}>

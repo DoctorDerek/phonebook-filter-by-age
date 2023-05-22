@@ -4,10 +4,13 @@ import {
   FieldErrorsImpl,
   UseFormGetValues,
   UseFormRegister,
+  UseFormSetError,
+  UseFormSetValue,
 } from "react-hook-form"
 
 import ContactCard from "@/components/ContactCard"
 import { DialogState } from "@/components/ContactDialog"
+import ContactDialogSecurityQuestions from "@/components/ContactDialogSecurityQuestions"
 import ContactDialogToggle from "@/components/ContactDialogToggle"
 import { Contact } from "@/contacts/CONTACTS"
 import classNames from "@/utils/classNames"
@@ -99,7 +102,9 @@ function ContactDialogInput({
               fieldName === "phoneNumber" ||
               fieldName === "birthMonth" ||
               fieldName === "birthDay" ||
-              fieldName === "birthYear"
+              fieldName === "birthYear" ||
+              fieldName === "securityQuestion" ||
+              fieldName === "securityQuestionAnswer"
             )
               // Don't validate other fields, but they are required.
               return Boolean(value) || "All fields are required."
@@ -139,6 +144,8 @@ function ErrorMessage({
       errors?.city?.message ||
       errors?.state?.message ||
       errors?.zipCode?.message ||
+      errors?.securityQuestion?.message ||
+      errors?.securityQuestionAnswer?.message ||
       "All fields are required."
     )
   }
@@ -151,11 +158,13 @@ export default function ContactDialogInputs({
   register,
   errors,
   getValues,
+  setValue,
 }: {
   dialogState: DialogState
   register: UseFormRegister<Contact>
   errors: Partial<FieldErrorsImpl<Contact>>
   getValues: UseFormGetValues<Contact>
+  setValue: UseFormSetValue<Contact>
 }) {
   const [addressEnabled, setAddressEnabled] = useState(false)
 
@@ -322,10 +331,40 @@ export default function ContactDialogInputs({
             errors?.state?.message ||
             errors?.zipCode?.message) && <ErrorMessage errors={errors} />}
       </div>
-      <div className="keen-slider__slide">Security Questions</div>
+      <div className="keen-slider__slide space-y-8">
+        <ContactDialogSecurityQuestions
+          setValue={setValue}
+          errors={errors}
+          register={register}
+        />
+        <ContactDialogInput
+          label="Security Question Answer"
+          fieldName="securityQuestionAnswer"
+          dialogState={dialogState}
+          register={register}
+          errors={errors}
+          addressEnabled={addressEnabled}
+        />
+        <div className="text-base italic pt-4">
+          Note: The security question is only for demonstration purposes. Do not
+          use a real security question.
+        </div>
+        {dialogState.type === "CREATE" &&
+          // We only show an error message if this slide has errors.
+          (errors?.securityQuestion?.message ||
+            errors?.securityQuestionAnswer?.message) && (
+            <ErrorMessage errors={errors} />
+          )}
+      </div>
       <div className="keen-slider__slide space-y-4 text-sm">
         <div className="font-bold italic text-base">Review and Submit</div>
         <ContactCard contact={getValues()} setDialogState={() => {}} />
+        <div className="font-bold italic text-base pb-4">Security Question</div>
+        <span className="italic">{getValues("securityQuestion")}</span>
+        <span className="font-bold">
+          {" "}
+          {getValues("securityQuestionAnswer")}
+        </span>
       </div>
     </>
   )
