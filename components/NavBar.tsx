@@ -8,15 +8,19 @@ import { useState } from "react"
 
 import ContactDialogClose from "@/components/ButtonCloseDialog"
 import ReactConfetti from "@/components/ReactConfetti"
+import ThemeSwitch from "@/components/ThemeSwitch"
 
 /** These are hardcoded to match the design document. */
 function NavBarLinks() {
   return (
     <>
-      <Link href="/" className="hover:text-gray-300">
+      <Link href="/" className="hover:text-gray-300 dark:hover:text-gray-500">
         Home
       </Link>
-      <Link href="/" className="text-gray-500 hover:text-gray-300">
+      <Link
+        href="/"
+        className="text-gray-500 hover:text-gray-300 dark:text-gray-300 dark:hover:text-gray-500"
+      >
         Features
       </Link>
     </>
@@ -69,6 +73,7 @@ export default function NavBar() {
             <NavBarLinks />
           </div>
         </div>
+        <ThemeSwitch />
         <div className="hidden xl:flex">
           <PhoneBookHeading />
         </div>

@@ -1405,6 +1405,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wits/next-themes@npm:^0.2.16":
+  version: 0.2.16
+  resolution: "@wits/next-themes@npm:0.2.16"
+  peerDependencies:
+    next: "*"
+    react: "*"
+    react-dom: "*"
+  checksum: 8217966ecb1d9da3f51bd28ecce4e9b9c053b3e893211f34e412b849ee065487414f0faa5ffeaeb6a40dbf00cfba8eb8fc848125af29b63cc065865f030695e1
+  languageName: node
+  linkType: hard
+
 "@xstate/react@npm:^3.2.2":
   version: 3.2.2
   resolution: "@xstate/react@npm:3.2.2"
@@ -5130,17 +5141,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-themes@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "next-themes@npm:0.2.1"
-  peerDependencies:
-    next: "*"
-    react: "*"
-    react-dom: "*"
-  checksum: ebc248b956138e73436c4ed0a0f0a877a0a48a33156db577029b8b8469e48b5c777d61abf2baeb75953378febea74e067a4869ff90b4a3e94fce123289b862ba
-  languageName: node
-  linkType: hard
-
 "next@npm:13.4.3":
   version: 13.4.3
   resolution: "next@npm:13.4.3"
@@ -5603,6 +5603,7 @@ __metadata:
     "@types/react": ^18.2.6
     "@types/react-dom": ^18.2.4
     "@types/react-transition-group": ^4.4.6
+    "@wits/next-themes": ^0.2.16
     "@xstate/react": ^3.2.2
     autoprefixer: ^10.4.14
     eslint: 8.41.0
@@ -5613,7 +5614,6 @@ __metadata:
     jest-environment-jsdom: ^29.5.0
     keen-slider: ^6.8.5
     next: 13.4.3
-    next-themes: ^0.2.1
     postcss: ^8.4.23
     prettier: ^2.8.8
     prettier-plugin-tailwindcss: ^0.3.0
