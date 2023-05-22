@@ -35,6 +35,7 @@ function ContactDialogInput({
   errors,
   disabled,
   addressEnabled,
+  placeholder,
 }: {
   label: string
   fieldName: keyof Contact
@@ -44,6 +45,7 @@ function ContactDialogInput({
   disabled?: boolean
   /** The address fields are only enabled when the user toggles them on. */
   addressEnabled: boolean
+  placeholder?: string
 }) {
   /**
    * Note that we don't want to use the "date" input for birthday, because it
@@ -55,8 +57,9 @@ function ContactDialogInput({
     return "text"
   }
 
-  /** We check for undefined and then coerce to a string. */
-  const placeholder = String(dialogState.contact?.[fieldName] || "")
+  /** For the UPDATE dialog, check for undefined and then coerce to a string. */
+  const placeholderWithPreviousValue =
+    String(dialogState.contact?.[fieldName] || "") || placeholder
   return (
     <div className="relative mt-4">
       <label
@@ -72,7 +75,7 @@ function ContactDialogInput({
           "px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200 dark:ring-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:ring-gray-500 dark:disabled:bg-gray-950 dark:disabled:text-gray-800 dark:disabled:ring-gray-950",
           errors[fieldName] ? "ring-2 ring-red-500 dark:ring-red-900" : ""
         )}
-        placeholder={placeholder}
+        placeholder={placeholderWithPreviousValue}
         {...register(fieldName, {
           // Fields are only required when we're creating a new user (contact).
           // When updating a user, blank fields just don't change the field.
@@ -257,6 +260,7 @@ export default function ContactDialogInputs({
           register={register}
           errors={errors}
           addressEnabled={addressEnabled}
+          placeholder="MM"
         />
         <ContactDialogInput
           label="Date of Birth - Day"
@@ -265,6 +269,7 @@ export default function ContactDialogInputs({
           register={register}
           errors={errors}
           addressEnabled={addressEnabled}
+          placeholder="DD"
         />
         <ContactDialogInput
           label="Date of Birth - Year"
@@ -273,6 +278,7 @@ export default function ContactDialogInputs({
           register={register}
           errors={errors}
           addressEnabled={addressEnabled}
+          placeholder="YYYY"
         />
         <ContactDialogInput
           label="Phone Number"
