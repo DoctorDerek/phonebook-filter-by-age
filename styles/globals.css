@@ -12,7 +12,7 @@ https://uxdesign.cc/create-better-accessible-focus-effects-75a3de27b8ba
   box-shadow: 0 0 0 0.0625rem #facc15 !important; /* 1px */
   /* Tailwind CSS color yellow-400 === #facc15 */
   border-color: transparent !important;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   /* Tailwind CSS rounded-lg === 0.5rem === 8px */
 }
 
