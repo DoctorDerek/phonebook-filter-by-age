@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  scroll-behavior: smooth;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
 /*
 Accessible focus effects
 https://uxdesign.cc/create-better-accessible-focus-effects-75a3de27b8ba
@@ -12,12 +18,379 @@ https://uxdesign.cc/create-better-accessible-focus-effects-75a3de27b8ba
   box-shadow: 0 0 0 0.0625rem #facc15 !important; /* 1px */
   /* Tailwind CSS color yellow-400 === #facc15 */
   border-color: transparent !important;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   /* Tailwind CSS rounded-lg === 0.5rem === 8px */
 }
 
-html,
-body {
-  scroll-behavior: smooth;
-  font-family: Inter, Arial, Helvetica, sans-serif;
+/* Theme Switch SVG animation by @bartkozal */
+/* Source: https://codesandbox.io/s/dark-mode-toggle-si6k2?file=/src/DarkModeToggle.js */
+
+.switch {
+  cursor: pointer;
+  width: 180px;
+  height: 74px;
+  margin: 80px;
+}
+
+.switch-enter .button {
+  transform: translateX(0);
+}
+
+.switch-enter-done .button {
+  transform: translateX(100px);
+  transition: transform 0.5s;
+}
+
+.switch-exit .button {
+  transform: translateX(100px);
+}
+
+.switch-exit-done .button {
+  transform: translateX(0);
+  transition: transform 0.5s;
+}
+
+.switch-enter .cloud1 {
+  transform: translateX(0);
+}
+
+.switch-enter-done .cloud1 {
+  transform: translateX(-100px);
+  transition: transform 0.8s;
+}
+
+.switch-exit .cloud1 {
+  transform: translateX(-100px);
+}
+
+.switch-exit-done .cloud1 {
+  transform: translateX(0);
+  transition: transform 0.8s;
+}
+
+.switch-enter .cloud2 {
+  transform: translateX(0);
+}
+
+.switch-enter-done .cloud2 {
+  transform: translateX(60px);
+  transition: transform 0.8s;
+}
+
+.switch-exit .cloud2 {
+  transform: translateX(60px);
+}
+
+.switch-exit-done .cloud2 {
+  transform: translateX(0);
+  transition: transform 0.8s;
+}
+
+.switch-enter .sun {
+  transform: translateY(0);
+}
+
+.switch-enter-done .sun {
+  transform: translateY(50px);
+  transition: transform 0.8s;
+}
+
+.switch-exit .sun {
+  transform: translateY(50px);
+}
+
+.switch-exit-done .sun {
+  transform: translateY(0);
+  transition: transform 0.8s;
+}
+
+.moon {
+  transform: translateY(-40px);
+}
+
+.switch-enter .moon {
+  transform: translateY(-40px);
+}
+
+.switch-enter-done .moon {
+  transform: translateY(0px);
+  transition: transform 0.7s;
+}
+
+.switch-exit .moon {
+  transform: translateY(0px);
+}
+
+.switch-exit-done .moon {
+  transform: translateY(-40px);
+  transition: transform 0.7s;
+}
+
+.switch-enter .mountain3 {
+  fill: #858585;
+  transition: fill 0.8s;
+}
+
+.switch-enter-done .mountain3 {
+  fill: #858585;
+  transition: fill 0.8s;
+}
+
+.switch-exit .mountain3 {
+  fill: #729971;
+  transition: fill 0.8s;
+}
+
+.switch-exit-done .mountain3 {
+  fill: #729971;
+  transition: fill 0.8s;
+}
+
+.switch-enter .mountain2 {
+  fill: #4d4d4d;
+  transition: fill 0.8s;
+}
+
+.switch-enter-done .mountain2 {
+  fill: #4d4d4d;
+  transition: fill 0.8s;
+}
+
+.switch-exit .mountain2 {
+  fill: #316930;
+  transition: fill 0.8s;
+}
+
+.switch-exit-done .mountain2 {
+  fill: #316930;
+  transition: fill 0.8s;
+}
+
+.switch-enter .mountain1 {
+  fill: #262626;
+  transition: fill 0.8s;
+}
+
+.switch-enter-done .mountain1 {
+  fill: #262626;
+  transition: fill 0.8s;
+}
+
+.switch-exit .mountain1 {
+  fill: #0d3f0c;
+  transition: fill 0.8s;
+}
+
+.switch-exit-done .mountain1 {
+  fill: #0d3f0c;
+  transition: fill 0.8s;
+}
+
+.switch-enter .trees {
+  fill: #1a1a1a;
+  transition: fill 0.8s;
+}
+
+.switch-enter-done .trees {
+  fill: #1a1a1a;
+  transition: fill 0.8s;
+}
+
+.switch-exit .trees {
+  fill: #092b08;
+  transition: fill 0.8s;
+}
+
+.switch-exit-done .trees {
+  fill: #092b08;
+  transition: fill 0.8s;
+}
+
+.switch-enter .background-top-color {
+  stop-color: #000;
+  transition: stop-color 0.7s;
+}
+
+.switch-enter-done .background-top-color {
+  stop-color: #000;
+  transition: stop-color 0.7s;
+}
+
+.switch-exit .background-top-color {
+  stop-color: #75daf0;
+  transition: stop-color 0.7s;
+}
+
+.switch-exit-done .background-top-color {
+  stop-color: #75daf0;
+  transition: stop-color 0.7s;
+}
+
+.switch-enter .background-bottom-color {
+  stop-color: #210658;
+  transition: stop-color 0.7s;
+}
+
+.switch-enter-done .background-bottom-color {
+  stop-color: #210658;
+  transition: stop-color 0.7s;
+}
+
+.switch-exit .background-bottom-color {
+  stop-color: #c3eff8;
+  transition: stop-color 0.7s;
+}
+
+.switch-exit-done .background-bottom-color {
+  stop-color: #c3eff8;
+  transition: stop-color 0.7s;
+}
+
+.star1 {
+  transform-origin: 154px 28px;
+}
+
+.star2 {
+  transform-origin: 135px 24px;
+}
+
+.star3 {
+  transform-origin: 143px 12px;
+}
+
+.star4 {
+  transform-origin: 125px 6px;
+}
+
+.star5 {
+  transform-origin: 114px 20px;
+}
+
+.star6 {
+  transform-origin: 15px 16px;
+}
+
+.star7 {
+  transform-origin: 29px 22px;
+}
+
+.star8 {
+  transform-origin: 37px 12px;
+}
+
+.star9 {
+  transform-origin: 68px 12px;
+}
+
+.star10 {
+  transform-origin: 94px 10px;
+}
+
+.star11 {
+  transform-origin: 79px 22px;
+}
+
+.star12 {
+  transform-origin: 52px 19px;
+}
+
+.star1,
+.star2,
+.star3,
+.star4,
+.star5,
+.star6,
+.star7,
+.star8,
+.star9,
+.star10,
+.star11,
+.star12 {
+  transform: scale(0);
+}
+
+.switch-enter .star1,
+.switch-enter .star2,
+.switch-enter .star3,
+.switch-enter .star4,
+.switch-enter .star5,
+.switch-enter .star6,
+.switch-enter .star7,
+.switch-enter .star8,
+.switch-enter .star9,
+.switch-enter .star10,
+.switch-enter .star11,
+.switch-enter .star12 {
+  transform: scale(0);
+}
+
+.switch-enter-done .star1,
+.switch-enter-done .star5,
+.switch-enter-done .star9 {
+  transform: scale(1);
+  transition: transform 0.2s;
+}
+
+.switch-enter-done .star2,
+.switch-enter-done .star6,
+.switch-enter-done .star10 {
+  transform: scale(1);
+  transition: transform 0.4s;
+}
+
+.switch-enter-done .star3,
+.switch-enter-done .star7,
+.switch-enter-done .star11 {
+  transform: scale(1);
+  transition: transform 0.6s;
+}
+
+.switch-enter-done .star4,
+.switch-enter-done .star8,
+.switch-enter-done .star12 {
+  transform: scale(1);
+  transition: transform 0.8s;
+}
+
+.switch-exit .star1,
+.switch-exit .star2,
+.switch-exit .star3,
+.switch-exit .star4,
+.switch-exit .star5,
+.switch-exit .star6,
+.switch-exit .star7,
+.switch-exit .star8,
+.switch-exit .star9,
+.switch-exit .star10,
+.switch-exit .star11,
+.switch-exit .star12 {
+  transform: scale(1);
+}
+
+.switch-exit-done .star1,
+.switch-exit-done .star5,
+.switch-exit-done .star9 {
+  transform: scale(0);
+  transition: transform 0.2s;
+}
+
+.switch-exit-done .star2,
+.switch-exit-done .star6,
+.switch-exit-done .star10 {
+  transform: scale(0);
+  transition: transform 0.4s;
+}
+
+.switch-exit-done .star3,
+.switch-exit-done .star7,
+.switch-exit-done .star11 {
+  transform: scale(0);
+  transition: transform 0.6s;
+}
+
+.switch-exit-done .star4,
+.switch-exit-done .star8,
+.switch-exit-done .star12 {
+  transform: scale(0);
+  transition: transform 0.8s;
 }

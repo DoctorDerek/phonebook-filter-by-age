@@ -11,7 +11,9 @@ export default function ContactCardPhoneNumber({
       href={`tel:${phoneNumber}`}
       className="group flex items-center justify-start space-x-1 text-sm font-medium"
     >
-      <span className="font-bold text-black">{phoneNumber}</span>
+      <span className="font-bold text-gray-950 dark:text-gray-200">
+        {phoneNumber}
+      </span>
       <PhoneIcon
         className="invisible h-2.5 w-2.5 group-hover:visible group-hover:fill-green-400"
         aria-label="Call"

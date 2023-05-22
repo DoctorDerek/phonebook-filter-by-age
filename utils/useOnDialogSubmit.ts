@@ -1,5 +1,8 @@
+import { useMutation } from "react-query"
+import { toast } from "react-toastify"
+
 import { DialogState } from "@/components/ContactDialog"
-import { calculateAge, Contact } from "@/contacts/CONTACTS"
+import { Contact, calculateAge } from "@/contacts/CONTACTS"
 import usePhoneBookService from "@/utils/usePhoneBookService"
 
 /**
@@ -21,12 +24,38 @@ export default function useOnDialogSubmit({
   // Retrieve our global context from the XState finite state machine:
   const { send } = usePhoneBookService()
 
+  /**
+   * Grab the mutation for https://httpstat.us/200 to demonstrate an API call.
+   *
+   * We include header "Accept: application/json" as part of the request. */
+  const mutation = useMutation({
+    mutationFn: async (contact: Contact) => {
+      toast("Sending the contact to https://httpstat.us/200.")
+      const response = await fetch("https://httpstat.us/200", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          // Special header to demonstrate the response in the toast:
+          "X-HttpStatus-Response-Contact": JSON.stringify(contact),
+        },
+        // We send the contact as JSON:
+        body: JSON.stringify(contact),
+      })
+      // We toast the response as JSON:
+      toast(JSON.stringify(await response.json()))
+    },
+  })
+
   const onDialogSubmit = (data: Contact) => {
     if (dialogState.type === "CREATE") {
       // We used React Hook Form to make sure we're getting all of the items:
       const {
-        name,
-        birthday,
+        firstName,
+        lastName,
+        birthYear,
+        birthMonth,
+        birthDay,
         streetAddress,
         city,
         state,
@@ -40,8 +69,11 @@ export default function useOnDialogSubmit({
       /** This is the contact that's ready to send to the state machine. */
       const contact = {
         id: maxId + 1,
-        name,
-        birthday,
+        firstName,
+        lastName,
+        birthYear,
+        birthMonth,
+        birthDay,
         streetAddress,
         city,
         state,
@@ -51,15 +83,21 @@ export default function useOnDialogSubmit({
         // The `age` is calculated by CREATE in `phoneBookMachine`.
       }
 
+      // Send the contact to the `phoneBookMachine` to update `localStorage`.
       send({ type: "CREATE", contact })
+      // Send the contact to the `mutation` to update the demonstration server.
+      mutation.mutate(contact)
     }
 
     if (dialogState.type === "UPDATE") {
       /** We unpack the existing contact from the `dialogState`. */
       const oldContact = dialogState?.contact
       // We have values from the form OR the contact for each of the fields.
-      const name = data.name || oldContact?.name || ""
-      const birthday = data.birthday || oldContact?.birthday || ""
+      const firstName = data.firstName || oldContact?.firstName || ""
+      const lastName = data.lastName || oldContact?.lastName || ""
+      const birthYear = data.birthYear || oldContact?.birthYear || ""
+      const birthMonth = data.birthMonth || oldContact?.birthMonth || ""
+      const birthDay = data.birthDay || oldContact?.birthDay || ""
       const streetAddress =
         data.streetAddress || oldContact?.streetAddress || ""
       const city = data.city || oldContact?.city || ""
@@ -71,14 +109,20 @@ export default function useOnDialogSubmit({
       const id = oldContact?.id || -1
       // We preserve data we didn't update in the form so we don't overwrite it.
       const photo = oldContact?.photo || ""
-      const age = oldContact?.age || calculateAge({ birthday }) || -1
+      const age =
+        oldContact?.age ||
+        calculateAge({ birthYear, birthMonth, birthDay }) ||
+        -1
 
       /** This is the contact that's ready to send to the state machine. */
       const contact = {
         id,
-        name,
+        firstName,
+        lastName,
         phoneNumber,
-        birthday,
+        birthYear,
+        birthMonth,
+        birthDay,
         age,
         photo,
         streetAddress,
@@ -88,7 +132,10 @@ export default function useOnDialogSubmit({
         email,
       }
 
+      // Send the contact to the `phoneBookMachine` to update `localStorage`.
       send({ type: "UPDATE", contact })
+      // Send the contact to the `mutation` to update the demonstration server.
+      mutation.mutate(contact)
     }
 
     if (dialogState.type === "DELETE" && dialogState?.contact)

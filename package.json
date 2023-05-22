@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --ignore-path .gitignore --write .",
+    "format": "prettier --write .",
     "test": "jest test --collectCoverage",
     "test:watch": "jest test --watch",
     "test:watchAll": "jest test --watchAll",
@@ -16,15 +16,22 @@
   "dependencies": {
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.18",
-    "@next/font": "^13.4.3",
+    "@hookform/resolvers": "^3.1.0",
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/react-transition-group": "^4.4.6",
+    "@wits/next-themes": "^0.2.16",
     "@xstate/react": "^3.2.2",
+    "keen-slider": "^6.8.5",
     "next": "13.4.3",
     "react": "18.2.0",
     "react-confetti": "^6.1.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "react-query": "^3.39.3",
-    "xstate": "^4.37.2"
+    "react-toastify": "^9.1.3",
+    "react-transition-group": "^4.4.5",
+    "xstate": "^4.37.2",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

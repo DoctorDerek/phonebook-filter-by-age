@@ -1,10 +1,11 @@
-"use client" // Specify this is a Client Component, not a Server Component.
+"use client"
 
+// Specify this is a Client Component, not a Server Component.
+import { Menu } from "@headlessui/react"
 import { Dispatch, SetStateAction, useState } from "react"
 
 import { AGE_RANGES } from "@/contacts/AGE_RANGES"
 import classNames from "@/utils/classNames"
-import { Menu } from "@headlessui/react"
 
 /**
  * The `<SearchBar>` powers the "search by age range" feature, though the
@@ -47,14 +48,17 @@ export default function SearchBar({
         {({ open }) => (
           <>
             {/* We don't need to reference `open` without `<Menu.Button>`. */}
-            <label className="relative flex w-full flex-col space-y-1.5">
+            <label
+              className="relative flex w-full flex-col space-y-1.5"
+              id="filter" // Used for the anchor link "Filter" in the `<NavBar>`
+            >
               <span className="text-xs font-semibold uppercase tracking-widest">
                 Age Ranges
               </span>
               <input
                 type="text"
                 placeholder="TYPE TO SEARCH"
-                className="w-full bg-gray-200 p-4 tracking-widest placeholder:text-xs placeholder:font-medium placeholder:text-gray-500"
+                className="w-full bg-gray-200 p-4 tracking-widest placeholder:text-xs placeholder:font-medium placeholder:text-gray-500 dark:bg-gray-500 dark:placeholder:text-gray-300"
                 // We don't need all the overhead of "react-hook-form" here.
                 onChange={(event) => setFilterText(event?.target?.value)}
                 onFocus={() => {
@@ -88,8 +92,8 @@ export default function SearchBar({
                             <button
                               className={classNames(
                                 active // This is the  "on hover" style.
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-gray-200 text-gray-500",
+                                  ? "bg-blue-500 text-white dark:bg-blue-400 dark:text-gray-100"
+                                  : "bg-gray-200 text-gray-500 dark:bg-gray-500 dark:text-gray-200",
                                 "w-full p-4 text-left font-medium uppercase tracking-widest"
                               )}
                               onClick={() => setFilterText(ageRangeString)}

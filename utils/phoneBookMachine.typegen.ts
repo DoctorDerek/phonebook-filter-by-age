@@ -8,9 +8,9 @@ export interface Typegen0 {
   invokeSrcNameMap: {}
   missingImplementations: {
     actions: never
-    services: never
-    guards: never
     delays: never
+    guards: never
+    services: never
   }
   eventsCausingActions: {
     createContact: "CREATE"
@@ -20,9 +20,9 @@ export interface Typegen0 {
     updateContact: "UPDATE"
     writePhoneBookToLocalStorage: "FINISH"
   }
-  eventsCausingServices: {}
-  eventsCausingGuards: {}
   eventsCausingDelays: {}
+  eventsCausingGuards: {}
+  eventsCausingServices: {}
   matchesStates: "idle" | "ready" | "running"
   tags: never
 }

@@ -1,3 +1,4 @@
+import { UserIcon } from "@heroicons/react/24/solid"
 import Image from "next/image"
 import { Dispatch, SetStateAction } from "react"
 
@@ -22,7 +23,11 @@ export default function ContactCardPhotoAndHeading({
   contact: Contact
   setDialogState: Dispatch<SetStateAction<DialogState>>
 }) {
-  const { name, photo } = contact || { name: "", photo: "" }
+  const { firstName, lastName, photo } = contact || {
+    firstName: "",
+    lastName: "",
+    photo: "",
+  }
   return (
     <div className="flex items-center justify-center space-x-4">
       <div className="group relative h-20 w-20 flex-shrink-0">
@@ -30,11 +35,18 @@ export default function ContactCardPhotoAndHeading({
         {photo && ( // Only show the photo if there's a `photo` URL.
           <Image
             src={`/contacts/${photo}`}
-            alt={name} // Screen readers announce "Image of {name}"
+            alt={`${firstName} ${lastName}`}
+            // Screen readers announce "Image of `${firstName} ${lastName}`"
             fill
             className="object-fit rounded-full"
             sizes={IMAGE_SIZES}
           />
+        )}
+        {/** If we don't have a photo, show a placeholder. */}
+        {!photo && (
+          <div className="bg-gray-300 dark:bg-gray-200 rounded-full h-full w-full flex items-center justify-center">
+            <UserIcon className="h-3/4 w-3/4 text-gray-100 dark:text-gray-400" />
+          </div>
         )}
         <div className="invisible absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 transform group-hover:visible">
           <ButtonDelete contact={contact} setDialogState={setDialogState} />

@@ -1,6 +1,5 @@
 [![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=phonebook-filter-by-age)](https://phonebook-filter-by-age.vercel.app/) [![codecov](https://codecov.io/gh/DoctorDerek/phonebook-filter-by-age/branch/main/graph/badge.svg?token=7VDUW7TGZN)](https://codecov.io/gh/DoctorDerek/phonebook-filter-by-age) ![GitHub Actions Build Status - CI Workflow](https://github.com/DoctorDerek/phonebook-filter-by-age/actions/workflows/ci.yml/badge.svg)
 
-
 # ☎️ Phonebook "Filter by Age" App - Next.js 13 + React 18 + Tailwind CSS + XState + CRUD Operations
 
 # 👀 View Production Build at https://phonebook-filter-by-age.vercel.app/

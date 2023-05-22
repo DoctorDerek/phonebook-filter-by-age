@@ -1,11 +1,15 @@
-"use client" // Specify this is a Client Component, not a Server Component.
+"use client"
 
+// Specify this is a Client Component, not a Server Component.
+import { ThemeProvider } from "@wits/next-themes"
+import { useInterpret } from "@xstate/react"
 import { ReactNode } from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 import GlobalStateContext from "@/components/GlobalStateContext"
 import phoneBookMachine from "@/utils/phoneBookMachine"
-import { useInterpret } from "@xstate/react"
 
 const queryClient = new QueryClient()
 
@@ -21,7 +25,12 @@ export default function Providers({ children }: { children: ReactNode }) {
       {/* We load React Query here but don't actually use it in the app. */}
       <GlobalStateContext.Provider value={{ phoneBookService }}>
         {/* We can access React context in the app via Provider */}
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {/* We load next-themes' automatic dark mode feature here. */}
+          <ToastContainer position="top-center" />
+          {/* We load react-toastify here. */}
+          {children}
+        </ThemeProvider>
       </GlobalStateContext.Provider>
     </QueryClientProvider>
   )

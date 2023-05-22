@@ -1,5 +1,6 @@
-"use client" // Specify this is a Client Component, not a Server Component.
+"use client"
 
+// Specify this is a Client Component, not a Server Component.
 import { useEffect, useState } from "react"
 
 import ButtonCreate from "@/components/ButtonCreate"
@@ -69,7 +70,6 @@ export default function PhoneBookApp() {
             <ButtonCreate setDialogState={setDialogState} />
           </div>
         </div>
-
         <ContactList
           contacts={contacts}
           filterText={filterText}

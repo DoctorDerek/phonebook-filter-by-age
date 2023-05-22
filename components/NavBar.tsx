@@ -1,22 +1,31 @@
-"use client" // Specify this is a Client Component, not a Server Component.
+"use client"
 
+// Specify this is a Client Component, not a Server Component.
+import { Dialog } from "@headlessui/react"
+import { Bars3Icon, DevicePhoneMobileIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import { useState } from "react"
 
 import ContactDialogClose from "@/components/ButtonCloseDialog"
 import ReactConfetti from "@/components/ReactConfetti"
-import { Dialog } from "@headlessui/react"
-import { Bars3Icon, DevicePhoneMobileIcon } from "@heroicons/react/24/solid"
+import ThemeSwitch from "@/components/ThemeSwitch"
 
 /** These are hardcoded to match the design document. */
 function NavBarLinks() {
   return (
     <>
-      <Link href="/" className="hover:text-gray-300">
+      <Link
+        href="#top"
+        className="hover:text-gray-300 dark:hover:text-gray-500"
+        id="top" // Used as the anchor link for itself
+      >
         Home
       </Link>
-      <Link href="/" className="text-gray-500 hover:text-gray-300">
-        Features
+      <Link
+        href="#filter"
+        className="text-gray-500 hover:text-gray-300 dark:text-gray-300 dark:hover:text-gray-500"
+      >
+        Filter
       </Link>
     </>
   )
@@ -44,7 +53,10 @@ function MobileNavigationMenu({
       <Dialog.Panel className="fixed inset-0 bg-black py-4 text-5xl uppercase text-white">
         <ContactDialogClose closeDialog={closeDialog} size="h-12 w-12" />
         <ReactConfetti />
-        <div className="flex flex-col items-center space-y-12">
+        <div
+          className="flex flex-col items-center space-y-12"
+          onClick={() => closeDialog()} // CLose when the user clicks a link.
+        >
           <PhoneBookHeading />
           <NavBarLinks />
         </div>
@@ -68,6 +80,7 @@ export default function NavBar() {
             <NavBarLinks />
           </div>
         </div>
+        <ThemeSwitch />
         <div className="hidden xl:flex">
           <PhoneBookHeading />
         </div>
