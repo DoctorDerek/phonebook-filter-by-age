@@ -39,8 +39,8 @@ function ProgressIndicator({
       className={classNames(
         "flex items-center border border-solid pr-2 rounded",
         slideIndex === thisSlideIndex
-          ? "text-blue-600 border-blue-600"
-          : "text-gray-600 border-gray-200"
+          ? "text-blue-600 border-blue-600 dark:text-blue-400 dark:border-blue-400"
+          : "text-gray-600 border-gray-200 dark:text-gray-300 dark:border-gray-700"
       )}
     >
       <span className="font-bold w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-end">
@@ -85,7 +85,7 @@ function ContactDialogButton({
   onClick?: () => void
   color:
     | "bg-blue-400 text-white hover:bg-blue-500 hover:outline-blue-400"
-    | "bg-gray-800 text-white hover:bg-gray-700 hover:outline-gray-800"
+    | "bg-gray-800 text-white hover:bg-gray-700 hover:outline-gray-800 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:outline-gray-700"
 }) {
   return (
     <button
@@ -140,7 +140,7 @@ export default function ContactDialogButtons({
               ? "Cancel"
               : "Back"
           }
-          color="bg-gray-800 text-white hover:bg-gray-700 hover:outline-gray-800"
+          color="bg-gray-800 text-white hover:bg-gray-700 hover:outline-gray-800 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:outline-gray-700"
           onClick={
             slideIndex === 0 ||
             (dialogState.type !== "CREATE" && dialogState.type !== "UPDATE")

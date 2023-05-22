@@ -22,7 +22,7 @@ export default function ContactDialogToggle({
       <span className="flex flex-grow flex-col">
         <Switch.Label
           as="span"
-          className="text-sm font-medium leading-6 text-gray-500"
+          className="text-sm font-medium leading-6 text-gray-500 dark:text-gray-300"
           passive
         >
           Show address fields
@@ -33,7 +33,7 @@ export default function ContactDialogToggle({
         checked={addressEnabled}
         onChange={setAddressEnabled}
         className={classNames(
-          addressEnabled ? "bg-indigo-600" : "bg-gray-200",
+          addressEnabled ? "bg-indigo-600" : "bg-gray-200 dark:bg-gray-700",
           "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
         )}
       >
@@ -41,7 +41,7 @@ export default function ContactDialogToggle({
         <span
           className={classNames(
             addressEnabled ? "translate-x-5" : "translate-x-0",
-            "pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+            "pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-gray-100 dark:bg-gray-800 shadow ring-0 transition duration-200 ease-in-out"
           )}
         >
           <span

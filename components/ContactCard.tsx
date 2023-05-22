@@ -42,7 +42,7 @@ export default function ContactCard({
 }) {
   const { birthday, phoneNumber, email } = contact
   return (
-    <div className="flex w-full flex-col items-start justify-between space-y-6 border border-solid border-gray-200 p-6 uppercase shadow-lg filter xl:space-y-8 xl:p-8">
+    <div className="flex w-full flex-col items-start justify-between space-y-6 border border-solid border-gray-200 p-6 uppercase shadow-lg filter dark:border-gray-800 xl:space-y-8 xl:p-8">
       {/** The entire `<ContactCard>` component uses UPPERCASE text. */}
       <ContactCardPhotoAndHeading
         contact={contact}

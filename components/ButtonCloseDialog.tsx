@@ -24,7 +24,7 @@ export default function ButtonCloseDialog({
     >
       <XMarkIcon
         aria-label="Close dialog"
-        className="fill-gray-500 group-hover:fill-gray-600"
+        className="fill-gray-500 dark:fill-gray-200 group-hover:fill-gray-600 dark:group-hover:fill-gray-100"
       />
     </button>
   )

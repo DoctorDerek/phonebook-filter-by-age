@@ -1,6 +1,7 @@
 "use client"
 
 // Specify this is a Client Component, not a Server Component.
+import { ThemeProvider } from "@wits/next-themes"
 import { useInterpret } from "@xstate/react"
 import { ReactNode } from "react"
 import { QueryClient, QueryClientProvider } from "react-query"
@@ -22,7 +23,10 @@ export default function Providers({ children }: { children: ReactNode }) {
       {/* We load React Query here but don't actually use it in the app. */}
       <GlobalStateContext.Provider value={{ phoneBookService }}>
         {/* We can access React context in the app via Provider */}
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {/* We load next-themes' automatic dark mode feature here. */}
+          {children}
+        </ThemeProvider>
       </GlobalStateContext.Provider>
     </QueryClientProvider>
   )

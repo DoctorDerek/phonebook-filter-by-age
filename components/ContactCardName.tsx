@@ -24,11 +24,11 @@ export default function ContactCardNameAndCity({
         onClick={() => setDialogState({ type: "UPDATE", contact })}
       >
         {firstName} {lastName}
-        <div className="invisible pl-1 text-sm lowercase tracking-normal text-gray-400 group-hover:visible">
+        <div className="invisible pl-1 text-sm lowercase tracking-normal text-gray-400 group-hover:visible dark:text-gray-300">
           edit
         </div>
       </button>
-      <span className="text-xs font-semibold tracking-wider text-gray-400">
+      <span className="text-xs font-semibold tracking-wider text-gray-400 dark:text-gray-300">
         {city}
       </span>
     </h3>

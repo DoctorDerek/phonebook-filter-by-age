@@ -22,8 +22,9 @@ const inter = Inter({ subsets: ["latin"] })
  * */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={inter.className}>
-      <body>
+    <html lang="en" className={inter.className} suppressHydrationWarning>
+      {/* We suppress hydration warning to use next-themes for dark mode. */}
+      <body className="antialiased text-gray-950 dark:text-gray-100 bg-gray-100 dark:bg-gray-800">
         <Providers>
           <NavBar />
           <main className="mx-auto flex min-h-screen w-[95vw] cursor-crosshair flex-col p-8">

@@ -70,7 +70,6 @@ export default function PhoneBookApp() {
             <ButtonCreate setDialogState={setDialogState} />
           </div>
         </div>
-
         <ContactList
           contacts={contacts}
           filterText={filterText}

@@ -55,7 +55,7 @@ export default function SearchBar({
               <input
                 type="text"
                 placeholder="TYPE TO SEARCH"
-                className="w-full bg-gray-200 p-4 tracking-widest placeholder:text-xs placeholder:font-medium placeholder:text-gray-500"
+                className="w-full bg-gray-200 p-4 tracking-widest placeholder:text-xs placeholder:font-medium placeholder:text-gray-500 dark:bg-gray-500 dark:placeholder:text-gray-300"
                 // We don't need all the overhead of "react-hook-form" here.
                 onChange={(event) => setFilterText(event?.target?.value)}
                 onFocus={() => {
@@ -89,8 +89,8 @@ export default function SearchBar({
                             <button
                               className={classNames(
                                 active // This is the  "on hover" style.
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-gray-200 text-gray-500",
+                                  ? "bg-blue-500 text-white dark:bg-blue-400 dark:text-gray-100"
+                                  : "bg-gray-200 text-gray-500 dark:bg-gray-500 dark:text-gray-200",
                                 "w-full p-4 text-left font-medium uppercase tracking-widest"
                               )}
                               onClick={() => setFilterText(ageRangeString)}

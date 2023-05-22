@@ -42,7 +42,7 @@ function ContactDialogInput({
     <div className="relative mt-4">
       <label
         htmlFor={fieldName}
-        className="absolute -top-3 left-3 inline-block bg-white px-1 text-sm font-medium text-gray-900"
+        className="absolute -top-3 left-3 inline-block bg-white px-1 text-sm font-medium text-gray-900 dark:bg-gray-800 dark:text-gray-100"
       >
         {label}
       </label>
@@ -50,7 +50,7 @@ function ContactDialogInput({
         type={fieldName === "password" ? "password" : "text"}
         id={fieldName}
         className={classNames(
-          "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200",
+          "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200 dark:ring-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:ring-gray-500 dark:disabled:bg-gray-800 dark:disabled:text-gray-700 dark:disabled:ring-gray-700",
           errors[fieldName] ? "ring-2 ring-red-500" : ""
         )}
         placeholder={placeholder}
