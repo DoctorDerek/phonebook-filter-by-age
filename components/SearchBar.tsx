@@ -48,7 +48,10 @@ export default function SearchBar({
         {({ open }) => (
           <>
             {/* We don't need to reference `open` without `<Menu.Button>`. */}
-            <label className="relative flex w-full flex-col space-y-1.5">
+            <label
+              className="relative flex w-full flex-col space-y-1.5"
+              id="filter" // Used for the anchor link "Filter" in the `<NavBar>`
+            >
               <span className="text-xs font-semibold uppercase tracking-widest">
                 Age Ranges
               </span>

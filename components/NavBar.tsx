@@ -14,14 +14,18 @@ import ThemeSwitch from "@/components/ThemeSwitch"
 function NavBarLinks() {
   return (
     <>
-      <Link href="/" className="hover:text-gray-300 dark:hover:text-gray-500">
+      <Link
+        href="#top"
+        className="hover:text-gray-300 dark:hover:text-gray-500"
+        id="top" // Used as the anchor link for itself
+      >
         Home
       </Link>
       <Link
-        href="/"
+        href="#filter"
         className="text-gray-500 hover:text-gray-300 dark:text-gray-300 dark:hover:text-gray-500"
       >
-        Features
+        Filter
       </Link>
     </>
   )
@@ -49,7 +53,10 @@ function MobileNavigationMenu({
       <Dialog.Panel className="fixed inset-0 bg-black py-4 text-5xl uppercase text-white">
         <ContactDialogClose closeDialog={closeDialog} size="h-12 w-12" />
         <ReactConfetti />
-        <div className="flex flex-col items-center space-y-12">
+        <div
+          className="flex flex-col items-center space-y-12"
+          onClick={() => closeDialog()} // CLose when the user clicks a link.
+        >
           <PhoneBookHeading />
           <NavBarLinks />
         </div>
