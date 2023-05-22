@@ -47,8 +47,8 @@ function ContactDialogInput({
         {...register(fieldName, {
           // Fields are only required when we're creating a new user (contact).
           // When updating a user, blank fields just don't change the field.
-          required: dialogState.type === "CREATE",
           validate: (value) => {
+            if (dialogState.type !== "CREATE") return true
             if (fieldName === "email") {
               return (
                 (typeof value === "string" && value?.includes("@")) ||
@@ -65,8 +65,10 @@ function ContactDialogInput({
               // 1 symbol
               if (typeof value === "string" && !/[!@#$%^&*]/.test(value))
                 return "Please enter a password with at least one symbol."
+              return true // Valid password
             }
-            return true // Don't validate other fields, but they are required.
+            // Don't validate other fields, but they are required.
+            return Boolean(value) || "All fields are required."
           },
         })}
         disabled={dialogState.type === "DELETE"}
@@ -75,8 +77,27 @@ function ContactDialogInput({
   )
 }
 
-function ErrorMessage() {
-  return <div className="text-red-500 mt-2">All fields are required.</div>
+function ErrorMessage({
+  errors,
+}: {
+  errors: Partial<FieldErrorsImpl<Contact>>
+}) {
+  const getErrorMessage = () => {
+    return (
+      errors?.email?.message ||
+      errors?.password?.message ||
+      errors?.firstName?.message ||
+      errors?.lastName?.message ||
+      errors?.birthday?.message ||
+      errors?.phoneNumber?.message ||
+      errors?.streetAddress?.message ||
+      errors?.city?.message ||
+      errors?.state?.message ||
+      errors?.zipCode?.message ||
+      "All fields are required."
+    )
+  }
+  return <div className="text-red-500 mt-2">{getErrorMessage()}</div>
 }
 
 /** This is the "interior" of the form, where the user inputs data. */
@@ -113,15 +134,10 @@ export default function ContactDialogInputs({
           use a real password.
         </div>
         {dialogState.type === "CREATE" &&
-          (errors.firstName ||
-            errors.lastName ||
-            errors.birthday ||
-            errors.streetAddress ||
-            errors.city ||
-            errors.state ||
-            errors.zipCode ||
-            errors.phoneNumber ||
-            errors.email) && <ErrorMessage />}
+          // We only show an error message if this slide has errors.
+          (errors?.email?.message || errors?.password?.message) && (
+            <ErrorMessage errors={errors} />
+          )}
       </div>
       <div className="keen-slider__slide">
         <ContactDialogInput
@@ -182,15 +198,15 @@ export default function ContactDialogInputs({
           errors={errors}
         />
         {dialogState.type === "CREATE" &&
-          (errors.firstName ||
-            errors.lastName ||
-            errors.birthday ||
-            errors.streetAddress ||
-            errors.city ||
-            errors.state ||
-            errors.zipCode ||
-            errors.phoneNumber ||
-            errors.email) && <ErrorMessage />}
+          // We only show an error message if this slide has errors.
+          (errors?.firstName?.message ||
+            errors?.lastName?.message ||
+            errors?.birthday?.message ||
+            errors?.phoneNumber?.message ||
+            errors?.streetAddress?.message ||
+            errors?.city?.message ||
+            errors?.state?.message ||
+            errors?.zipCode?.message) && <ErrorMessage errors={errors} />}
       </div>
       <div className="keen-slider__slide">Security Questions</div>
       <div className="keen-slider__slide">Review and Submit</div>

@@ -93,14 +93,48 @@ export default function ContactDialog({
   }
 
   useEffect(() => {
+    /**
+     * Stop the user from advancing the slide if there are form errors.
+     *
+     * We use guard clauses to exit early so the user can always go back.
+     */
     async function showSlideWithError() {
+      if (slideIndex === 0) return
       if (errors?.email || errors?.password) {
         setSlideIndex(0)
         instanceRef?.current?.moveToIdx(0, true)
       }
+      if (slideIndex === 1) return
+      if (
+        errors?.firstName ||
+        errors?.lastName ||
+        errors?.birthday ||
+        errors?.streetAddress ||
+        errors?.city ||
+        errors?.state ||
+        errors?.zipCode ||
+        errors?.phoneNumber
+      ) {
+        setSlideIndex(1)
+        instanceRef?.current?.moveToIdx(1, true)
+      }
     }
     showSlideWithError()
-  }, [errors?.email, errors?.password, instanceRef, slideIndex, trigger])
+  }, [
+    errors?.birthday,
+    errors?.city,
+    errors?.email,
+    errors?.firstName,
+    errors?.lastName,
+    errors?.password,
+    errors?.phoneNumber,
+    errors?.state,
+    errors?.streetAddress,
+    errors?.zipCode,
+    instanceRef,
+    slideIndex,
+    trigger,
+  ])
 
   return (
     <Dialog
@@ -132,7 +166,7 @@ export default function ContactDialog({
               />
             </div>
             <div onClick={() => validateSlide()}>
-              {/* Bottom section */}
+              {/* Bottom section; trigger a validation of the current slide. */}
               <ContactDialogButtons
                 dialogState={dialogState}
                 closeDialog={closeDialog}
