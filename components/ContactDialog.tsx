@@ -62,6 +62,7 @@ export default function ContactDialog({
 
   const [slideIndex, setSlideIndex] = useState(0)
   const [sliderRef, instanceRef] = useKeenSlider({
+    // Keep track of the slide index so we can validate the form.
     slideChanged() {
       setSlideIndex(instanceRef?.current?.track?.details?.abs || 0)
     },
@@ -71,6 +72,7 @@ export default function ContactDialog({
     destroyed() {
       setSlideIndex(0)
     },
+    drag: false, // Disable drag controls for the slideshow.
   })
 
   /**
