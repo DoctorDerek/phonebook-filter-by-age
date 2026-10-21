@@ -72,3 +72,11 @@ pnpm audit --prod
 ```
 
 Pull requests run ESLint, Vitest coverage, and Playwright E2E checks in GitHub Actions, publish coverage to Codecov, and receive a Vercel preview deployment.
+
+### TypeScript lint coverage
+
+`pnpm lint` scans the repository, including application code, tests, Playwright files, and root configuration. `eslint.config.ts` composes Next.js rules with its TypeScript recommended preset for `.ts`, `.tsx`, `.mts`, and `.cts` files. Existing Git and Next.js ignores protect generated and private files.
+
+The pinned DoctorDerekCICD workflow checks every Git-tracked TypeScript file for an effective configuration with enabled TypeScript rules before reporting quality success. The shared workflow owns that coverage guard; CRM owns its lint rules. Justified exceptions belong in narrowly scoped ESLint configuration, not inline disables or authored-file exclusions. This adoption requires no new rule exceptions.
+
+Ordinary lint findings remain advisory. Missing TypeScript lint coverage blocks the quality check; TypeScript compilation and Vitest remain separate blocking checks. Real-ESLint integration tests verify representative source paths, diagnostic behavior, and scope boundaries without duplicating the shared scanner.
